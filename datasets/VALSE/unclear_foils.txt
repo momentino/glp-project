@@ -1,0 +1,16 @@
+
+A person carves wood --> (A wood/Wood) carves a person [la prima è grammaticalmente scorretta ma tiene l'articolo]
+
+A person counts money --> (A money/money) counts a person
+
+A man flexes his biceps --> Biceps flex their man/A bicep flexes its man
+
+The people disembark an airplane --> The airplane disembarks (people/the people)
+
+The people unveil a painting --> The painting unveils (people/the people)
+
+A parent encourages such a girl --> A girl encourages such a parent [o modifichiamo anche la true togliendo such a?]
+
+The people flip a boat --> The boat flips (people/the people)
+                            
+Start from: actions_test_137
