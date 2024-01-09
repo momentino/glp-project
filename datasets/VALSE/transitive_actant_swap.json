@@ -1213,7 +1213,7 @@
          "true_active":1,
          "other":0
       },
-      "foil_active":"A football player tackles a football player."
+      "foil_active":"All the opposition tackles the football player."
    },
    "actions_test_138":{
       "dataset":"SWiG",
@@ -1229,7 +1229,7 @@
          "true_active":2,
          "other":0
       },
-      "foil_active":"A flag waves at people."
+      "foil_active":"The flag waves people."
    },
    "actions_test_141":{
       "dataset":"SWiG",
@@ -1261,7 +1261,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A nose wrinkles like a male child."
+      "foil_active":"A nose wrinkles its male child."
    },
    "actions_test_148":{
       "dataset":"SWiG",
@@ -1277,7 +1277,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A bicycle pedals as a rider."
+      "foil_active":"A bicycle pedals a rider."
    },
    "actions_test_150":{
       "dataset":"SWiG",
@@ -1293,7 +1293,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A tail wags like a dog."
+      "foil_active":"A tail wags a dog."
    },
    "actions_test_151":{
       "dataset":"SWiG",
@@ -1309,7 +1309,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A tail wags like a dog."
+      "foil_active":"A tail wags a dog."
    },
    "actions_test_152":{
       "dataset":"SWiG",
@@ -1325,7 +1325,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A tail wags like a dog."
+      "foil_active":"A tail wags a dog."
    },
    "actions_test_153":{
       "dataset":"SWiG",
@@ -1341,7 +1341,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A leg rehabilitates a woman."
+      "foil_active":"A leg rehabilitates its woman."
    },
    "actions_test_154":{
       "dataset":"SWiG",
@@ -1357,7 +1357,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A leg rehabilitates a woman."
+      "foil_active":"A leg rehabilitates its woman."
    },
    "actions_test_155":{
       "dataset":"SWiG",
@@ -1421,7 +1421,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A toddler encourages a woman."
+      "foil_active":"A young toddler encourages a woman."
    },
    "actions_test_161":{
       "dataset":"SWiG",
@@ -1501,7 +1501,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A breast sucks like a horse."
+      "foil_active":"A breast sucks its horse."
    },
    "actions_test_168":{
       "dataset":"SWiG",
@@ -1533,7 +1533,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A student teaches as a coach."
+      "foil_active":"A student teaches a coach."
    },
    "actions_test_170":{
       "dataset":"SWiG",
@@ -1565,7 +1565,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A fabric wrings from a woman."
+      "foil_active":"A fabric wrings a woman."
    },
    "actions_test_186":{
       "dataset":"SWiG",
@@ -1629,7 +1629,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A child reassures a mother."
+      "foil_active":"A child reassures its mother."
    },
    "actions_test_194":{
       "dataset":"SWiG",
@@ -1661,7 +1661,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A lip puckers like a man."
+      "foil_active":"A lip puckers its man."
    },
    "actions_test_197":{
       "dataset":"SWiG",
@@ -1677,7 +1677,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A lip puckers like a man."
+      "foil_active":"A lip puckers its man."
    },
    "actions_test_198":{
       "dataset":"SWiG",
@@ -1709,7 +1709,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A child teaches a woman."
+      "foil_active":"A female child teaches a woman."
    },
    "actions_test_200":{
       "dataset":"SWiG",
@@ -1725,7 +1725,7 @@
          "true_active":0,
          "other":3
       },
-      "foil_active":"A toilet inserts into a person."
+      "foil_active":"A toilet inserts a person."
    },
    "actions_test_201":{
       "dataset":"SWiG",
@@ -1741,7 +1741,7 @@
          "true_active":2,
          "other":1
       },
-      "foil_active":"A shirt browses at a woman."
+      "foil_active":"A shirt browses my woman."
    },
    "actions_test_202":{
       "dataset":"SWiG",
@@ -1853,7 +1853,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A neck stretches like a person."
+      "foil_active":"A neck stretches its person."
    },
    "actions_test_210":{
       "dataset":"SWiG",
@@ -1869,7 +1869,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A child reassures a woman."
+      "foil_active":"A child reassures their woman."
    },
    "actions_test_211":{
       "dataset":"SWiG",
@@ -1901,7 +1901,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A ballot counts as a homo."
+      "foil_active":"A ballot counts a homo."
    },
    "actions_test_214":{
       "dataset":"SWiG",
@@ -1965,7 +1965,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A male child scolds the girl."
+      "foil_active":"A male child scolds a girl."
    },
    "actions_test_219":{
       "dataset":"SWiG",
@@ -2061,7 +2061,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A meat kneads a person."
+      "foil_active":"A meat kneads the person."
    },
    "actions_test_225":{
       "dataset":"SWiG",
@@ -2077,7 +2077,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A sheet folds over my person."
+      "foil_active":"A sheet folds a person."
    },
    "actions_test_226":{
       "dataset":"SWiG",
@@ -2141,7 +2141,7 @@
          "true_active":2,
          "other":0
       },
-      "foil_active":"A goalkeeper reassures a soccer player."
+      "foil_active":"A goalkeeper reassures the soccer player."
    },
    "actions_test_234":{
       "dataset":"SWiG",
@@ -2157,7 +2157,7 @@
          "true_active":2,
          "other":1
       },
-      "foil_active":"A shotgun aims at the woman."
+      "foil_active":"A shotgun aims a woman."
    },
    "actions_test_235":{
       "dataset":"SWiG",
@@ -2173,7 +2173,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"An elephant trains as a trainer."
+      "foil_active":"An elephant trains a trainer."
    },
    "actions_test_239":{
       "dataset":"SWiG",
@@ -2237,7 +2237,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A berry forages for a man."
+      "foil_active":"A berry forages a man."
    },
    "actions_test_244":{
       "dataset":"SWiG",
@@ -2253,7 +2253,7 @@
          "true_active":1,
          "other":1
       },
-      "foil_active":"An opposition tackles an athlete."
+      "foil_active":"An opposition tackles the athlete."
    },
    "actions_test_246":{
       "dataset":"SWiG",
@@ -2269,7 +2269,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A bandage tugs at a man."
+      "foil_active":"A bandage tugs a man."
    },
    "actions_test_248":{
       "dataset":"SWiG",
@@ -2285,7 +2285,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"The grass sniff like a dog."
+      "foil_active":"The grass sniff a dog."
    },
    "actions_test_252":{
       "dataset":"SWiG",
@@ -2301,7 +2301,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A gun aims at a person."
+      "foil_active":"A gun aims a person."
    },
    "actions_test_254":{
       "dataset":"SWiG",
@@ -2333,7 +2333,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A patient asks for a nurse."
+      "foil_active":"A patient asks a nurse."
    },
    "actions_test_257":{
       "dataset":"SWiG",
@@ -2413,7 +2413,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A baby nuzzles its mother."
+      "foil_active":"A baby nuzzles their mother."
    },
    "actions_test_271":{
       "dataset":"SWiG",
@@ -2525,7 +2525,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"The lass scold a parent."
+      "foil_active":"A lass scolds the parent."
    },
    "actions_test_284":{
       "dataset":"SWiG",
@@ -2541,7 +2541,7 @@
          "true_active":2,
          "other":1
       },
-      "foil_active":"A leg rehabilitates a man."
+      "foil_active":"A leg rehabilitates its man."
    },
    "actions_test_285":{
       "dataset":"SWiG",
@@ -2557,7 +2557,7 @@
          "true_active":2,
          "other":0
       },
-      "foil_active":"A leg rehabilitates a man."
+      "foil_active":"A leg rehabilitates its man."
    },
    "actions_test_293":{
       "dataset":"SWiG",
@@ -2637,7 +2637,7 @@
          "true_active":2,
          "other":0
       },
-      "foil_active":"A feline restrains people."
+      "foil_active":"The feline restrains the people."
    },
    "actions_test_299":{
       "dataset":"SWiG",
@@ -2685,7 +2685,7 @@
          "true_active":1,
          "other":2
       },
-      "foil_active":"A man confronts the people."
+      "foil_active":" People confronts the man."
    },
    "actions_test_306":{
       "dataset":"SWiG",
@@ -2701,7 +2701,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"The cash count was a young buck."
+      "foil_active":"The cash counts the young buck."
    },
    "actions_test_308":{
       "dataset":"SWiG",
@@ -2765,7 +2765,7 @@
          "true_active":2,
          "other":1
       },
-      "foil_active":"A child trains with a woman."
+      "foil_active":"A child trains a woman."
    },
    "actions_test_313":{
       "dataset":"SWiG",
@@ -2797,7 +2797,7 @@
          "true_active":2,
          "other":0
       },
-      "foil_active":"The people preach under a curate."
+      "foil_active":"The people preach a curate."
    },
    "actions_test_317":{
       "dataset":"SWiG",
@@ -2813,7 +2813,7 @@
          "true_active":2,
          "other":0
       },
-      "foil_active":"The people preach under a curate."
+      "foil_active":"The people preach a curate."
    },
    "actions_test_318":{
       "dataset":"SWiG",
@@ -2925,7 +2925,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"The fish spear a male child."
+      "foil_active":"A fish spears the male child."
    },
    "actions_test_331":{
       "dataset":"SWiG",
@@ -2973,7 +2973,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A burlap sews a person."
+      "foil_active":"A burlap sews the person."
    },
    "actions_test_340":{
       "dataset":"SWiG",
@@ -2989,7 +2989,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A hand bites the child."
+      "foil_active":"A hand bites my child."
    },
    "actions_test_341":{
       "dataset":"SWiG",
@@ -3021,7 +3021,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A sniper rifle aims at the soldier."
+      "foil_active":"A sniper rifle aims a soldier."
    },
    "actions_test_349":{
       "dataset":"SWiG",
@@ -3037,7 +3037,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A metallic element chisels man."
+      "foil_active":"A metallic element chisels a man."
    },
    "actions_test_350":{
       "dataset":"SWiG",
@@ -3101,7 +3101,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A beard twists like a man."
+      "foil_active":"A beard twists its man."
    },
    "actions_test_359":{
       "dataset":"SWiG",
@@ -3165,7 +3165,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A lip puckers like a statue."
+      "foil_active":"A lip puckers its statue."
    },
    "actions_test_364":{
       "dataset":"SWiG",
@@ -3197,7 +3197,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A submachine gun aims at a man."
+      "foil_active":"A submachine gun aims a man."
    },
    "actions_test_369":{
       "dataset":"SWiG",
@@ -3213,7 +3213,7 @@
          "true_active":1,
          "other":0
       },
-      "foil_active":"A shark circles around the fish."
+      "foil_active":"A fish circles the shark."
    },
    "actions_test_371":{
       "dataset":"SWiG",
@@ -3293,7 +3293,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A meat barbecues man."
+      "foil_active":"A meat barbecues the man."
    },
    "actions_test_380":{
       "dataset":"SWiG",
@@ -3309,7 +3309,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A meat barbecues man."
+      "foil_active":"A meat barbecues the man."
    },
    "actions_test_381":{
       "dataset":"SWiG",
@@ -3325,7 +3325,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A meat barbecues man."
+      "foil_active":"A meat barbecues the man."
    },
    "actions_test_383":{
       "dataset":"SWiG",
@@ -3341,7 +3341,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"The fish spear a man."
+      "foil_active":"A fish spears the man."
    },
    "actions_test_384":{
       "dataset":"SWiG",
@@ -3357,7 +3357,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"The fish spear a man."
+      "foil_active":"A fish spears the man."
    },
    "actions_test_385":{
       "dataset":"SWiG",
@@ -3373,7 +3373,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"The fish spear a man."
+      "foil_active":"A fish spears the man."
    },
    "actions_test_386":{
       "dataset":"SWiG",
@@ -3389,7 +3389,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"The fish spear a man."
+      "foil_active":"A fish spears the man."
    },
    "actions_test_387":{
       "dataset":"SWiG",
@@ -3405,7 +3405,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"The fish spear a man."
+      "foil_active":"A fish spears the man."
    },
    "actions_test_388":{
       "dataset":"SWiG",
@@ -3421,7 +3421,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"The fish spear a man."
+      "foil_active":"A fish spears the man."
    },
    "actions_test_389":{
       "dataset":"SWiG",
@@ -3565,7 +3565,7 @@
          "true_active":1,
          "other":1
       },
-      "foil_active":"A mare nuzzles her foal."
+      "foil_active":"A mare nuzzles the foal."
    },
    "actions_test_404":{
       "dataset":"SWiG",
@@ -3629,7 +3629,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A foot attacks the kitten."
+      "foil_active":"A foot attacks its kitten."
    },
    "actions_test_415":{
       "dataset":"SWiG",
@@ -3645,7 +3645,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A gun aims at a woman."
+      "foil_active":"A gun aims a woman."
    },
    "actions_test_417":{
       "dataset":"SWiG",
@@ -3725,7 +3725,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A dog calms a woman."
+      "foil_active":"A dog calms its woman."
    },
    "actions_test_426":{
       "dataset":"SWiG",
@@ -3741,7 +3741,7 @@
          "true_active":2,
          "other":0
       },
-      "foil_active":"A woman detains a policeman."
+      "foil_active":"A woman detains the policeman."
    },
    "actions_test_427":{
       "dataset":"SWiG",
@@ -3821,7 +3821,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A rope tugs the child."
+      "foil_active":"A rope tugs a child."
    },
    "actions_test_433":{
       "dataset":"SWiG",
@@ -3837,7 +3837,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"An application presses on a person."
+      "foil_active":"An application presses a person."
    },
    "actions_test_434":{
       "dataset":"SWiG",
@@ -3853,7 +3853,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A fingernail bites a person."
+      "foil_active":"A fingernail bites its person."
    },
    "actions_test_440":{
       "dataset":"SWiG",
@@ -4045,7 +4045,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A cellular telephone calls the young buck."
+      "foil_active":"A cellular telephone calls a young buck."
    },
    "actions_test_456":{
       "dataset":"SWiG",
@@ -4061,7 +4061,7 @@
          "true_active":2,
          "other":0
       },
-      "foil_active":"A woman admires such a man."
+      "foil_active":"A woman admires a man."
    },
    "actions_test_457":{
       "dataset":"SWiG",
@@ -4093,7 +4093,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A back stretches like a lion."
+      "foil_active":"A back stretches its lion."
    },
    "actions_test_459":{
       "dataset":"SWiG",
@@ -4157,7 +4157,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A telephone phones a male child."
+      "foil_active":"A telephone phones the male child."
    },
    "actions_test_470":{
       "dataset":"SWiG",
@@ -4173,7 +4173,7 @@
          "true_active":1,
          "other":1
       },
-      "foil_active":"A mob confronts police."
+      "foil_active":"The mob confronts police."
    },
    "actions_test_475":{
       "dataset":"SWiG",
@@ -4205,7 +4205,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A plant smells like a dog."
+      "foil_active":"A plant smells the dog."
    },
    "actions_test_477":{
       "dataset":"SWiG",
@@ -4237,7 +4237,7 @@
          "true_active":1,
          "other":0
       },
-      "foil_active":"A ballet dancer trains as a teacher."
+      "foil_active":"A ballet dancer trains a teacher."
    },
    "actions_test_480":{
       "dataset":"SWiG",
@@ -4333,7 +4333,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A soil bulldozes a person."
+      "foil_active":"A soil bulldozes The person."
    },
    "actions_test_487":{
       "dataset":"SWiG",
@@ -4349,7 +4349,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A soil bulldozes a person."
+      "foil_active":"A soil bulldozes the person."
    },
    "actions_test_488":{
       "dataset":"SWiG",
@@ -4365,7 +4365,7 @@
          "true_active":2,
          "other":0
       },
-      "foil_active":"An ear bites like a groundhog."
+      "foil_active":"An ear bites its groundhog."
    },
    "actions_test_489":{
       "dataset":"SWiG",
@@ -4381,7 +4381,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A food sells a man."
+      "foil_active":"A food sells its man."
    },
    "actions_test_491":{
       "dataset":"SWiG",
@@ -4397,7 +4397,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"An air conditioner mends the man."
+      "foil_active":"An air conditioner mends a man."
    },
    "actions_test_492":{
       "dataset":"SWiG",
@@ -4477,7 +4477,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A rope skips toward the woman."
+      "foil_active":"A jump rope skips a woman."
    },
    "actions_test_498":{
       "dataset":"SWiG",
@@ -4493,7 +4493,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"An airplane disembarks without a passenger."
+      "foil_active":"An airplane disembarks a passenger."
    },
    "actions_test_499":{
       "dataset":"SWiG",
@@ -4557,7 +4557,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A neck licks like a dog."
+      "foil_active":"A neck licks my dog."
    },
    "actions_test_510":{
       "dataset":"SWiG",
@@ -4573,7 +4573,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"The deer hunt the wolf."
+      "foil_active":"A deer hunts the wolf."
    },
    "actions_test_511":{
       "dataset":"SWiG",
@@ -4589,7 +4589,7 @@
          "true_active":2,
          "other":1
       },
-      "foil_active":"The deer hunt a cheetah."
+      "foil_active":"A deer hunts a cheetah."
    },
    "actions_test_512":{
       "dataset":"SWiG",
@@ -4605,7 +4605,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A brow wrinkles like an old woman."
+      "foil_active":"A brow wrinkles its old woman."
    },
    "actions_test_513":{
       "dataset":"SWiG",
@@ -4653,7 +4653,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A leg stretches toward the woman."
+      "foil_active":"A leg stretches its woman."
    },
    "actions_test_518":{
       "dataset":"SWiG",
@@ -4669,7 +4669,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"The sheep lead the man."
+      "foil_active":"A sheep leads the man."
    },
    "actions_test_519":{
       "dataset":"SWiG",
@@ -4701,7 +4701,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A statue rids a man."
+      "foil_active":"A statue rids the man."
    },
    "actions_test_525":{
       "dataset":"SWiG",
@@ -4717,7 +4717,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A soil bulldozes man."
+      "foil_active":"A soil bulldozes the man."
    },
    "actions_test_529":{
       "dataset":"SWiG",
@@ -4861,7 +4861,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A nail bites a man."
+      "foil_active":"A nail bites its man."
    },
    "actions_test_541":{
       "dataset":"SWiG",
@@ -4877,7 +4877,7 @@
          "true_active":2,
          "other":1
       },
-      "foil_active":"A man admires a male child."
+      "foil_active":"An old man admires a male child."
    },
    "actions_test_542":{
       "dataset":"SWiG",
@@ -4909,7 +4909,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A report displays on a speaker."
+      "foil_active":"A report displays a speaker."
    },
    "actions_test_552":{
       "dataset":"SWiG",
@@ -4925,7 +4925,7 @@
          "true_active":1,
          "other":2
       },
-      "foil_active":"A criminal confronts police."
+      "foil_active":"The criminal confronts police."
    },
    "actions_test_559":{
       "dataset":"SWiG",
@@ -4973,7 +4973,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A cake bakes a woman."
+      "foil_active":"A cake bakes me a woman."
    },
    "actions_test_563":{
       "dataset":"SWiG",
@@ -4989,7 +4989,7 @@
          "true_active":1,
          "other":1
       },
-      "foil_active":"A colleague trains as a businesswoman."
+      "foil_active":"A colleague trains a businesswoman."
    },
    "actions_test_564":{
       "dataset":"SWiG",
@@ -5005,7 +5005,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A colleague trains as a businesswoman."
+      "foil_active":"A colleague trains a businesswoman."
    },
    "actions_test_566":{
       "dataset":"SWiG",
@@ -5021,7 +5021,7 @@
          "true_active":2,
          "other":1
       },
-      "foil_active":"A football punts for a young buck."
+      "foil_active":"A football punts a young buck."
    },
    "actions_test_567":{
       "dataset":"SWiG",
@@ -5037,7 +5037,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A football punts for a young buck."
+      "foil_active":"A football punts a young buck."
    },
    "actions_test_569":{
       "dataset":"SWiG",
@@ -5053,7 +5053,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A module adjusts to a person."
+      "foil_active":"A module adjusts the person."
    },
    "actions_test_570":{
       "dataset":"SWiG",
@@ -5069,7 +5069,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A marching band leads the band."
+      "foil_active":"A marching band leads a conductor."
    },
    "actions_test_572":{
       "dataset":"SWiG",
@@ -5085,7 +5085,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"The happiness mime was a mime."
+      "foil_active":"The happiness mimes a mime."
    },
    "actions_test_573":{
       "dataset":"SWiG",
@@ -5101,7 +5101,7 @@
          "true_active":1,
          "other":1
       },
-      "foil_active":"A telephone phones a man."
+      "foil_active":"A cellular telephone phones a man."
    },
    "actions_test_574":{
       "dataset":"SWiG",
@@ -5149,7 +5149,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A work force frisks a policeman."
+      "foil_active":"A work force frisks the policeman."
    },
    "actions_test_578":{
       "dataset":"SWiG",
@@ -5165,7 +5165,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A telephone phones a woman."
+      "foil_active":"A telephone phones the woman."
    },
    "actions_test_582":{
       "dataset":"SWiG",
@@ -5181,7 +5181,7 @@
          "true_active":2,
          "other":1
       },
-      "foil_active":"A rope tugs the woman."
+      "foil_active":"A rope tugs a woman."
    },
    "actions_test_584":{
       "dataset":"SWiG",
@@ -5197,7 +5197,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A building works for man."
+      "foil_active":"A building works the man."
    },
    "actions_test_586":{
       "dataset":"SWiG",
@@ -5213,7 +5213,7 @@
          "true_active":2,
          "other":0
       },
-      "foil_active":"A child admires such a woman."
+      "foil_active":"A child admires their woman."
    },
    "actions_test_587":{
       "dataset":"SWiG",
@@ -5229,7 +5229,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A rope skips people."
+      "foil_active":"The rope skips the people."
    },
    "actions_test_588":{
       "dataset":"SWiG",
@@ -5261,7 +5261,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A man detains a policeman."
+      "foil_active":"A man detains the policeman."
    },
    "actions_test_592":{
       "dataset":"SWiG",
@@ -5277,7 +5277,7 @@
          "true_active":2,
          "other":0
       },
-      "foil_active":"A wing flaps like a bird."
+      "foil_active":"A wing flaps its bird."
    },
    "actions_test_593":{
       "dataset":"SWiG",
@@ -5293,7 +5293,7 @@
          "true_active":2,
          "other":1
       },
-      "foil_active":"A wing flaps like a bird."
+      "foil_active":"A wing flaps its bird."
    },
    "actions_test_594":{
       "dataset":"SWiG",
@@ -5309,7 +5309,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A wing flaps like a bird."
+      "foil_active":"A wing flaps its bird."
    },
    "actions_test_595":{
       "dataset":"SWiG",
@@ -5341,7 +5341,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A cruiser burns over a man."
+      "foil_active":"A cruiser burns the man."
    },
    "actions_test_598":{
       "dataset":"SWiG",
@@ -5389,7 +5389,7 @@
          "true_active":2,
          "other":1
       },
-      "foil_active":"A jump rope skips the man."
+      "foil_active":"A jump rope skips a man."
    },
    "actions_test_603":{
       "dataset":"SWiG",
@@ -5421,7 +5421,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A water taxis an airplane."
+      "foil_active":"A water taxis the airplane."
    },
    "actions_test_607":{
       "dataset":"SWiG",
@@ -5453,7 +5453,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A patient reassures the radiologist."
+      "foil_active":"A patient reassures a radiologist."
    },
    "actions_test_610":{
       "dataset":"SWiG",
@@ -5517,7 +5517,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"An airplane disembarks the girl."
+      "foil_active":"An airplane disembarks a girl."
    },
    "actions_test_615":{
       "dataset":"SWiG",
@@ -5597,7 +5597,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A bicycle assembles around a man."
+      "foil_active":"A bicycle assembles a man."
    },
    "actions_test_621":{
       "dataset":"SWiG",

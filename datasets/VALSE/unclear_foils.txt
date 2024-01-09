@@ -1,16 +1,116 @@
 
-A person carves wood --> (A wood/Wood) carves a person [la prima è grammaticalmente scorretta ma tiene l'articolo]
+COLLECTIVE NOUNS - la versione con l'articolo a è grammaticalmente scorretta
 
-A person counts money --> (A money/money) counts a person
+A person carves wood --> (A wood/the wood/Wood) carves (a/the) person
 
-A man flexes his biceps --> Biceps flex their man/A bicep flexes its man
+A person counts money --> (A money/the money/money) counts (a/the) person
+
+A woman wrings fabric --> (A fabric/the fabric/Fabric) wrings (a/the) woman
+
+The police bother a young buck --> The young buck bothers (a police/the police/police)
+
+A young buck counts the cash --> (A/The) cash counts the young buck
+
+A man bites fish --> (A fish/the fish/fish) bites (a/the) man [a fish non è sbagliato ma è un significato diverso da fish senza niente]
+
+The police confront a mob --> The mob confronts (a police/the police/police)
+
+The police confront a criminal --> The criminal confronts (a police/the police/police)
+
+A mime mimes happiness --> (A happiness/the happiness/happiness) mimes (a/the) mime
+
+The police arrest a male --> The male arrests (a police/the police/police)
+
+A demonstrator confronts the police --> (a police/the police/police) confront the demonstrator
+
+A woman packages paperwork --> (A paperwork/the paperwork/paperwork) packages (a/the) woman
+
+The police arrest a woman --> The woman arrests (a police/the police/police)
+
+PEOPLE
 
 The people disembark an airplane --> The airplane disembarks (people/the people)
 
 The people unveil a painting --> The painting unveils (people/the people)
 
-A parent encourages such a girl --> A girl encourages such a parent [o modifichiamo anche la true togliendo such a?]
-
 The people flip a boat --> The boat flips (people/the people)
+
+The people wave a flag --> The flag waves (people/the people)
+
+A woman teaches people --> (people/the people) teach (a/the) woman
+
+A man lectures people --> (people/the people) lecture (a/the) man
+
+A man trains people --> (people/the people) train (a/the) man
+
+A woman trains people --> (people/the people) train (a/the) woman
+
+A woman coaches people --> (people/the people) coach (a/the) woman
+
+A woman leads the people --> (people/the people) lead the woman
+
+A man confronts the people --> (people/the people) confront the man
+
+A woman lectures people --> (people/the people) lecture (a/the) woman
+
+A curate preaches people --> (people/the people) preach (a/the) curate
+
+A professor lectures people --> (people/the people) lecture (a/the) professor
+
+A man coaches people --> (people/the people) coach (a/the) man
+
+A woman instructs people --> (people/the people) instruct (a/the) woman
+
+A man instructs people --> (people/the people) instruct (a/the) man
+
+A man interviews people --> (people/the people) interview (a/the) man
+
+A man panhandles people --> (people/the people) panhandle (a/the) man
+
+An old man coaches people --> (people/the people) coach (an/the) old man
+
+A man instructs his people --> (people/the people) instruct their man
+
+A man shushes people --> (people/the people) shush (a/the) man
+
+
+SUCH A [da decidere se tenere o togliere anche dalla true]
+
+A parent encourages such a girl --> A girl encourages such a parent
+
+A person sells such a merchandise --> A merchandise sells such a person
+
+A child imitates such a woman --> A woman imitates such a child
+
+
+OTHER
+
+A man flexes his biceps --> Biceps flex their man/A bicep flexes its man
                             
-Start from: actions_test_137
+A football player tackles all the opposition --> All the opposition tackles the football player [togliamo all? togliamo il sample?]
+
+A congressman reads Isaiah --> Isaiah reads (a/the) congressman
+
+A woman browses my shirt --> A shirt browses my woman [sono perplesso dal "my" nella frase e come si possa capire in una foto]
+
+A man lifts weight --> A weight lifts (man/a man)
+
+A man offers me a hand --> A hand offers me a man [togliamo il me?]
+
+A figure climbs the stairs --> (The stairs/A stair) climb(s) the figure
+
+A nurse asks a patient --> togliere?
+
+A person packages you a chocolate --> A chocolate packages you a person [teniamo o togliamo you?]
+
+A child bites my hand --> A hand bites my child [teniamo my?]
+
+A woman stitches the scissors --> (The scissors/Scissors) stitch the woman
+
+A dog licks my neck --> A neck licks my dog [my?]
+
+A woman bakes me a cake --> A cake bakes me a woman [teniamo me?]
+
+
+
+Continue from: 621
