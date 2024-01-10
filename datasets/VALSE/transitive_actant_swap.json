@@ -2319,22 +2319,6 @@
       },
       "foil_active":"A tiller tills the farmer."
    },
-   "actions_test_255":{
-      "dataset":"SWiG",
-      "original_split":"test",
-      "dataset_idx":"asking_129.jpg",
-      "linguistic_phenomena":"actions",
-      "image_file":"asking_129.jpg",
-      "true_active":"A nurse asks a patient.",
-      "classes":"nurse",
-      "classes_foil_active":"patient",
-      "mturk":{
-         "foil_active":0,
-         "true_active":3,
-         "other":0
-      },
-      "foil_active":"A patient asks a nurse."
-   },
    "actions_test_257":{
       "dataset":"SWiG",
       "original_split":"test",
@@ -7949,7 +7933,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A car drives by a man."
+      "foil_active":"A car drives a man."
    },
    "actions_test_902":{
       "dataset":"SWiG",
@@ -8013,7 +7997,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A food brews for the man."
+      "foil_active":"A food brews its man."
    },
    "actions_test_911":{
       "dataset":"SWiG",
@@ -8045,7 +8029,7 @@
          "true_active":1,
          "other":2
       },
-      "foil_active":"A girl ignores the man."
+      "foil_active":"A man ignores the girl."
    },
    "actions_test_917":{
       "dataset":"SWiG",
@@ -8157,7 +8141,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A clay molds an artist."
+      "foil_active":"A clay molds the artist."
    },
    "actions_test_940":{
       "dataset":"SWiG",
@@ -8205,7 +8189,7 @@
          "true_active":1,
          "other":1
       },
-      "foil_active":"A policeman confronts a man."
+      "foil_active":"A man confronts a policeman."
    },
    "actions_test_943":{
       "dataset":"SWiG",
@@ -8269,7 +8253,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A nose licks the dog."
+      "foil_active":"A nose licks its dog."
    },
    "actions_test_948":{
       "dataset":"SWiG",
@@ -8317,7 +8301,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"The debris burn the man."
+      "foil_active":"A debris burns the man."
    },
    "actions_test_952":{
       "dataset":"SWiG",
@@ -8333,7 +8317,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A cigarette ignites the man."
+      "foil_active":"A cigarette ignites a man."
    },
    "actions_test_953":{
       "dataset":"SWiG",
@@ -8349,7 +8333,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A bread bakes for an old man."
+      "foil_active":"A bread bakes its old man."
    },
    "actions_test_956":{
       "dataset":"SWiG",
@@ -8397,7 +8381,7 @@
          "true_active":0,
          "other":1
       },
-      "foil_active":"A woman confronts a woman."
+      "foil_active":"A man confronts a woman."
    },
    "actions_test_962":{
       "dataset":"SWiG",
@@ -8445,7 +8429,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A window smashes into a man."
+      "foil_active":"A window smashes a man."
    },
    "actions_test_965":{
       "dataset":"SWiG",
@@ -8510,23 +8494,7 @@
          "other":0
       },
       "foil_active":"A book autographes a man."
-   },
-   "actions_test_974":{
-      "dataset":"SWiG",
-      "original_split":"test",
-      "dataset_idx":"pouncing_185.jpg",
-      "linguistic_phenomena":"actions",
-      "image_file":"pouncing_185.jpg",
-      "true_active":"A cheetah pounces prey.",
-      "classes":"cheetah",
-      "classes_foil_active":"prey",
-      "mturk":{
-         "foil_active":0,
-         "true_active":2,
-         "other":1
-      },
-      "foil_active":"A prey pounces on the cheetah."
-   },
+   },   
    "actions_test_975":{
       "dataset":"SWiG",
       "original_split":"test",
@@ -8557,7 +8525,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A car tows the truck."
+      "foil_active":"A car tows a truck."
    },
    "actions_test_980":{
       "dataset":"SWiG",
@@ -8573,7 +8541,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A car tows the truck."
+      "foil_active":"A car tows a truck."
    },
    "actions_test_981":{
       "dataset":"SWiG",
@@ -8589,7 +8557,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A log hauls the truck."
+      "foil_active":"A log hauls a truck."
    },
    "actions_test_982":{
       "dataset":"SWiG",
@@ -8621,7 +8589,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A fencing videotapes a man."
+      "foil_active":"A fencing videotapes the man."
    },
    "actions_test_986":{
       "dataset":"SWiG",
@@ -8733,7 +8701,7 @@
          "true_active":0,
          "other":3
       },
-      "foil_active":"A man ignores a woman."
+      "foil_active":"A woman ignores a man."
    },
    "actions_test_994":{
       "dataset":"SWiG",
@@ -8765,7 +8733,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A wall smashes into the woman."
+      "foil_active":"A wall smashes a woman."
    },
    "actions_test_997":{
       "dataset":"SWiG",
@@ -8813,7 +8781,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A statue imitates a woman."
+      "foil_active":"A statue imitates the woman."
    },
    "actions_test_1000":{
       "dataset":"SWiG",
@@ -8845,7 +8813,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A car drives by a woman."
+      "foil_active":"A car drives a woman."
    },
    "actions_test_1003":{
       "dataset":"SWiG",
@@ -8861,7 +8829,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A car drives by a woman."
+      "foil_active":"A car drives a woman."
    },
    "actions_test_1004":{
       "dataset":"SWiG",
@@ -8877,7 +8845,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A car drives by a woman."
+      "foil_active":"A car drives a woman."
    },
    "actions_test_1005":{
       "dataset":"SWiG",
@@ -8893,7 +8861,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A car drives by a woman."
+      "foil_active":"A car drives a woman."
    },
    "actions_test_1006":{
       "dataset":"SWiG",
@@ -8909,7 +8877,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A car drives by a woman."
+      "foil_active":"A car drives a woman."
    },
    "actions_test_1007":{
       "dataset":"SWiG",
@@ -8957,7 +8925,7 @@
          "true_active":2,
          "other":1
       },
-      "foil_active":"A motorcycle drives by a man."
+      "foil_active":"A motorcycle drives a man."
    },
    "actions_test_1011":{
       "dataset":"SWiG",
@@ -8973,7 +8941,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"An alarm presses on a person."
+      "foil_active":"An alarm presses a person."
    },
    "actions_test_1012":{
       "dataset":"SWiG",
@@ -9005,7 +8973,7 @@
          "true_active":2,
          "other":1
       },
-      "foil_active":"A man frisks police."
+      "foil_active":"A man frisks the police matron."
    },
    "actions_test_1014":{
       "dataset":"SWiG",
@@ -9021,7 +8989,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A sculpture moistens like a woman."
+      "foil_active":"A sculpture moistens the woman."
    },
    "actions_test_1015":{
       "dataset":"SWiG",
@@ -9037,7 +9005,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A boat pulls the truck."
+      "foil_active":"A boat pulls a truck."
    },
    "actions_test_1016":{
       "dataset":"SWiG",
@@ -9069,7 +9037,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A leg stretches like a man."
+      "foil_active":"A leg stretches an old man."
    },
    "actions_test_1018":{
       "dataset":"SWiG",
@@ -9085,7 +9053,7 @@
          "true_active":2,
          "other":0
       },
-      "foil_active":"A painting admires such a man."
+      "foil_active":"A painting admires a man."
    },
    "actions_test_1019":{
       "dataset":"SWiG",
@@ -9101,7 +9069,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A paper folds like a child."
+      "foil_active":"A paper folds the child."
    },
    "actions_test_1022":{
       "dataset":"SWiG",
@@ -9149,7 +9117,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A truck drives toward the woman."
+      "foil_active":"A truck drives a woman."
    },
    "actions_test_1025":{
       "dataset":"SWiG",
@@ -9213,7 +9181,7 @@
          "true_active":2,
          "other":1
       },
-      "foil_active":"A magazine browses on a woman."
+      "foil_active":"A magazine browses a woman."
    },
    "actions_test_1030":{
       "dataset":"SWiG",
@@ -9229,7 +9197,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A van drives the woman."
+      "foil_active":"A van drives a woman."
    },
    "actions_test_1031":{
       "dataset":"SWiG",
@@ -9277,7 +9245,7 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A trailer truck drives past a man."
+      "foil_active":"A trailer truck drives a man."
    },
    "actions_test_1038":{
       "dataset":"SWiG",
@@ -9325,6 +9293,6 @@
          "true_active":3,
          "other":0
       },
-      "foil_active":"A table rots like a hamburger."
+      "foil_active":"A table rots the hamburger."
    }
 }

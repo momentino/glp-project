@@ -1,5 +1,5 @@
 
-COLLECTIVE NOUNS - la versione con l'articolo a è grammaticalmente scorretta
+COLLECTIVE/UNCOUNTABLE NOUNS - la versione con l'articolo a è grammaticalmente scorretta
 
 A person carves wood --> (A wood/the wood/Wood) carves (a/the) person
 
@@ -36,6 +36,26 @@ A bartender serves ale --> (An ale/the ale/ale) serves (a/the) bartender
 A puppy sniffs the grass --> (A grass/The grass) sniff the puppy
 
 A woman sells soap --> (A/the) soap sells (a/the) woman
+
+A person packages food --> (A food/food) packages (a/the) person [entrambe corrette ma con significato diverso]
+
+A man packages food --> (A food/the food/food) packages (a/the) man [tutte corrette ma con significato diverso]
+
+An artist molds the clay --> (A clay/the clay/clay) molds the artist
+
+A man burns the debris --> (A debris/the debris) burns the man
+
+A person burns the wood --> (A wood/the wood/Wood) burns the person
+
+A vent erupts lava --> (A lava/the lava/lava) erupts from (a/the) vent
+
+A snake spits venom --> (A venom/the venom/venom) spits (a/the) snake
+
+A man spits blood --> (A blood/the blood/blood) spits (a/the) man
+
+A woman chews food --> (A food/the food/food) chews (a/the) woman [tutte corrette ma con significato diverso]
+
+A man gnaws meat --> (A meat/the meat/meat) gnaws (a/the) man
 
 
 PEOPLE
