@@ -27,13 +27,11 @@ def convert_to_passive_aro():
     transitive_aro = {}
     with open(os.path.join(ARO_ROOT, 'transitive_visual_genome_relation.json')) as d:
         data = json.load(d)
-        count = 0
         for key, value in data.items():
             caption = value['true_caption']
             print(caption)
             tagged_caption = nltk.pos_tag(nltk.word_tokenize(caption)) # tag caption
             passive_caption = []
-            false_passive_caption = []
             for t in tagged_caption:
                 if 'VBG' in t[1]:
                     doc = nlp(t[0])
@@ -50,13 +48,9 @@ def convert_to_passive_aro():
             b = passive_caption[5]
             false_passive_caption[1] = b
             false_passive_caption[5] = a
-            #print(" FALSE CAPTION ",false_passive_caption)
-            #print(" TRUE CAPTION ",passive_caption)
             transitive_aro[key] = value
             transitive_aro[key]['true_passive_caption']=" ".join(passive_caption)
             transitive_aro[key]['false_passive_caption']=" ".join(false_passive_caption)
-            #print(transitive_aro['true_passive_caption'], "                ", transitive_aro['false_passive_caption'])
-
     print(transitive_aro)
     with open(os.path.join(ARO_ROOT, 'transitive_visual_genome_relation.json'), 'w') as s:
         json.dump(transitive_aro, s)
