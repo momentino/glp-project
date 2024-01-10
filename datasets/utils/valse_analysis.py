@@ -13,12 +13,13 @@ def valse_foil_analysis():
         foil_count=0
 
         for key, value in data.items():
-            foil = value['foil']
+            foil = value['foil_active']
             tagged_foil = nltk.pos_tag(nltk.word_tokenize(foil))
             foil_tag_list = [t[1] for t in tagged_foil]
 
             if( 'IN' in foil_tag_list or 'RP' in foil_tag_list or 'TO' in foil_tag_list):
                 foil_count+=1
+                print(foil_tag_list)
         
         print("total number of samples: {}".format(total_count))
         print("number of wrong foil samples: {}".format(foil_count))
