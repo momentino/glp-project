@@ -27,6 +27,17 @@ A woman packages paperwork --> (A paperwork/the paperwork/paperwork) packages (a
 
 The police arrest a woman --> The woman arrests (a police/the police/police)
 
+The police arrest a demonstrator --> The demonstator arrests (a police/the police/police)
+
+A farmer hoes weed --> (A weed/Weed) hoes (a/the) farmer [sono entrambe corrette ma con significato diverso]
+
+A bartender serves ale --> (An ale/the ale/ale) serves (a/the) bartender
+
+A puppy sniffs the grass --> (A grass/The grass) sniff the puppy
+
+A woman sells soap --> (A/the) soap sells (a/the) woman
+
+
 PEOPLE
 
 The people disembark an airplane --> The airplane disembarks (people/the people)
@@ -73,6 +84,8 @@ A man instructs his people --> (people/the people) instruct their man
 
 A man shushes people --> (people/the people) shush (a/the) man
 
+A preacher preaches people --> (people/the people) preach (a/the) preacher
+
 
 SUCH A [da decidere se tenere o togliere anche dalla true]
 
@@ -81,6 +94,8 @@ A parent encourages such a girl --> A girl encourages such a parent
 A person sells such a merchandise --> A merchandise sells such a person
 
 A child imitates such a woman --> A woman imitates such a child
+
+A woman admires such a man --> A man admires such a woman
 
 
 OTHER
@@ -111,6 +126,10 @@ A dog licks my neck --> A neck licks my dog [my?]
 
 A woman bakes me a cake --> A cake bakes me a woman [teniamo me?]
 
+A man aims a bow and arrow --> [sono due oggetti, che facciamo?]
 
+A dog bites my hand --> A hand bites my dog [my?]
 
-Continue from: 621
+A man pees the door --> [ingrammaticale?]
+
+A male child pees a toilet --> [ingrammaticale?]
