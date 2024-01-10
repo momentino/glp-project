@@ -9,7 +9,7 @@ package
 count
 rid
 boat
-nuzzle
+nuzzles
 applaud
 inflate
 carve
@@ -78,7 +78,7 @@ eat
 restrain
 confront
 sell
-preach
+preache
 drive
 spear
 sew
@@ -113,9 +113,9 @@ adjust
 mime
 frisk
 work
-shush
+shushe
 flap
-taxi
+taxis
 board
 assemble
 carry
@@ -148,7 +148,7 @@ throw
 ignite
 smash
 subdue
-autograph
+autographe
 haul
 videotape
 erupt
@@ -169,7 +169,7 @@ ride
 cut
 cover
 play
-swing
+swinge
 hug
 surround
 splash
@@ -186,7 +186,7 @@ brush
 drag
 tie
 drink
-board
+boarding
 enclose
 guide
 move
