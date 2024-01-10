@@ -29,8 +29,12 @@ def convert_to_passive_aro():
         data = json.load(d)
         for key, value in data.items():
             caption = value['true_caption']
+            foil = value['false_caption']
             print(caption)
+
             tagged_caption = nltk.pos_tag(nltk.word_tokenize(caption)) # tag caption
+            tagged_foil = nltk.pos_tag(nltk.word_tokenize(foil)) # tag foil
+            false_passive_caption = []
             passive_caption = []
             for t in tagged_caption:
                 if 'VBG' in t[1]:
@@ -38,17 +42,25 @@ def convert_to_passive_aro():
                     lemmatized_verb = [token.lemma_ for token in doc][0]
                     verb_index = verbs.index(lemmatized_verb)
                     passive_verb = passive_verbs[verb_index]
-                    passivized_verb = 'being '+passive_verb+' by '
+                    passivized_verb = 'being '+passive_verb+' by'
+                    false_passive_caption.append(passivized_verb)
+                else:
+                    false_passive_caption.append(t[0])
+            for t in tagged_foil:
+                if 'VBG' in t[1]:
+                    doc = nlp(t[0])
+                    lemmatized_verb = [token.lemma_ for token in doc][0]
+                    verb_index = verbs.index(lemmatized_verb)
+                    passive_verb = passive_verbs[verb_index]
+                    passivized_verb = 'being '+passive_verb+' by'
                     passive_caption.append(passivized_verb)
                 else:
                     passive_caption.append(t[0])
-            false_passive_caption = passive_caption.copy()
-            """ swap object and subject """
-            a = passive_caption[1]
-            b = passive_caption[5]
-            false_passive_caption[1] = b
-            false_passive_caption[5] = a
+
+
             transitive_aro[key] = value
+
+
             transitive_aro[key]['true_passive_caption']=" ".join(passive_caption)
             transitive_aro[key]['false_passive_caption']=" ".join(false_passive_caption)
     print(transitive_aro)
@@ -108,7 +120,26 @@ def build_transitive_aro(verb_list):
                     count = 0
                     for elem in data:
                         caption = elem['true_caption']
+                        foil = elem['false_caption']
+                        # replace is with are when the sentence contains pants, jeans or trousers to keep the agreement
+                        # Pay attention at the position of the element. Whether it is at the end or in the middle of the sentence
 
+                        caption = caption.split(" ")
+                        foil = foil.split(" ")
+                        doc = nlp(caption[-1])
+                        lemmatized_object_true = [token.lemma_ for token in doc][0]
+                        # if plural
+                        if(lemmatized_object_true != caption[-1] or (caption[-1] == "people") or (caption[-1] == "children")):
+                            foil[foil.index("is")] = "are"
+                        doc = nlp(foil[-1])
+                        lemmatized_object_false= [token.lemma_ for token in doc][0]
+
+                        if (lemmatized_object_false != foil[-1] or (foil[-1] == "people") or (foil[-1] == "children")):
+                            caption[caption.index("is")] = "are"
+                        caption = " ".join(caption)
+                        foil = " ".join(foil)
+                        elem['true_caption'] = caption
+                        elem['false_caption'] = foil
                         tagged_caption = nltk.pos_tag(nltk.word_tokenize(caption))
                         caption_tag_list = [t[1] for t in tagged_caption]
                         if ('IN' not in caption_tag_list and 'RP' not in caption_tag_list and 'TO' not in caption_tag_list):
@@ -132,7 +163,35 @@ def build_transitive_aro(verb_list):
             with open(os.path.join(ARO_ROOT,'transitive_visual_genome_relation.json'),'w') as s:
                 json.dump(transitive_aro, s)
 
+def fix_aro_agreement():
+    pass
+
+def remove_aro_duplicates():
+    transitive_aro = {}
+    with open(os.path.join(ARO_ROOT, 'transitive_visual_genome_relation.json'), 'r+') as d:
+        data = json.load(d)
+        transitive_aro = data.copy()
+        for key, values in data.items():
+            for key2, values2 in data.items():
+                #print(" KEY ",key, " KEY 2 ",key2)
+                #print(values)
+                if (key != key2 and (values['image_id'] == values2['image_id'])
+                        and values['true_caption'] == values2['true_caption']
+                        and values['relation_info']['object'] != values2['relation_info']['object']
+                        and int(key)<int(key2)):
+                    #print(" ECCO ")
+                    try:
+                        del transitive_aro[key2]
+                    except:
+                        print(" Already removed ")
+
+    with open(os.path.join(ARO_ROOT, 'transitive_visual_genome_relation.json'), 'w') as s:
+        json.dump(transitive_aro, s)
+
+
+
 if __name__ == '__main__':
     verb_list = []
     build_transitive_aro(verb_list)
     convert_to_passive_aro()
+    remove_aro_duplicates()
