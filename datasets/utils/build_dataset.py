@@ -17,7 +17,7 @@ def is_file_empty(file_path):
 
 def convert_to_passive_aro():
     verb_list_path = '../Verb List'
-    with open(verb_list_path + '/verb_list_with_mistakes.txt', 'r') as f:
+    with open(verb_list_path + '/verb_list_with_mistakes.txt', 'r') as f: # need to use this to match properly lemmatized verbs with their passives. The correct list is just for us.
         verbs = f.readlines()
         verbs = [v.replace('\n','') for v in verbs]  #remove newline char
     with open(verb_list_path + '/participle_verb_list.txt', 'r') as f:
