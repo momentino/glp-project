@@ -197,60 +197,6 @@
         "true_passive": "The money is counted by a person",
         "foil_passive": "A person is counted by money"
     },
-    "actions_test_25": {
-        "dataset": "SWiG",
-        "original_split": "test",
-        "dataset_idx": "boating_46.jpg",
-        "linguistic_phenomena": "actions",
-        "image_file": "boating_46.jpg",
-        "true_active": "A person boats a motorboat",
-        "classes": "person",
-        "classes_foil_active": "motorboat",
-        "mturk": {
-            "foil_active": 0,
-            "true_active": 3,
-            "other": 0
-        },
-        "foil_active": "A motorboat boats a person",
-        "true_passive": "A motorboat is boated by a person",
-        "foil_passive": "A person is boated by a motorboat"
-    },
-    "actions_test_26": {
-        "dataset": "SWiG",
-        "original_split": "test",
-        "dataset_idx": "boating_44.jpg",
-        "linguistic_phenomena": "actions",
-        "image_file": "boating_44.jpg",
-        "true_active": "A person boats a motorboat",
-        "classes": "person",
-        "classes_foil_active": "motorboat",
-        "mturk": {
-            "foil_active": 0,
-            "true_active": 3,
-            "other": 0
-        },
-        "foil_active": "A motorboat boats a person",
-        "true_passive": "A motorboat is boated by a person",
-        "foil_passive": "A person is boated by a motorboat"
-    },
-    "actions_test_27": {
-        "dataset": "SWiG",
-        "original_split": "test",
-        "dataset_idx": "boating_55.jpg",
-        "linguistic_phenomena": "actions",
-        "image_file": "boating_55.jpg",
-        "true_active": "A person boats a motorboat",
-        "classes": "person",
-        "classes_foil_active": "motorboat",
-        "mturk": {
-            "foil_active": 1,
-            "true_active": 2,
-            "other": 0
-        },
-        "foil_active": "A motorboat boats a person",
-        "true_passive": "A motorboat is boated by a person",
-        "foil_passive": "A person is boated by a motorboat"
-    },
     "actions_test_28": {
         "dataset": "SWiG",
         "original_split": "test",
@@ -1007,24 +953,6 @@
         "true_passive": "A finger is nipped by a puppy",
         "foil_passive": "A puppy is nipped by a finger"
     },
-    "actions_test_92": {
-        "dataset": "SWiG",
-        "original_split": "test",
-        "dataset_idx": "boating_16.jpg",
-        "linguistic_phenomena": "actions",
-        "image_file": "boating_16.jpg",
-        "true_active": "A person boats a boat",
-        "classes": "person",
-        "classes_foil_active": "boat",
-        "mturk": {
-            "foil_active": 0,
-            "true_active": 3,
-            "other": 0
-        },
-        "foil_active": "A boat boats a person",
-        "true_passive": "A boat is boated by a person",
-        "foil_passive": "A person is boated by a boat"
-    },
     "actions_test_93": {
         "dataset": "SWiG",
         "original_split": "test",
@@ -1186,24 +1114,6 @@
         "foil_active": "A soccer ball kicks a man",
         "true_passive": "A soccer ball is kicked by a man",
         "foil_passive": "A man is kicked by a soccer ball"
-    },
-    "actions_test_111": {
-        "dataset": "SWiG",
-        "original_split": "test",
-        "dataset_idx": "ailing_51.jpg",
-        "linguistic_phenomena": "actions",
-        "image_file": "ailing_51.jpg",
-        "true_active": "A man ails her arm",
-        "classes": "man",
-        "classes_foil_active": "arm",
-        "mturk": {
-            "foil_active": 1,
-            "true_active": 2,
-            "other": 0
-        },
-        "foil_active": "An arm ails its man",
-        "true_passive": "An arm is ailed by its man",
-        "foil_passive": "A man is ailed by her arm"
     },
     "actions_test_115": {
         "dataset": "SWiG",
@@ -1859,7 +1769,7 @@
         "dataset_idx": "inserting_326.jpg",
         "linguistic_phenomena": "actions",
         "image_file": "inserting_326.jpg",
-        "true_active": "A person inserts a toilet",
+        "true_active": "A person inserts a cable",
         "classes": "person",
         "classes_foil_active": "toilet",
         "mturk": {
@@ -1867,9 +1777,9 @@
             "true_active": 0,
             "other": 3
         },
-        "foil_active": "A toilet inserts a person",
-        "true_passive": "A toilet is inserted by a person",
-        "foil_passive": "A person is inserted by a toilet"
+        "foil_active": "A cable inserts a person",
+        "true_passive": "A cable is inserted by a person",
+        "foil_passive": "A person is inserted by a cable"
     },
     "actions_test_201": {
         "dataset": "SWiG",
@@ -2428,24 +2338,6 @@
         "foil_active": "The stairs climb the figure",
         "true_passive": "The stairs climb the figure",
         "foil_passive": "A figure is climbed by the stairs"
-    },
-    "actions_test_243": {
-        "dataset": "SWiG",
-        "original_split": "test",
-        "dataset_idx": "foraging_102.jpg",
-        "linguistic_phenomena": "actions",
-        "image_file": "foraging_102.jpg",
-        "true_active": "A man forages a berry",
-        "classes": "man",
-        "classes_foil_active": "berry",
-        "mturk": {
-            "foil_active": 0,
-            "true_active": 3,
-            "other": 0
-        },
-        "foil_active": "A berry forages a man",
-        "true_passive": "A berry is foraged by a man",
-        "foil_passive": "A man is foraged by a berry"
     },
     "actions_test_244": {
         "dataset": "SWiG",
@@ -5039,24 +4931,6 @@
         "true_passive": "A sheep is led by the man",
         "foil_passive": "A man is led by the sheep"
     },
-    "actions_test_519": {
-        "dataset": "SWiG",
-        "original_split": "test",
-        "dataset_idx": "panhandling_89.jpg",
-        "linguistic_phenomena": "actions",
-        "image_file": "panhandling_89.jpg",
-        "true_active": "A man panhandles people",
-        "classes": "man",
-        "classes_foil_active": "people",
-        "mturk": {
-            "foil_active": 0,
-            "true_active": 2,
-            "other": 1
-        },
-        "foil_active": "The people panhandle a man",
-        "true_passive": "The people are panhandled by a man",
-        "foil_passive": "A man is panhandled by people"
-    },
     "actions_test_525": {
         "dataset": "SWiG",
         "original_split": "test",
@@ -5758,24 +5632,6 @@
         "foil_active": "The police confront the demonstrator",
         "true_passive": "The police confront the demonstrator",
         "foil_passive": "A demonstrator is confronted by the police"
-    },
-    "actions_test_604": {
-        "dataset": "SWiG",
-        "original_split": "test",
-        "dataset_idx": "taxiing_77.jpg",
-        "linguistic_phenomena": "actions",
-        "image_file": "taxiing_77.jpg",
-        "true_active": "An airplane taxis the water",
-        "classes": "airplane",
-        "classes_foil_active": "water",
-        "mturk": {
-            "foil_active": 0,
-            "true_active": 3,
-            "other": 0
-        },
-        "foil_active": "A water taxis the airplane",
-        "true_passive": "A water taxis the airplane",
-        "foil_passive": "An airplane taxis the water"
     },
     "actions_test_607": {
         "dataset": "SWiG",
