@@ -69,7 +69,6 @@ offered
 aimed
 climbed
 foraged
-asked
 led
 deflected
 blocked
@@ -130,7 +129,6 @@ served
 spat
 distracted
 launched
-peed
 helped
 brewed
 saluted

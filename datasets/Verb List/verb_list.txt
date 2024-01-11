@@ -69,7 +69,6 @@ offer
 aim
 climb
 forage
-ask
 lead
 deflect
 block
@@ -130,7 +129,6 @@ serve
 spit
 distract
 launch
-pee
 help
 brew
 salute
