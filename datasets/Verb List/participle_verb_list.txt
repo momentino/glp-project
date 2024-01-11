@@ -7,7 +7,6 @@ arched
 rehabilitated
 packaged
 counted
-rid
 boated
 nuzzled
 applauded
@@ -77,7 +76,6 @@ eaten
 restrained
 confronted
 sold
-preached
 driven
 speared
 sewn
@@ -111,7 +109,6 @@ backed
 adjusted
 mimed
 frisked
-worked
 shushed
 flapped
 taxied
@@ -184,7 +181,6 @@ brushed
 dragged
 tied
 drunk
-boarded
 enclosed
 guided
 moved

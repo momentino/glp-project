@@ -7,7 +7,6 @@ arch
 rehabilitate
 package
 count
-rid
 boat
 nuzzles
 applaud
@@ -69,7 +68,6 @@ offer
 aim
 climb
 forage
-ask
 lead
 deflect
 block
@@ -78,7 +76,6 @@ eat
 restrain
 confront
 sell
-preache
 drive
 spear
 sew
@@ -112,7 +109,6 @@ bake
 adjust
 mime
 frisk
-work
 shushe
 flap
 taxis
@@ -130,7 +126,6 @@ serve
 spit
 distract
 launch
-pee
 help
 brew
 salute
@@ -186,7 +181,6 @@ brush
 drag
 tie
 drink
-boarding
 enclose
 guide
 move

@@ -197,24 +197,6 @@
         "true_passive": "The money is counted by a person",
         "foil_passive": "A person is counted by money"
     },
-    "actions_test_24": {
-        "dataset": "SWiG",
-        "original_split": "test",
-        "dataset_idx": "riding_24.jpg",
-        "linguistic_phenomena": "actions",
-        "image_file": "riding_24.jpg",
-        "true_active": "A man rids the raft",
-        "classes": "man",
-        "classes_foil_active": "raft",
-        "mturk": {
-            "foil_active": 0,
-            "true_active": 3,
-            "other": 0
-        },
-        "foil_active": "A raft rids the man",
-        "true_passive": "A raft is rid by the man",
-        "foil_passive": "A man is rid by the raft"
-    },
     "actions_test_25": {
         "dataset": "SWiG",
         "original_split": "test",
@@ -5075,24 +5057,6 @@
         "true_passive": "The people are panhandled by a man",
         "foil_passive": "A man is panhandled by people"
     },
-    "actions_test_522": {
-        "dataset": "SWiG",
-        "original_split": "test",
-        "dataset_idx": "riding_69.jpg",
-        "linguistic_phenomena": "actions",
-        "image_file": "riding_69.jpg",
-        "true_active": "A man rids the statue",
-        "classes": "man",
-        "classes_foil_active": "statue",
-        "mturk": {
-            "foil_active": 0,
-            "true_active": 3,
-            "other": 0
-        },
-        "foil_active": "A statue rids the man",
-        "true_passive": "A statue is rid by the man",
-        "foil_passive": "A man is rid by the statue"
-    },
     "actions_test_525": {
         "dataset": "SWiG",
         "original_split": "test",
@@ -5578,24 +5542,6 @@
         "foil_active": "A rope tugs a woman",
         "true_passive": "A rope is tugged by a woman",
         "foil_passive": "A woman is tugged by a rope"
-    },
-    "actions_test_584": {
-        "dataset": "SWiG",
-        "original_split": "test",
-        "dataset_idx": "working_82.jpg",
-        "linguistic_phenomena": "actions",
-        "image_file": "working_82.jpg",
-        "true_active": "A man works the building",
-        "classes": "man",
-        "classes_foil_active": "building",
-        "mturk": {
-            "foil_active": 0,
-            "true_active": 3,
-            "other": 0
-        },
-        "foil_active": "A building works the man",
-        "true_passive": "A building is worked by the man",
-        "foil_passive": "A man is worked by the building"
     },
     "actions_test_586": {
         "dataset": "SWiG",

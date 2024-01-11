@@ -7,7 +7,6 @@ arch
 rehabilitate
 package
 count
-rid
 boat
 nuzzle
 applaud
@@ -77,7 +76,6 @@ eat
 restrain
 confront
 sell
-preach
 drive
 spear
 sew
@@ -111,7 +109,6 @@ bake
 adjust
 mime
 frisk
-work
 shush
 flap
 taxi
@@ -184,7 +181,6 @@ brush
 drag
 tie
 drink
-board
 enclose
 guide
 move
