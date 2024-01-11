@@ -6917,8 +6917,8 @@
    },
    "372":{
       "image_id":"2360173",
-      "true_caption":"the plate is contain the food",
-      "false_caption":"the food is contain the plate",
+      "true_caption":"the plate is containing the food",
+      "false_caption":"the food is containing the plate",
       "relation_info":{
          "object":"1691893",
          "name":"contain"
@@ -6931,7 +6931,7 @@
       "bbox_h":186,
       "relation_name":"contain",
       "image_path":"2360173.jpg",
-      "true_passive_caption":"the food is contain the plate",
+      "true_passive_caption":"the food is containing the plate",
       "false_passive_caption":"the plate is being contained by the food"
    },
    "373":{
