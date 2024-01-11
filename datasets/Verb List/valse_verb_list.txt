@@ -122,7 +122,7 @@ carry
 plow
 interrogate
 push
-weed
+hoe
 bandage
 break
 chase

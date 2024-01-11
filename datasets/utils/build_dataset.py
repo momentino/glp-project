@@ -69,7 +69,7 @@ def convert_to_passive_aro():
 
 def build_transitive_valse(verb_list):
     valse_verb_list = []
-    extra_intransitive = ['rot', 'pounce', 'disembark', 'camouflage', 'drop']
+    extra_intransitive = ['rot', 'pounce', 'disembark', 'camouflage', 'drop', 'ask', 'pee']
     verb_list_path = '../Verb List'
     with open(verb_list_path+'/verb_list.txt', 'a') as f:
         if (is_file_empty(verb_list_path + '/valse_verb_list.txt')):
@@ -108,7 +108,7 @@ def build_transitive_aro(verb_list):
     # these are verbs that because of grammatical mistakes are into sentences that may be transitive, but after looking at the picture,
     # I can confirm they were not. However the algorithm consider the sentences with these verbs transitive because they were ambiguous or grammatically incorrect.
     # For this reason, I created this small list
-    extra_intransitive = ['rot', 'pounce', 'disembark', 'camouflage', 'drop']
+    extra_intransitive = ['rot', 'pounce', 'disembark', 'camouflage', 'drop', 'ask', 'pee']
     verb_list_path = '../Verb List'
 
     transitive_aro = {}
@@ -188,10 +188,89 @@ def remove_aro_duplicates():
     with open(os.path.join(ARO_ROOT, 'transitive_visual_genome_relation.json'), 'w') as s:
         json.dump(transitive_aro, s)
 
+#create passive captions for VALSE
+def convert_to_passive_valse():
+    verb_list_path = '../Verb List'
+
+    with open(verb_list_path + '/verb_list_with_mistakes.txt', 'r') as f:
+        verbs = f.readlines()
+        verbs = [v.replace('\n','') for v in verbs]  #remove newline char
+    with open(verb_list_path + '/verb_list.txt', 'r') as f:
+        correct_verbs = f.readlines()
+        correct_verbs = [v.replace('\n','') for v in correct_verbs]  #remove newline char
+    with open(verb_list_path + '/participle_verb_list.txt', 'r') as f:
+        passive_verbs = f.readlines()
+        passive_verbs = [v.replace('\n', '') for v in passive_verbs]  # remove newline char
+
+    transitive_valse = {}
+    with open(os.path.join(VALSE_ROOT, 'transitive_actant_swap.json')) as d:
+        data = json.load(d)
+        for key, value in data.items():
+            
+            #create false passive from true active (e.g. "the woman drives a car" --> "the woman is driven by a car")
+            true_active = value['true_active']
+            tagged_true_active = nltk.pos_tag(nltk.word_tokenize(true_active)) # tag caption
+            foil_passive = []
+            for t in tagged_true_active:
+                if 'VBZ' in t[1]: # singular verb
+                    doc = nlp(t[0])
+                    lemmatized_verb = [token.lemma_ for token in doc][0]
+                    if lemmatized_verb in verbs:
+                        verb_index = verbs.index(lemmatized_verb)
+                    elif lemmatized_verb in correct_verbs:
+                        verb_index = correct_verbs.index(lemmatized_verb)
+                    passive_verb = passive_verbs[verb_index]
+                    passivized_verb = 'is '+passive_verb+' by'
+                    foil_passive.append(passivized_verb)
+                elif 'VBP' in t[1]: # plural verb
+                    doc = nlp(t[0])
+                    lemmatized_verb = [token.lemma_ for token in doc][0]
+                    if lemmatized_verb in verbs:
+                        verb_index = verbs.index(lemmatized_verb)
+                    elif lemmatized_verb in correct_verbs:
+                        verb_index = correct_verbs.index(lemmatized_verb)
+                    passive_verb = passive_verbs[verb_index]
+                    passivized_verb = 'are '+passive_verb+' by'
+                    foil_passive.append(passivized_verb)
+                else:
+                    foil_passive.append(t[0])
+
+            #create true passive from false active (e.g. "the car drives a woman" --> "the car is driven by a woman")
+            foil_active = value['foil_active']
+            tagged_foil_active = nltk.pos_tag(nltk.word_tokenize(foil_active)) # tag caption
+            true_passive = []
+            for t in tagged_foil_active:
+                if 'VBZ' in t[1]: # singular verb
+                    doc = nlp(t[0])
+                    lemmatized_verb = [token.lemma_ for token in doc][0]
+                    if lemmatized_verb in verbs:
+                        verb_index = verbs.index(lemmatized_verb)
+                    elif lemmatized_verb in correct_verbs:
+                        verb_index = correct_verbs.index(lemmatized_verb)
+                    passive_verb = passive_verbs[verb_index]
+                    passivized_verb = 'is '+passive_verb+' by'
+                    true_passive.append(passivized_verb)
+                elif 'VBP' in t[1]: # plural verb
+                    doc = nlp(t[0])
+                    lemmatized_verb = [token.lemma_ for token in doc][0]
+                    if lemmatized_verb in verbs:
+                        verb_index = verbs.index(lemmatized_verb)
+                    elif lemmatized_verb in correct_verbs:
+                        verb_index = correct_verbs.index(lemmatized_verb)
+                    passive_verb = passive_verbs[verb_index]
+                    passivized_verb = 'are '+passive_verb+' by'
+                    true_passive.append(passivized_verb)
+                else:
+                    true_passive.append(t[0])
+            transitive_valse[key] = value
+            transitive_valse[key]['true_passive']=" ".join(true_passive)
+            transitive_valse[key]['foil_passive']=" ".join(foil_passive)
+    #print(transitive_valse)
+    with open(os.path.join(VALSE_ROOT, 'transitive_actant_swap.json'), 'w') as s:
+        json.dump(transitive_valse, s)
 
 
 if __name__ == '__main__':
-    verb_list = []
-    build_transitive_aro(verb_list)
-    convert_to_passive_aro()
-    remove_aro_duplicates()
+    #verb_list = []
+    #build_transitive_valse(verb_list)
+    convert_to_passive_valse()
