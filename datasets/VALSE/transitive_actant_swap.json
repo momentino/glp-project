@@ -887,7 +887,7 @@
         "dataset_idx": "begging_156.jpg",
         "linguistic_phenomena": "actions",
         "image_file": "begging_156.jpg",
-        "true_active": "A beaver begs a woman",
+        "true_active": "An otter begs a woman",
         "classes": "beaver",
         "classes_foil_active": "woman",
         "mturk": {
@@ -895,9 +895,9 @@
             "true_active": 2,
             "other": 0
         },
-        "foil_active": "A woman begs a beaver",
-        "true_passive": "A woman is begged by a beaver",
-        "foil_passive": "A beaver is begged by a woman"
+        "foil_active": "A woman begs an otter",
+        "true_passive": "A woman is begged by an otter",
+        "foil_passive": "An otter is begged by a woman"
     },
     "actions_test_87": {
         "dataset": "SWiG",
@@ -1517,7 +1517,7 @@
         "dataset_idx": "sucking_49.jpg",
         "linguistic_phenomena": "actions",
         "image_file": "sucking_49.jpg",
-        "true_active": "A horse sucks her breast",
+        "true_active": "A calf sucks her breast",
         "classes": "horse",
         "classes_foil_active": "breast",
         "mturk": {
@@ -1525,9 +1525,9 @@
             "true_active": 3,
             "other": 0
         },
-        "foil_active": "A breast sucks its horse",
-        "true_passive": "A breast is sucked by its horse",
-        "foil_passive": "A horse is sucked by her breast"
+        "foil_active": "A breast sucks its calf",
+        "true_passive": "A breast is sucked by its calf",
+        "foil_passive": "A calf is sucked by her breast"
     },
     "actions_test_168": {
         "dataset": "SWiG",
