@@ -1,183 +1,183 @@
-verb,traduzione, category_alex,category_filippo, category,notes
-exercise,esercitare,Body Action,Body Action,,
-display,mostrare,?,Communication,,"“a speaker displays a report”, “a man displays a certificate”"
-unveil,rivelare,?,Change State/Communication,,"“a man unveils a statue”, “a man unveils a painting”"
-read,leggere,Communication,Communication,,
-teach,insegnare,Social,Social,,
-arch,inarcare (schiena),Body Action,Body Action,,
-rehabilitate,riabilitare,Body Action,Change State,,"""A woman rehabilitates a person"""
-package,impacchettare,Tools?,Change State,,"""The people package the food"""
-count,contare,?,Mental Cognition,,
-nuzzle,strusciare il naso,Contact,Body Action,,
-applaud,applaudire,?,Communication,,
-inflate,gonfiare,?,Change State,,
-carve,intagliare,Tools,Change State,,
-discipline,disciplinare,Communication/Contrast,Social,,
-pucker,corrugare,Body Action,Body Action,,
-encourage,incoraggiare,Communication,Communication,,
-hurl,lanciare/gettare,Change Location,Change Location,,
-bite,mordere,Body Action,Body Action/Contact,,"""A child bites a hand"", ""A woman bites her shoe"" "
-heave,sollevare/tirare,Motion Direction,Change Location,,
-bother,infastidire,Contrast,Social/Communication/Contrast,,
-admire,ammirare,Communication,Communication/Perception,,"“a man admires a painting” (è di spalle nell’immagine associata e sembra sinonimo di guardare, quindi associato ai 5 sensi)"
-smell,annusare,Perception,Perception,,
-grill,grigliare,Tools,Change State,,
-burn,bruciare,Tools/Destruction,Change State,,
-flex,contrarre,Body Action,Body Action,,
-sniff,annusare,Perception,Perception,,
-wrinkle,increspare,Body Action,Body Action,,
-scold,rimproverare,Contrast?,Social/Communication/Contrast,,
-pay,pagare,Exchange,Exchange,,
-flip,capovolgere/lanciare,Change Location/Motion Direction,Change Location/Motion Direction,,
-turn,girare,Change Location/Motion Direction,Motion Direction,,
-press,premere,Contact,Contact,,
-train,allenare,Social,Body Action,,
-beg,pregare,Communication/Social,Communication/Social,,
-spank,sculacciare,Contact,Communication/Contact/Contrast,,
-nip,mordicchiare,Contact,Body Action/Contact,,“a shark nips a man”
-tug,tirare,Motion Direction,Change Location,,
-chisel,incidere,Tools,Change State,,
-butt,dare una testata,Contact,Contact/Contrast,,
-kick,calciare,Contact,Contact/Contrast,,
-tackle,placcare,Contact,Contact/Contrast,,
-wave,salutare,Communication?,Communication,,
-pedal,pedalare,Motion Manner,Motion Manner,,
-wag,scodinzolare,Body Action,Body Action,,
-sow,seminare,Tools,Body Action/Change State,,
-juggle,far roteare (giocoleria),Tools?,Change Location/Motion Direction,,
-suck,succhiare,Body Actions,Contact,,
-reassure,rassicurare,Communication?,Communication,,
-till,arare,Tools,Change State,,
-wring,torcere,Contact,Contact,,
-garden,coltivare,Tools,Change State,,
-ford,guadare,?,Motion Direction,,"(attraversare un fiume è un tipo di “cross”, attravesamento specifico)"
-coach,allenare,Social,Social,,
-insert,inserire,Contact?,Change State,,
-browse,cercare sul web,Mental Cognition?,Mental Cognition,,"(cercare, curiosare..)"
-ram,colpire con forza,Contact,Contact,,
-lift,sollevare,Motion Direction,Change Location,,
-dial,chiamare,Communication,Communication,,
-stretch,allungare,Body Action,Body Action,,
-lecture,tenere una lezione,Social,Social,,
-punt,calciare (nel football),Contact,Contact/Body Action,,
-educate,educare,Social?,Social,,
-knead,impastare,Tools,Change State,,
-fold,piegare,Tools?,Contact,,(se torcere è Contact penso anche piegare debba esserlo)
-offer,offrire,Exchange,Exchange,,
-aim,puntare/mirare,Tools,Mental Cognition/Perception,,"(mirare qualcosa richiede una certo sforzo cognitivo, credo sia più che posizionare in una direzione, ho scelto anche Perception perchè è legato alla vista)"
-climb,scalare,Motion Direction,Motion Manner/ Motion Direction/ Body Action,,
-lead,guidare,Motion Manner,Social,,"“a woman leads the people”, “a woman leads the parade”"
-deflect,deviare,?,Contact/ Body Action,,
-block,bloccare,?,Contrast/Contact,,
-embrace,abbracciare,Contact,Communication,,
-eat,mangiare,Body Actions,Perception,,
-restrain,trattenere/bloccare,Contrast,Contrast/Contact,,
-confront,affrontare?,Contrast,Contrast,,
-sell,vendere,Exchange,Exchange,,
-preach,predicare,Social,Social,,
-drive,guidare,Motion Manner,Motion Manner,,
-spear,trafiggere,Tools,Contact/Change State,,
-sew,cucire,Tools,Change State,,
-massage,massaggiare,Body Actions?,Body Action,,
-twist,attorcigliare,Tools?,Contact,,
-handcuff,mettere le manette,Contrast,Contrast,,
-circle,accerchiare,Motion Direction? (it's in the sense of swimming in circles),Contrast/State Of Being/Motion Direction,,
-milk,mungere,Tools?,Body Action,,
-barbecue,grigliare,Tools,Change State,,
-instruct,istruire,Social,Social,,
-gnaw,masticare,Body Actions,Contact,,
-attack,attaccare,Contrast,Contrast,,
-release,rilasciare,?,Contrast,,Secondo me è più simile semanticamente ai verbi Contrast che alla comunicazione
-stitch,cucire,Tools,Change State,,
-calm,calmare,Communication?,Communication,,
-detain,trattenere (polizia),Contrast,Contrast,,
-imitate,imitare,?,Communication,,
-phone,telefonare,Communication,Communication,,
-call,chiamare,Communication,Communication,,
-interview,intervistare,Communication/Social,Social,,
-whip,frustare,Contact,Contact/Contrast,,
-bulldoze,abbattere/demolire,Destruction,Change State,,
-mend,riparare,Construction,Change State,,
-ignore,ignorare,?,Communication,,
-skip,saltare/saltellare,Body Actions,Motion Manner,,
-lick,leccare,Body Actions,Contact,,
-hunt,cacciare,Tools?,Contrast,,c’è dell’antagonismo tra preda e cacciatore (lo vedo più una interazione che un cambiamento di stato
-arrest,arrestare,Contrast,Contrast,,
-bake,cucinare in forno,Tools,Change State,,
-adjust,aggiustare,Construction,Change State,,
-mime,mimare,?,Communication,,
-frisk,perquisire,Contrast,Contrast,,
-shush,zittire,?,Communication,,
-flap,sbattere (ali),Motion Manner,Body Action,,anche se non svolta dal corpo umano
-board,salire a bordo,Motion Direction?,Motion Direction,,
-assemble,assemblare,Construction,Change State,,
-carry,trasportare,Change Location,Change Location,,
-plow,arare,Tools,Change State,,
-interrogate,interrogare,Contrast,Social,,
-push,spingere,Change Location,Change Location/Contact/Contrast,,
-hoe,zappare,Tools,Change State,,
-bandage,bendare,Tools,Change State,,
-break,rompere,Destroy,Change State,,
-chase,inseguire,?,Contrast,,lo metterei nello stesso posto in cui è “cacciare”
-serve,servire (cameriere),Social?,Social,,è un interazione perchè l’azione necessita di un ricevente dell’azione (qualcuno che ne beneficia)
-spit,sputare,Body Action,Body Action,,
-distract,distrarre,?,Communication/Mental Cognition,,"""A cellular telephone distracts the woman"", ""A female child distracts a woman"", ""A doughnut distracts the man"" (la distrazione forse può essere visto come qualcosa che avviene a livello cognitivo, penso che alla forma passiva sia più evidente)"
-launch,lanciare (razzo),Motion Direction?,Change Location,,
-help,aiutare,Social?,Social,,
-brew,preparare,Tools,Change State,,
-salute,fare il saluto (militare),Social?,Social/Communication,,
-chew,masticare,Body Action,Body Action,,
-baptize,battezzare,Social,Social,,
-tow,trainare,Change Location,Change Location,,
-check,controllare,?,Mental Cognition,,questo lo diceva WordNet
-guard,fare la guardia,?,Contrast,,
-nag,tormentare/assillare,Contrast,Communication/Contrast,,
-apprehend,arrestare,Contrast,Contrast,,
-punch,dare un pugno,Contact,Contact/Contrast,,
-destroy,distruggere,Destroy,Change State,,
-mold,modellare (argilla),Tools,Change State,,
-throw,lanciare,Contact? Change Location?,Change Location,,
-ignite,accendere,Tools,Change State,,
-smash,spaccare,Destroy,Change State,,
-subdue,soggiogare,Contrast,Contrast,,
-autograph,autografare,Communication? Social?,Communication/Social,,
-haul,trasportare,Change Location,Change Location,,
-videotape,riprendere,Tools,Perception,,
-erupt,eruttare (vulcano),?,Change State,,
-pull,tirare,Change Location,Change Location/Contact,,
-moisten,inumidire,Tools,Change State,,si vuole far diventare umido qualcosa che non lo era
-paint,dipingere,Tools,Change State/Communication,,
-decorate,decorare,Tools,Change State,,
-cook,cucinare,Tools,Change State,,
-wear,indossare,Body Action? Tools?,Body Action/Change State,,
-hold,tenere,Contact?,Change Location/Contact,,
-use,usare,?,Change State,,forse questo è più sensato per un sistema informatico che per la realtà però (un oggetto che si trova nello stato di “in uso” dopo che l’agente lo ha preso in mano)
-touch,toccare,Contact,Contact,,
-feed,nutrire,?,Body Action,,
-watch,guardare,Perception,Perception,,
-exit,uscire,Motion Direction,Motion Direction,,
-cross,attraversare,Motion Direction?,Motion Direction,,
-ride,cavalcare,Motion Manner,Motion Manner,,
-cut,tagliare,Tools,Change State,,
-cover,coprire,Tools,Change State,,
-play,giocare/suonare,Tools,Communication/Change State,,giocare e suonare sono interazioni con l’oggetto (forse può anche essere visto come un cambiamento di stato)
-swing,far oscillare,Motion Direction?,Change Location,,
-hug,abbracciare,Contact,Contact,,
-surround,circondare/essere intorno,State of being,State Of Being,,
-splash,schizzare,?,Contact,,difficile da definire ma l’unico esempio che abbiamo è : “the horse is splashing the water” e lo schizzo avviene al contatto
-contain,contenere,State of being,State Of Being,,
-face,essere rivolto verso,State of being,State Of Being,,
-fly,volare,Motion Manner,Motion Manner,,
-pet,accarezzare (animale),Contact,Contact,,
-pour,versare,Tools?,Change State,,
-leave,andarsene,Motion Direction,Motion Direction,,
-make,creare/fare,creation,Change State,,
-open,aprire,Motion Direction?,Motion Direction,,
-clean,pulire,Tools,Change State,,
-brush,spazzolare,Tools,Change State/Contact,,
-drag,trascinare,Change Location,Change Location,,
-tie,annodare,Tools?,Change State,,
-drink,bere,Body Action,Perception,,
-enclose,racchiudere,State of being,State Of Being,,
-guide,guidare,Motion Manner,Motion Manner,,
-move,muovere,Change Location,Change Location,,
+verb,traduzione, category
+adjust,aggiustare,Change State
+admire,ammirare,Perception
+aim,puntare/mirare,Motion Direction
+applaud,applaudire,Communication
+apprehend,arrestare,Contrast
+arch,inarcare (schiena),Body Action
+arrest,arrestare,Contrast
+assemble,assemblare,Change State
+attack,attaccare,Contrast
+autograph,autografare,Social
+bake,cucinare in forno,Change State
+bandage,bendare,Change State
+baptize,battezzare,Social
+barbecue,grigliare,Change State
+beg,pregare,Communication
+bite,mordere,contact
+block,bloccare,Contrast
+board,salire a bordo,Motion Direction
+bother,infastidire,Communication
+break,rompere,Change State
+brew,preparare,Change State
+browse,cercare sul web,Mental Cognition
+brush,spazzolare,Contact
+bulldoze,abbattere/demolire,Change State
+burn,bruciare,Change State
+butt,dare una testata,Contact
+call,chiamare,Communication
+calm,calmare,Communication
+carry,trasportare,Change Location
+carve,intagliare,Change State
+chase,inseguire,Contrast
+check,controllare,Mental Cognition
+chew,masticare,Body Action
+chisel,incidere,Change State
+circle,accerchiare,Motion Direction
+clean,pulire,Change State
+climb,scalare,Motion Direction
+coach,allenare,Social
+confront,affrontare?,Contrast
+contain,contenere,State Of Being
+cook,cucinare,Change State
+count,contare,Mental Cognition
+cover,coprire,Change State
+cross,attraversare,Motion Direction
+cut,tagliare,Change State
+decorate,decorare,Change State
+deflect,deviare,Contact
+destroy,distruggere,Change State
+detain,trattenere (polizia),Contrast
+dial,chiamare,Communication
+discipline,disciplinare,Contrast
+display,mostrare,Communication
+distract,distrarre,Mental Cognition
+drag,trascinare,Change Location
+drink,bere,Body Action
+drive,guidare,Motion Manner
+eat,mangiare,Body Action
+educate,educare,Social
+embrace,abbracciare,Contact
+enclose,racchiudere,State Of Being
+encourage,incoraggiare,Communication
+erupt,eruttare (vulcano),Change State
+exercise,esercitare,Body Action
+exit,uscire,Motion Direction
+face,essere rivolto verso,State Of Being
+feed,nutrire,Body Action
+flap,sbattere (ali),Body Action
+flex,contrarre,Body Action
+flip,capovolgere/lanciare,Motion Direction
+fly,volare,Motion Manner
+fold,piegare,Contact
+ford,guadare,Motion Direction
+frisk,perquisire,Contrast
+garden,coltivare,Change State
+gnaw,masticare,Body Action
+grill,grigliare,Change State
+guard,fare la guardia,Contrast 
+guide,guidare,Motion Manner
+handcuff,mettere le manette,Contrast
+haul,trasportare,Change Location
+heave,sollevare/tirare,Motion Direction
+help,aiutare,Social
+hoe,zappare,Change State
+hold,tenere,Contact
+hug,abbracciare,Contact
+hunt,cacciare,Contrast
+hurl,lanciare/gettare,Change Location
+ignite,accendere,Change State
+ignore,ignorare,Communication
+imitate,imitare,Communication
+inflate,gonfiare,Change State
+insert,inserire,Change State
+instruct,istruire,Social
+interrogate,interrogare,Contrast
+interview,intervistare,Social
+juggle,far roteare (giocoleria),Motion Direction
+kick,calciare,Contact
+knead,impastare,Change State
+launch,lanciare (razzo),Motion Direction
+lead,guidare,Social
+leave,andarsene,Motion Direction
+lecture,tenere una lezione,Social
+lick,leccare,Contact
+lift,sollevare,Change Location
+make,creare/fare,Change State
+massage,massaggiare,Body Action
+mend,riparare,Change State
+milk,mungere,Contact
+mime,mimare,Communication
+moisten,inumidire,Change State
+mold,modellare (argilla),Change State
+move,muovere,Change Location
+nag,tormentare/assillare,Communication
+nip,mordicchiare,Contact
+nuzzle,strusciare il naso,Contact
+offer,offrire,Exchange
+open,aprire,Motion Direction
+package,impacchettare,Change State
+paint,dipingere,Communication
+pay,pagare,Exchange
+pedal,pedalare,Motion Manner
+pet,accarezzare (animale),Contact
+phone,telefonare,Communication
+play,giocare/suonare,Social
+plow,arare,Change State
+pour,versare,Change State
+preach,predicare,Social
+press,premere,Contact
+pucker,corrugare,Body Action
+pull,tirare,Change Location
+punch,dare un pugno,Contact
+punt,calciare (nel football),Contact
+push,spingere,Change Location
+ram,colpire con forza,Contact
+read,leggere,Communication
+reassure,rassicurare,Communication
+rehabilitate,riabilitare,Change State
+release,rilasciare,Contrast
+restrain,trattenere/bloccare,Contact
+ride,cavalcare,Motion Manner
+salute,fare il saluto (militare),Social
+scold,rimproverare,Contrast
+sell,vendere,Exchange
+serve,servire (cameriere),Social
+sew,cucire,Change State
+shush,zittire,Communication
+skip,saltare/saltellare,Motion Manner
+smash,spaccare,Change State
+smell,annusare,Perception
+sniff,annusare,Perception
+sow,seminare,Change State
+spank,sculacciare,Contact
+spear,trafiggere,Change State
+spit,sputare,Body Action
+splash,schizzare,Contact
+stitch,cucire,Change State
+stretch,allungare,Body Action
+subdue,soggiogare,Contrast
+suck,succhiare,Contact
+surround,circondare/essere intorno,State Of Being
+swing,far oscillare,Motion Direction
+tackle,placcare,Contact
+teach,insegnare,Social
+throw,lanciare,Change Location
+tie,annodare,Change State
+till,arare,Change State
+touch,toccare,Contact
+tow,trainare,Change Location
+train,allenare,Social
+tug,tirare,Change Location
+turn,girare,Motion Direction
+twist,attorcigliare,Contact
+unveil,rivelare,Change State
+use,usare,Body Action
+videotape,riprendere,Communication
+wag,scodinzolare,Body Action
+watch,guardare,Perception
+wave,salutare,Communication
+wear,indossare,Body Action
+whip,frustare,Body Action
+wring,torcere,Contact
+wrinkle,increspare,Body Action
