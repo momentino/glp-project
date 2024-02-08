@@ -1,1 +1,3 @@
 text_encoder: bert-base-uncased
+
+image_res: 384

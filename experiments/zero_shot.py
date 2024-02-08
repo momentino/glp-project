@@ -113,14 +113,18 @@ def main(args):
         }
         if(model_name == 'ALBEF'):
             if(dataset == 'all' and split=='all'):
-                pairwise_acc, acc, true_prec, foil_prec, rec, perf_by_cat = albef_eval(model, ARO_active_loader) # TODO
+                pairwise_acc, acc, true_prec, foil_prec, rec, perf_by_cat = albef_eval(model,
+                                                                                       ARO_active_loader,
+                                                                                       configs['ALBEF'])   # TODO
                 performances['ARO']['active'] = {'pairwise_acc': pairwise_acc,
                                                  'acc': acc,
                                                  'true_prec':true_prec,
                                                  'foil_prec': foil_prec,
                                                  'rec': rec,
                                                  'perf_by_cat': perf_by_cat}
-                pairwise_acc, acc, true_prec, foil_prec, rec, perf_by_cat = albef_eval(model, ARO_passive_loader)  # TODO
+                pairwise_acc, acc, true_prec, foil_prec, rec, perf_by_cat = albef_eval(model,
+                                                                                       ARO_passive_loader,
+                                                                                       configs['ALBEF'])  # TODO
                 performances['ARO']['passive'] = {'pairwise_acc': pairwise_acc,
                                                   'acc': acc,
                                                   'true_prec': true_prec,
@@ -128,7 +132,8 @@ def main(args):
                                                   'rec': rec,
                                                   'perf_by_cat': perf_by_cat}
                 pairwise_acc, acc, true_prec, foil_prec, rec, perf_by_cat = albef_eval(model,
-                                                                                       VALSE_active_loader)  # TODO
+                                                                                       VALSE_active_loader,
+                                                                                       configs['ALBEF'])  # TODO
                 performances['VALSE']['active'] = {'pairwise_acc': pairwise_acc,
                                                    'acc': acc,
                                                    'true_prec': true_prec,
@@ -136,7 +141,8 @@ def main(args):
                                                    'rec': rec,
                                                    'perf_by_cat': perf_by_cat}
                 pairwise_acc, acc, true_prec, foil_prec, rec, perf_by_cat = albef_eval(model,
-                                                                                       VALSE_passive_loader)  # TODO
+                                                                                       VALSE_passive_loader,
+                                                                                       configs['ALBEF'])  # TODO
                 performances['VALSE']['passive'] = {'pairwise_acc': pairwise_acc,
                                                     'acc': acc,
                                                     'true_prec': true_prec,
