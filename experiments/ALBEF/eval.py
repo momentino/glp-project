@@ -1,6 +1,7 @@
 from PIL import Image
 from torchvision import transforms
 from tqdm import tqdm
+from models.AdaptedModels import ALBEFForITM
 
 import torch
 
@@ -16,7 +17,13 @@ def preprocess_images(config, images):
     return transform(images)
 
 def eval(model, loader, config):
+    adapted_model = ALBEFForITM(model)
+
     model.eval()
     with torch.no_grad():
         for images, captions, foils, categories in tqdm(loader):
             images = preprocess_images(config, images)
+
+            caption_scores, foils_scores = ALBEFForITM(images, captions, foils)
+
+
