@@ -6,9 +6,10 @@ import torch.nn.functional as F
 
 class ALBEFForITM(nn.Module):
     def __init__(self, base_model):
+        super().__init__()
         self.base_model = base_model
-    def forward(self, images, captions, foils):
 
+    def forward(self, images, captions, foils):
         """ Take the image embeddings and the attention mask """
         image_embeds = self.base_model.visual_encoder(images)
         image_atts = torch.ones(image_embeds.size()[:-1],dtype=torch.long)
