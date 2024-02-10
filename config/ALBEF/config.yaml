@@ -1,3 +1,18 @@
 text_encoder: bert-base-uncased
+bert_config: ../models/ALBEF/configs/config_bert.json
 
-image_res: 384
+## Vision Encoder
+image_res: 256
+vision_width: 768
+
+## Training
+batch_size_test: 12
+batch_size_test_text: 64
+max_tokens: 40
+embed_dim: 256
+temp: 0.07
+k_test: 256
+mlm_probability: 0
+queue_size: 65536
+momentum: 0.995
+alpha: 0.4

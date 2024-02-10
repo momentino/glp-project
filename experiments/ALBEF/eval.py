@@ -1,29 +1,35 @@
-from PIL import Image
-from torchvision import transforms
 from tqdm import tqdm
-from models.AdaptedModels import ALBEFForITM
+from models.AdaptedModels.ALBEFForITM import ALBEFForITM
 
 import torch
 
-""" Taken from the original ALBEF """
-def preprocess_images(config, images):
-    normalize = transforms.Normalize((0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711))
-    transform = transforms.Compose([
-        transforms.Resize((config['image_res'], config['image_res']), interpolation=Image.BICUBIC),
-        transforms.ToTensor(),
-        normalize,
-    ])
-
-    return transform(images)
 
 def eval(model, loader, config):
     adapted_model = ALBEFForITM(model)
+    adapted_model.eval()
 
-    model.eval()
+
+    c_scores = []
+    f_scores = []
+    total_num_samples = 0
     with torch.no_grad():
         for images, captions, foils, categories in tqdm(loader):
-            images = preprocess_images(config, images)
+            caption_scores, foils_scores = adapted_model(images, captions, foils)
+            c_scores.extend(caption_scores)
+            f_scores.extend(foils_scores)
+            total_num_samples+=64
 
-            caption_scores, foils_scores = ALBEFForITM(images, captions, foils)
+            print(sum([1 if c_scores[i].item()>f_scores[i].item() else 0 for i in range(len(c_scores))])/total_num_samples)
+    pairwise_acc = sum([1 if c_scores[i].item()>f_scores[i].item() else 0 for i in range(len(c_scores))])/total_num_samples
+    pairwise_acc_50 = sum([1 if c_scores[i].item()>f_scores[i].item() and c_scores[i].item()>0.5 else 0 for i in range(len(c_scores))])/total_num_samples
+    pairwise_acc_60 = sum([1 if c_scores[i].item() > f_scores[i].item() and c_scores[i].item() > 0.6 else 0 for i in
+                           range(len(c_scores))]) / total_num_samples
+    pairwise_acc_70 = sum([1 if c_scores[i].item() > f_scores[i].item() and c_scores[i].item() > 0.7 else 0 for i in
+                           range(len(c_scores))]) / total_num_samples
+    print(pairwise_acc, " ",pairwise_acc_50," ",pairwise_acc_60," ",pairwise_acc_70)
+
+
+    # here true negatives should be 0. TP sono tutti quelli con punteggio maggiore nella caption. FP sono 0. FN sono quelli con punteggio maggiore nella foil
+
 
 

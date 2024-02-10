@@ -6,8 +6,8 @@
 '''
 
 from functools import partial
-from models.vit import VisionTransformer, interpolate_pos_embed
-from models.xbert import BertConfig, BertForMaskedLM
+from .vit import VisionTransformer, interpolate_pos_embed
+from .xbert import BertConfig, BertForMaskedLM
 
 import torch
 import torch.nn.functional as F

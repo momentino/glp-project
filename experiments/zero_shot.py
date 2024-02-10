@@ -27,7 +27,7 @@ _logger.info(f"Running with args {FLAGS}, {FIRE_FLAGS}")
 def get_args_parser():
     parser = argparse.ArgumentParser('Set parameters for the expriments)', add_help=False)
     parser.add_argument('--model', default='ALBEF', type=str, choices=['ALBEF','XVLM','BLIP','CLIP','NegCLIP'])
-    parser.add_argument('--experiment', default='pre', type=str, choices=['pre', 'first_second'])
+    parser.add_argument('--experiment', default='first_second', type=str, choices=['pre', 'first_second'])
     parser.add_argument('--dataset', default='all', type=str, choices=['VALSE', 'ARO','all'])
     parser.add_argument('--split', default='all', type=str, choices=['active', 'passive','all'])
 
@@ -48,9 +48,9 @@ def main(args):
 
 
     configs = {
-        'general': load_config('config/general',
+        'general': load_config('../config/general',
                          'general_config.yaml'),  # load the configuration file (the parameters will then be used like a dictionary with key-value pairs
-        'ALBEF': load_config('config/ALBEF',
+        'ALBEF': load_config('../config/ALBEF',
                          'config.yaml'),
     }
 
@@ -59,7 +59,7 @@ def main(args):
 
 
     models = {
-        'ALBEF': ALBEF(text_encoder=configs['ALBEF']['text_encoder'], tokenizer=tokenizer)
+        'ALBEF': ALBEF(config=configs['ALBEF'], text_encoder=configs['ALBEF']['text_encoder'], tokenizer=tokenizer)
     }
 
     # load the model
@@ -76,26 +76,37 @@ def main(args):
         ARO_active_dataset = ITMDataset(dataset_file=dataset_files['combined'],
                                         dataset_name='ARO', split='active',
                                         tokenizer=tokenizer,
-                                        config=configs['general'])
+                                        general_config=configs['general'],
+                                        model_name=model_name,
+                                        model_config=configs[model_name])
         ARO_passive_dataset = ITMDataset(dataset_file=dataset_files['combined'],
                                          dataset_name='ARO',
                                          split='passive',
                                          tokenizer=tokenizer,
-                                         config=configs['general'])
+                                         general_config=configs['general'],
+                                         model_name=model_name,
+                                         model_config=configs[model_name]
+                                         )
         VALSE_active_dataset = ITMDataset(dataset_file=dataset_files['combined'],
                                           dataset_name='VALSE',
                                           split='active',
                                           tokenizer=tokenizer,
-                                          config=configs['general'])
+                                          general_config=configs['general'],
+                                          model_name=model_name,
+                                          model_config=configs[model_name]
+                                          )
         VALSE_passive_dataset = ITMDataset(dataset_file=dataset_files['combined'],
                                            dataset_name='VALSE', split='passive',
                                            tokenizer=tokenizer,
-                                           config=configs['general'])
+                                           general_config=configs['general'],
+                                           model_name=model_name,
+                                           model_config=configs[model_name]
+                                           )
         """ Define our loaders """
-        ARO_active_loader = DataLoader(ARO_active_dataset, batch_size=64, shuffle=True)
-        ARO_passive_loader = DataLoader(ARO_passive_dataset, batch_size=64, shuffle=True)
-        VALSE_active_loader = DataLoader(VALSE_active_dataset, batch_size=64, shuffle=True)
-        VALSE_passive_loader = DataLoader(VALSE_passive_dataset, batch_size=64, shuffle=True)
+        ARO_active_loader = DataLoader(ARO_active_dataset, batch_size=64, shuffle=False)
+        ARO_passive_loader = DataLoader(ARO_passive_dataset, batch_size=64, shuffle=False)
+        VALSE_active_loader = DataLoader(VALSE_active_dataset, batch_size=64, shuffle=False)
+        VALSE_passive_loader = DataLoader(VALSE_passive_dataset, batch_size=64, shuffle=False)
 
         _logger.info(f" Evaluation on the {dataset} benchmark - {split} mode. Model evaluated: {model_name}")
 
@@ -154,5 +165,4 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('GLP Project', parents=[get_args_parser()])
     args = parser.parse_args()
-
     main(args)
