@@ -8,7 +8,10 @@ from torch.utils.data import DataLoader
 
 from datasets.datasets import ITMDataset
 from models.ALBEF.models.model_pretrain import ALBEF
+from models.XVLM.models.model_pretrain import XVLM
 from experiments.ALBEF.eval import eval as albef_eval
+from experiments.XVLM.eval import eval as xvlm_eval
+from utils.utils import download_weights
 
 _logger = logging.getLogger(__name__)
 
@@ -26,7 +29,7 @@ _logger.info(f"Running with args {FLAGS}, {FIRE_FLAGS}")
 """
 def get_args_parser():
     parser = argparse.ArgumentParser('Set parameters for the expriments)', add_help=False)
-    parser.add_argument('--model', default='ALBEF', type=str, choices=['ALBEF','XVLM','BLIP','CLIP','NegCLIP'])
+    parser.add_argument('--model', default='XVLM', type=str, choices=['ALBEF','XVLM','BLIP','CLIP','NegCLIP'])
     parser.add_argument('--experiment', default='first_second', type=str, choices=['pre', 'first_second'])
     parser.add_argument('--dataset', default='all', type=str, choices=['VALSE', 'ARO','all'])
     parser.add_argument('--split', default='all', type=str, choices=['active', 'passive','all'])
@@ -52,14 +55,19 @@ def main(args):
                          'general_config.yaml'),  # load the configuration file (the parameters will then be used like a dictionary with key-value pairs
         'ALBEF': load_config('../config/ALBEF',
                          'config.yaml'),
+        'XVLM': load_config('../config/XVLM',
+                             'config.yaml'),
     }
 
     # our tokenizer is initialized from the text encoder specified in the config file
     tokenizer = AutoTokenizer.from_pretrained(configs[model_name]['text_encoder'])
 
-
+    if(model_name=='XVLM'):
+        download_weights(model_name='swin',
+                         general_config=configs['general'])  # to download the vision encoder weights if not done already
     models = {
-        'ALBEF': ALBEF(config=configs['ALBEF'], text_encoder=configs['ALBEF']['text_encoder'], tokenizer=tokenizer)
+        'ALBEF': ALBEF(config=configs['ALBEF'], text_encoder=configs['ALBEF']['text_encoder'], tokenizer=tokenizer),
+         'XVLM': XVLM(config=configs['XVLM'])
     }
 
     # load the model
@@ -126,7 +134,7 @@ def main(args):
             if(dataset == 'all' and split=='all'):
                 pairwise_acc, acc, true_prec, foil_prec, rec, perf_by_cat = albef_eval(model,
                                                                                        ARO_active_loader,
-                                                                                       configs['ALBEF'])   # TODO
+                                                                                       configs['general'])
                 performances['ARO']['active'] = {'pairwise_acc': pairwise_acc,
                                                  'acc': acc,
                                                  'true_prec':true_prec,
@@ -135,7 +143,7 @@ def main(args):
                                                  'perf_by_cat': perf_by_cat}
                 pairwise_acc, acc, true_prec, foil_prec, rec, perf_by_cat = albef_eval(model,
                                                                                        ARO_passive_loader,
-                                                                                       configs['ALBEF'])  # TODO
+                                                                                       configs['general'])
                 performances['ARO']['passive'] = {'pairwise_acc': pairwise_acc,
                                                   'acc': acc,
                                                   'true_prec': true_prec,
@@ -144,7 +152,7 @@ def main(args):
                                                   'perf_by_cat': perf_by_cat}
                 pairwise_acc, acc, true_prec, foil_prec, rec, perf_by_cat = albef_eval(model,
                                                                                        VALSE_active_loader,
-                                                                                       configs['ALBEF'])  # TODO
+                                                                                       configs['general'])
                 performances['VALSE']['active'] = {'pairwise_acc': pairwise_acc,
                                                    'acc': acc,
                                                    'true_prec': true_prec,
@@ -153,15 +161,24 @@ def main(args):
                                                    'perf_by_cat': perf_by_cat}
                 pairwise_acc, acc, true_prec, foil_prec, rec, perf_by_cat = albef_eval(model,
                                                                                        VALSE_passive_loader,
-                                                                                       configs['ALBEF'])  # TODO
+                                                                                       configs['general'])
                 performances['VALSE']['passive'] = {'pairwise_acc': pairwise_acc,
                                                     'acc': acc,
                                                     'true_prec': true_prec,
                                                     'foil_prec': foil_prec,
                                                     'rec': rec,
                                                     'perf_by_cat': perf_by_cat}
-
-
+        elif(model_name == 'XVLM'):
+            pairwise_acc, acc, true_prec, foil_prec, rec, perf_by_cat = xvlm_eval(model,
+                                                                                   ARO_active_loader,
+                                                                                  configs['general'])
+            performances['ARO']['active'] = {'pairwise_acc': pairwise_acc,
+                                             'acc': acc,
+                                             'true_prec': true_prec,
+                                             'foil_prec': foil_prec,
+                                             'rec': rec,
+                                             'perf_by_cat': perf_by_cat}
+            # TODO the rest
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('GLP Project', parents=[get_args_parser()])
     args = parser.parse_args()

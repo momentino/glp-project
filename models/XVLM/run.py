@@ -259,7 +259,7 @@ def run(args):
     elif args.task == 'refcoco_weakly':
         assert os.path.exists("images/coco")
         args.config = './configs/Grounding.yaml'
-        run_refcoco(args, block_num=9)  # 9 for X-VLM base
+        run_refcoco(args, block_num=9)  # 9 for XVLM base
 
     elif args.task == 'refcoco_block_num_search':  # for refcoco_weakly
         assert os.path.exists("images/coco")

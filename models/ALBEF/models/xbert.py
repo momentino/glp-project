@@ -57,6 +57,7 @@ from transformers.utils import logging
 from transformers.models.bert.configuration_bert import BertConfig
 
 import transformers
+
 transformers.logging.set_verbosity_error()
 
 logger = logging.get_logger(__name__)
@@ -121,8 +122,8 @@ def load_tf_weights_in_bert(model, config, tf_checkpoint_path):
         # adam_v and adam_m are variables used in AdamWeightDecayOptimizer to calculated m and v
         # which are not required for using pretrained model
         if any(
-            n in ["adam_v", "adam_m", "AdamWeightDecayOptimizer", "AdamWeightDecayOptimizer_1", "global_step"]
-            for n in name
+                n in ["adam_v", "adam_m", "AdamWeightDecayOptimizer", "AdamWeightDecayOptimizer_1", "global_step"]
+                for n in name
         ):
             logger.info("Skipping {}".format("/".join(name)))
             continue
@@ -155,7 +156,7 @@ def load_tf_weights_in_bert(model, config, tf_checkpoint_path):
             array = np.transpose(array)
         try:
             assert (
-                pointer.shape == array.shape
+                    pointer.shape == array.shape
             ), f"Pointer shape {pointer.shape} and array shape {array.shape} mismatched"
         except AssertionError as e:
             e.args += (pointer.shape, array.shape)
@@ -182,11 +183,11 @@ class BertEmbeddings(nn.Module):
         # position_ids (1, len position emb) is contiguous in memory and exported when serialized
         self.register_buffer("position_ids", torch.arange(config.max_position_embeddings).expand((1, -1)))
         self.position_embedding_type = getattr(config, "position_embedding_type", "absolute")
-        
+
         self.config = config
 
     def forward(
-        self, input_ids=None, token_type_ids=None, position_ids=None, inputs_embeds=None, past_key_values_length=0
+            self, input_ids=None, token_type_ids=None, position_ids=None, inputs_embeds=None, past_key_values_length=0
     ):
         if input_ids is not None:
             input_shape = input_ids.size()
@@ -196,15 +197,15 @@ class BertEmbeddings(nn.Module):
         seq_length = input_shape[1]
 
         if position_ids is None:
-            position_ids = self.position_ids[:, past_key_values_length : seq_length + past_key_values_length]
+            position_ids = self.position_ids[:, past_key_values_length: seq_length + past_key_values_length]
 
         if token_type_ids is None:
             token_type_ids = torch.zeros(input_shape, dtype=torch.long, device=self.position_ids.device)
 
         if inputs_embeds is None:
             inputs_embeds = self.word_embeddings(input_ids)
-        
-        token_type_embeddings = self.token_type_embeddings(token_type_ids)  
+
+        token_type_embeddings = self.token_type_embeddings(token_type_ids)
 
         embeddings = inputs_embeds + token_type_embeddings
         if self.position_embedding_type == "absolute":
@@ -224,7 +225,9 @@ class BertSelfAttention(nn.Module):
                 "The hidden size (%d) is not a multiple of the number of attention "
                 "heads (%d)" % (config.hidden_size, config.num_attention_heads)
             )
-        
+
+        self.fp16 = getattr(config, 'fp16', False)
+
         self.num_attention_heads = config.num_attention_heads
         self.attention_head_size = int(config.hidden_size / config.num_attention_heads)
         self.all_head_size = self.num_attention_heads * self.attention_head_size
@@ -242,20 +245,19 @@ class BertSelfAttention(nn.Module):
         if self.position_embedding_type == "relative_key" or self.position_embedding_type == "relative_key_query":
             self.max_position_embeddings = config.max_position_embeddings
             self.distance_embedding = nn.Embedding(2 * config.max_position_embeddings - 1, self.attention_head_size)
-        self.save_attention = False   
-            
+        self.save_attention = False
+
     def save_attn_gradients(self, attn_gradients):
         self.attn_gradients = attn_gradients
-        
+
     def get_attn_gradients(self):
         return self.attn_gradients
-    
+
     def save_attention_map(self, attention_map):
         self.attention_map = attention_map
-        
+
     def get_attention_map(self):
         return self.attention_map
-    
 
     def transpose_for_scores(self, x):
         new_x_shape = x.size()[:-1] + (self.num_attention_heads, self.attention_head_size)
@@ -263,22 +265,22 @@ class BertSelfAttention(nn.Module):
         return x.permute(0, 2, 1, 3)
 
     def forward(
-        self,
-        hidden_states,
-        attention_mask=None,
-        head_mask=None,
-        encoder_hidden_states=None,
-        encoder_attention_mask=None,
-        past_key_value=None,
-        output_attentions=False,
+            self,
+            hidden_states,
+            attention_mask=None,
+            head_mask=None,
+            encoder_hidden_states=None,
+            encoder_attention_mask=None,
+            past_key_value=None,
+            output_attentions=False,
     ):
+
         mixed_query_layer = self.query(hidden_states)
 
         # If this is instantiated as a cross-attention module, the keys
         # and values come from an encoder; the attention mask needs to be
         # such that the encoder's padding tokens are not attended to.
         is_cross_attention = encoder_hidden_states is not None
-
 
         if is_cross_attention:
             key_layer = self.transpose_for_scores(self.key(encoder_hidden_states))
@@ -293,7 +295,12 @@ class BertSelfAttention(nn.Module):
             key_layer = self.transpose_for_scores(self.key(hidden_states))
             value_layer = self.transpose_for_scores(self.value(hidden_states))
 
-        query_layer = self.transpose_for_scores(mixed_query_layer)
+        if not self.fp16:
+            query_layer = self.transpose_for_scores(mixed_query_layer)
+        else:
+            # to avoid gradient overflow
+            query_layer = self.transpose_for_scores(mixed_query_layer) / math.sqrt(
+                self.attention_head_size)  # bsz, max_length, hidden_size
 
         past_key_value = (key_layer, value_layer)
 
@@ -316,19 +323,21 @@ class BertSelfAttention(nn.Module):
                 relative_position_scores_key = torch.einsum("bhrd,lrd->bhlr", key_layer, positional_embedding)
                 attention_scores = attention_scores + relative_position_scores_query + relative_position_scores_key
 
-        attention_scores = attention_scores / math.sqrt(self.attention_head_size)
+        if not self.fp16:
+            attention_scores = attention_scores / math.sqrt(self.attention_head_size)  # bsz, 12, max_length, max_length
+
         if attention_mask is not None:
             # Apply the attention mask is (precomputed for all layers in BertModel forward() function)
             attention_scores = attention_scores + attention_mask
 
         # Normalize the attention scores to probabilities.
         attention_probs = nn.Softmax(dim=-1)(attention_scores)
-        
+
         if is_cross_attention and self.save_attention:
             self.save_attention_map(attention_probs)
-            attention_probs.register_hook(self.save_attn_gradients)         
+            attention_probs.register_hook(self.save_attn_gradients)
 
-        # This is actually dropping out entire tokens to attend to, which might
+            # This is actually dropping out entire tokens to attend to, which might
         # seem a bit unusual, but is taken from the original Transformer paper.
         attention_probs_dropped = self.dropout(attention_probs)
 
@@ -388,14 +397,14 @@ class BertAttention(nn.Module):
         self.pruned_heads = self.pruned_heads.union(heads)
 
     def forward(
-        self,
-        hidden_states,
-        attention_mask=None,
-        head_mask=None,
-        encoder_hidden_states=None,
-        encoder_attention_mask=None,
-        past_key_value=None,
-        output_attentions=False,
+            self,
+            hidden_states,
+            attention_mask=None,
+            head_mask=None,
+            encoder_hidden_states=None,
+            encoder_attention_mask=None,
+            past_key_value=None,
+            output_attentions=False,
     ):
         self_outputs = self.self(
             hidden_states,
@@ -449,21 +458,21 @@ class BertLayer(nn.Module):
         self.attention = BertAttention(config)
 
         self.has_cross_attention = (layer_num >= config.fusion_layer)
-        if self.has_cross_attention:           
-            self.layer_num = layer_num                
+        if self.has_cross_attention:
+            self.layer_num = layer_num
             self.crossattention = BertAttention(config, is_cross_attention=True)
         self.intermediate = BertIntermediate(config)
         self.output = BertOutput(config)
 
     def forward(
-        self,
-        hidden_states,
-        attention_mask=None,
-        head_mask=None,
-        encoder_hidden_states=None,
-        encoder_attention_mask=None,
-        past_key_value=None,
-        output_attentions=False,
+            self,
+            hidden_states,
+            attention_mask=None,
+            head_mask=None,
+            encoder_hidden_states=None,
+            encoder_attention_mask=None,
+            past_key_value=None,
+            output_attentions=False,
     ):
         # decoder uni-directional self-attention cached key/values tuple is at positions 1,2
         self_attn_past_key_value = past_key_value[:2] if past_key_value is not None else None
@@ -481,19 +490,19 @@ class BertLayer(nn.Module):
 
         if self.has_cross_attention:
             assert encoder_hidden_states is not None, "encoder_hidden_states must be given for cross-attention layers"
-            
+
             if type(encoder_hidden_states) == list:
                 cross_attention_outputs = self.crossattention(
                     attention_output,
                     attention_mask,
                     head_mask,
-                    encoder_hidden_states[(self.layer_num-self.config.fusion_layer)%len(encoder_hidden_states)],
-                    encoder_attention_mask[(self.layer_num-self.config.fusion_layer)%len(encoder_hidden_states)],
+                    encoder_hidden_states[(self.layer_num - self.config.fusion_layer) % len(encoder_hidden_states)],
+                    encoder_attention_mask[(self.layer_num - self.config.fusion_layer) % len(encoder_hidden_states)],
                     output_attentions=output_attentions,
-                )    
+                )
                 attention_output = cross_attention_outputs[0]
                 outputs = outputs + cross_attention_outputs[1:-1]
-         
+
             else:
                 cross_attention_outputs = self.crossattention(
                     attention_output,
@@ -504,7 +513,8 @@ class BertLayer(nn.Module):
                     output_attentions=output_attentions,
                 )
                 attention_output = cross_attention_outputs[0]
-                outputs = outputs + cross_attention_outputs[1:-1]  # add cross attentions if we output attention weights                               
+                outputs = outputs + cross_attention_outputs[1:-1]  # add cross attentions if we output attention weights
+
         layer_output = apply_chunking_to_forward(
             self.feed_forward_chunk, self.chunk_size_feed_forward, self.seq_len_dim, attention_output
         )
@@ -524,41 +534,42 @@ class BertEncoder(nn.Module):
     def __init__(self, config):
         super().__init__()
         self.config = config
-        self.layer = nn.ModuleList([BertLayer(config,i) for i in range(config.num_hidden_layers)])
+        self.layer = nn.ModuleList([BertLayer(config, i) for i in range(config.num_hidden_layers)])
 
     def forward(
-        self,
-        hidden_states,
-        attention_mask=None,
-        head_mask=None,
-        encoder_hidden_states=None,
-        encoder_attention_mask=None,
-        past_key_values=None,
-        use_cache=None,
-        output_attentions=False,
-        output_hidden_states=False,
-        return_dict=True,
-        mode='multi_modal',
+            self,
+            hidden_states,
+            attention_mask=None,
+            head_mask=None,
+            encoder_hidden_states=None,
+            encoder_attention_mask=None,
+            past_key_values=None,
+            use_cache=None,
+            output_attentions=False,
+            output_hidden_states=False,
+            return_dict=True,
+            mode='multi_modal',
     ):
         all_hidden_states = () if output_hidden_states else None
         all_self_attentions = () if output_attentions else None
         all_cross_attentions = () if output_attentions and self.config.add_cross_attention else None
 
         next_decoder_cache = () if use_cache else None
-        
-                
-        if mode=='text': 
+
+        if mode == 'text':
             start_layer = 0
             output_layer = self.config.fusion_layer
-            
-        elif mode=='fusion':
+
+        elif mode == 'fusion':
             start_layer = self.config.fusion_layer
             output_layer = self.config.num_hidden_layers
-            
-        elif mode=='multi_modal':
+
+        elif mode == 'multi_modal':
             start_layer = 0
-            output_layer = self.config.num_hidden_layers        
-        
+            output_layer = self.config.num_hidden_layers
+        else:
+            raise ValueError(f"mode {mode} is not supported")
+
         for i in range(start_layer, output_layer):
             layer_module = self.layer[i]
             if output_hidden_states:
@@ -845,13 +856,12 @@ class BertModel(BertPreTrainedModel):
         self.config = config
 
         self.embeddings = BertEmbeddings(config)
-        
+
         self.encoder = BertEncoder(config)
 
         self.pooler = BertPooler(config) if add_pooling_layer else None
 
         self.init_weights()
- 
 
     def get_input_embeddings(self):
         return self.embeddings.word_embeddings
@@ -868,15 +878,8 @@ class BertModel(BertPreTrainedModel):
             self.encoder.layer[layer].attention.prune_heads(heads)
 
     @add_start_docstrings_to_model_forward(BERT_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
-    @add_code_sample_docstrings(
-        tokenizer_class=_TOKENIZER_FOR_DOC,
-        checkpoint="bert-base-uncased",
-        output_type=BaseModelOutputWithPoolingAndCrossAttentions,
-        config_class=_CONFIG_FOR_DOC,
-    )
-    
-    
-    def get_extended_attention_mask(self, attention_mask: Tensor, input_shape: Tuple[int], device: device, is_decoder: bool) -> Tensor:
+    def get_extended_attention_mask(self, attention_mask: Tensor, input_shape: Tuple[int], device: device,
+                                    is_decoder: bool) -> Tensor:
         """
         Makes broadcastable attention and causal masks so that future and masked tokens are ignored.
 
@@ -937,25 +940,25 @@ class BertModel(BertPreTrainedModel):
         extended_attention_mask = extended_attention_mask.to(dtype=self.dtype)  # fp16 compatibility
         extended_attention_mask = (1.0 - extended_attention_mask) * -10000.0
         return extended_attention_mask
-    
+
     def forward(
-        self,
-        input_ids=None,
-        attention_mask=None,
-        token_type_ids=None,
-        position_ids=None,
-        head_mask=None,
-        inputs_embeds=None,
-        encoder_embeds=None,
-        encoder_hidden_states=None,
-        encoder_attention_mask=None,
-        past_key_values=None,
-        use_cache=None,
-        output_attentions=None,
-        output_hidden_states=None,
-        return_dict=None,
-        is_decoder=False,
-        mode='multi_modal',
+            self,
+            input_ids=None,
+            attention_mask=None,
+            token_type_ids=None,
+            position_ids=None,
+            head_mask=None,
+            inputs_embeds=None,
+            encoder_embeds=None,
+            encoder_hidden_states=None,
+            encoder_attention_mask=None,
+            past_key_values=None,
+            use_cache=None,
+            output_attentions=None,
+            output_hidden_states=None,
+            return_dict=None,
+            is_decoder=False,
+            mode='multi_modal',
     ):
         r"""
         encoder_hidden_states  (:obj:`torch.FloatTensor` of shape :obj:`(batch_size, sequence_length, hidden_size)`, `optional`):
@@ -996,9 +999,9 @@ class BertModel(BertPreTrainedModel):
             input_shape = inputs_embeds.size()[:-1]
             batch_size, seq_length = input_shape
             device = inputs_embeds.device
-        elif encoder_embeds is not None:    
+        elif encoder_embeds is not None:
             input_shape = encoder_embeds.size()[:-1]
-            batch_size, seq_length = input_shape 
+            batch_size, seq_length = input_shape
             device = encoder_embeds.device
         else:
             raise ValueError("You have to specify either input_ids or inputs_embeds or encoder_embeds")
@@ -1013,7 +1016,7 @@ class BertModel(BertPreTrainedModel):
 
         # We can provide a self-attention mask of dimensions [batch_size, from_seq_length, to_seq_length]
         # ourselves in which case we just need to make it broadcastable to all heads.
-        extended_attention_mask: torch.Tensor = self.get_extended_attention_mask(attention_mask, input_shape, 
+        extended_attention_mask: torch.Tensor = self.get_extended_attention_mask(attention_mask, input_shape,
                                                                                  device, is_decoder)
 
         # If a 2D or 3D attention mask is provided for the cross-attention
@@ -1024,13 +1027,13 @@ class BertModel(BertPreTrainedModel):
             else:
                 encoder_batch_size, encoder_sequence_length, _ = encoder_hidden_states.size()
             encoder_hidden_shape = (encoder_batch_size, encoder_sequence_length)
-            
+
             if type(encoder_attention_mask) == list:
                 encoder_extended_attention_mask = [self.invert_attention_mask(mask) for mask in encoder_attention_mask]
             elif encoder_attention_mask is None:
                 encoder_attention_mask = torch.ones(encoder_hidden_shape, device=device)
                 encoder_extended_attention_mask = self.invert_attention_mask(encoder_attention_mask)
-            else:    
+            else:
                 encoder_extended_attention_mask = self.invert_attention_mask(encoder_attention_mask)
         else:
             encoder_extended_attention_mask = None
@@ -1041,7 +1044,7 @@ class BertModel(BertPreTrainedModel):
         # input head_mask has shape [num_heads] or [num_hidden_layers x num_heads]
         # and head_mask is converted to shape [num_hidden_layers x batch x num_heads x seq_length x seq_length]
         head_mask = self.get_head_mask(head_mask, self.config.num_hidden_layers)
-        
+
         if encoder_embeds is None:
             embedding_output = self.embeddings(
                 input_ids=input_ids,
@@ -1052,7 +1055,7 @@ class BertModel(BertPreTrainedModel):
             )
         else:
             embedding_output = encoder_embeds
-            
+
         encoder_outputs = self.encoder(
             embedding_output,
             attention_mask=extended_attention_mask,
@@ -1107,18 +1110,18 @@ class BertForPreTraining(BertPreTrainedModel):
     @add_start_docstrings_to_model_forward(BERT_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
     @replace_return_docstrings(output_type=BertForPreTrainingOutput, config_class=_CONFIG_FOR_DOC)
     def forward(
-        self,
-        input_ids=None,
-        attention_mask=None,
-        token_type_ids=None,
-        position_ids=None,
-        head_mask=None,
-        inputs_embeds=None,
-        labels=None,
-        next_sentence_label=None,
-        output_attentions=None,
-        output_hidden_states=None,
-        return_dict=None,
+            self,
+            input_ids=None,
+            attention_mask=None,
+            token_type_ids=None,
+            position_ids=None,
+            head_mask=None,
+            inputs_embeds=None,
+            labels=None,
+            next_sentence_label=None,
+            output_attentions=None,
+            output_hidden_states=None,
+            return_dict=None,
     ):
         r"""
         labels (:obj:`torch.LongTensor` of shape ``(batch_size, sequence_length)``, `optional`):
@@ -1180,19 +1183,64 @@ class BertForPreTraining(BertPreTrainedModel):
         )
 
 
+class LabelSmoothSoftmaxCEV1(nn.Module):
+    '''
+    This is the autograd version, you can also try the LabelSmoothSoftmaxCEV2 that uses derived gradients
+    '''
+
+    def __init__(self, lb_smooth=0.1, reduction='mean', ignore_index=-100):
+        super(LabelSmoothSoftmaxCEV1, self).__init__()
+        self.lb_smooth = lb_smooth
+        self.reduction = reduction
+        self.lb_ignore = ignore_index
+        self.log_softmax = nn.LogSoftmax(dim=1)
+
+    def forward(self, logits, label):
+        '''
+        Same usage method as nn.CrossEntropyLoss:
+            # >>> criteria = LabelSmoothSoftmaxCEV1()
+            # >>> logits = torch.randn(8, 19, 384, 384) # nchw, float/half
+            # >>> lbs = torch.randint(0, 19, (8, 384, 384)) # nhw, int64_t
+            # >>> loss = criteria(logits, lbs)
+        '''
+        # overcome ignored label
+        logits = logits.float()  # use fp32 to avoid nan
+        with torch.no_grad():
+            num_classes = logits.size(1)
+            label = label.clone().detach()
+            ignore = label.eq(self.lb_ignore)
+            n_valid = ignore.eq(0).sum()
+            label[ignore] = 0
+            lb_pos, lb_neg = 1. - self.lb_smooth, self.lb_smooth / num_classes
+            lb_one_hot = torch.empty_like(logits).fill_(
+                lb_neg).scatter_(1, label.unsqueeze(1), lb_pos).detach()
+
+        logs = self.log_softmax(logits)
+        loss = -torch.sum(logs * lb_one_hot, dim=1)
+        loss[ignore] = 0
+        if self.reduction == 'mean':
+            loss = loss.sum() / n_valid
+        if self.reduction == 'sum':
+            loss = loss.sum()
+
+        return loss
+
+
 @add_start_docstrings(
     """Bert Model with a `language modeling` head on top for CLM fine-tuning. """, BERT_START_DOCSTRING
 )
 class BertLMHeadModel(BertPreTrainedModel):
-
     _keys_to_ignore_on_load_unexpected = [r"pooler"]
     _keys_to_ignore_on_load_missing = [r"position_ids", r"predictions.decoder.bias"]
 
-    def __init__(self, config):
+    def __init__(self, config, label_smoothing=0.0):
         super().__init__(config)
 
         self.bert = BertModel(config, add_pooling_layer=False)
+
         self.cls = BertOnlyMLMHead(config)
+
+        self.label_smoothing = label_smoothing
 
         self.init_weights()
 
@@ -1205,27 +1253,25 @@ class BertLMHeadModel(BertPreTrainedModel):
     @add_start_docstrings_to_model_forward(BERT_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
     @replace_return_docstrings(output_type=CausalLMOutputWithCrossAttentions, config_class=_CONFIG_FOR_DOC)
     def forward(
-        self,
-        input_ids=None,
-        attention_mask=None,
-        token_type_ids=None,
-        position_ids=None,
-        head_mask=None,
-        inputs_embeds=None,
-        encoder_hidden_states=None,
-        encoder_attention_mask=None,
-        labels=None,
-        past_key_values=None,
-        use_cache=None,
-        output_attentions=None,
-        output_hidden_states=None,
-        return_dict=None,
-        is_decoder=True,
-        reduction='mean',
-        mode='multi_modal',
-        soft_labels=None,
-        alpha=0,
-        return_logits=False,        
+            self,
+            input_ids=None,
+            attention_mask=None,
+            token_type_ids=None,
+            position_ids=None,
+            head_mask=None,
+            inputs_embeds=None,
+            encoder_hidden_states=None,
+            encoder_attention_mask=None,
+            labels=None,
+            past_key_values=None,
+            use_cache=None,
+            output_attentions=None,
+            output_hidden_states=None,
+            return_dict=None,
+            is_decoder=True,
+            reduction='mean',
+            mode='multi_modal',
+            return_logits=False,
     ):
         r"""
         encoder_hidden_states  (:obj:`torch.FloatTensor` of shape :obj:`(batch_size, sequence_length, hidden_size)`, `optional`):
@@ -1280,26 +1326,27 @@ class BertLMHeadModel(BertPreTrainedModel):
             is_decoder=is_decoder,
             mode=mode,
         )
-        
+
         sequence_output = outputs[0]
         prediction_scores = self.cls(sequence_output)
-        
+
         if return_logits:
-            return prediction_scores[:, :-1, :].contiguous()  
+            return prediction_scores[:, :-1, :].contiguous()
 
         lm_loss = None
         if labels is not None:
             # we are doing next-token prediction; shift prediction scores and input ids by one
             shifted_prediction_scores = prediction_scores[:, :-1, :].contiguous()
             labels = labels[:, 1:].contiguous()
-            loss_fct = CrossEntropyLoss(reduction=reduction)
+
+            if self.label_smoothing > 0:
+                loss_fct = LabelSmoothSoftmaxCEV1(lb_smooth=self.label_smoothing, reduction=reduction)
+            else:
+                loss_fct = CrossEntropyLoss(reduction=reduction)
+
             lm_loss = loss_fct(shifted_prediction_scores.view(-1, self.config.vocab_size), labels.view(-1))
-            lm_loss = lm_loss.view(prediction_scores.size(0),-1).sum(1)
-            
-        if soft_labels is not None:
-            loss_distill = -torch.sum(F.log_softmax(shifted_prediction_scores, dim=-1)*soft_labels,dim=-1)
-            loss_distill = (loss_distill * (labels!=-100)).sum(1)
-            lm_loss = (1-alpha)*lm_loss + alpha*loss_distill                    
+            if reduction == 'none':
+                lm_loss = lm_loss.view(prediction_scores.size(0), -1).sum(1)
 
         if not return_dict:
             output = (prediction_scores,) + outputs[2:]
@@ -1325,8 +1372,8 @@ class BertLMHeadModel(BertPreTrainedModel):
             input_ids = input_ids[:, -1:]
 
         return {
-            "input_ids": input_ids, 
-            "attention_mask": attention_mask, 
+            "input_ids": input_ids,
+            "attention_mask": attention_mask,
             "past_key_values": past,
             "encoder_hidden_states": model_kwargs.get("encoder_hidden_states", None),
             "encoder_attention_mask": model_kwargs.get("encoder_attention_mask", None),
@@ -1339,10 +1386,137 @@ class BertLMHeadModel(BertPreTrainedModel):
             reordered_past += (tuple(past_state.index_select(0, beam_idx) for past_state in layer_past),)
         return reordered_past
 
+    def _generate_no_beam_search(
+            self,
+            input_ids,
+            cur_len,
+            max_length,
+            do_sample,
+            temperature,
+            top_k,
+            top_p,
+            repetition_penalty,
+            pad_token_id,
+            eos_token_ids,
+            batch_size,
+            **model_kwargs
+    ):
+        """ Generate sequences for each example without beam search (num_beams == 1).
+            All returned sequence are generated independantly.
+        """
+        # current position / max lengths / length of generated sentences / unfinished sentences
+        unfinished_sents = []
+        cur_unfinished = input_ids.new(batch_size).fill_(1)
+
+        # log of scores for each sentence in the batch
+        logprobs = []
+
+        while cur_len < max_length:
+            model_inputs = self.prepare_inputs_for_generation(input_ids, **model_kwargs)
+
+            outputs = self(**model_inputs, return_dict=True)
+            next_token_logits = outputs.logits[:, -1, :]
+
+            # repetition penalty from CTRL paper (https://arxiv.org/abs/1909.05858)
+            if repetition_penalty != 1.0:
+                for i in range(batch_size):
+                    for previous_token in set(input_ids[i].tolist()):
+                        # if score < 0 then repetition penalty has to multiplied to reduce the previous token probability
+                        if next_token_logits[i, previous_token] < 0:
+                            next_token_logits[i, previous_token] *= repetition_penalty
+                        else:
+                            next_token_logits[i, previous_token] /= repetition_penalty
+
+            if do_sample:
+                # Temperature (higher temperature => more likely to sample low probability tokens)
+                if temperature != 1.0:
+                    next_token_logits = next_token_logits / temperature
+                # Top-p/top-k filtering
+                next_token_logits = top_k_top_p_filtering(next_token_logits, top_k=top_k, top_p=top_p)
+                # Sample
+                next_token = torch.multinomial(F.softmax(next_token_logits, dim=-1), num_samples=1).squeeze(1)
+            else:
+                # Greedy decoding
+                next_token = torch.argmax(next_token_logits, dim=-1)
+
+            # Compute scores
+            _scores = F.log_softmax(next_token_logits, dim=-1)  # (batch_size, vocab_size)
+            _scores = torch.gather(_scores, -1, next_token.unsqueeze(-1))  # (batch_size, 1)
+            logprobs.append(_scores)  # (batch_size, 1)
+            unfinished_sents.append(cur_unfinished)
+
+            # update generations and finished sentences
+            tokens_to_add = next_token * cur_unfinished + pad_token_id * (1 - cur_unfinished)
+            input_ids = torch.cat([input_ids, tokens_to_add.unsqueeze(-1)], dim=-1)
+
+            model_kwargs = self._update_model_kwargs_for_generation(
+                outputs, model_kwargs, is_encoder_decoder=self.config.is_encoder_decoder
+            )
+            cur_len = cur_len + 1
+
+            for eos_token_id in eos_token_ids:
+                cur_unfinished = cur_unfinished.mul(tokens_to_add.ne(eos_token_id).long())
+
+            # stop when there is a </s> in each sentence, or if we exceed the maximul length
+            if cur_unfinished.max() == 0:
+                break
+
+        # add eos_token_ids to unfinished sentences
+        if cur_len == max_length:
+            input_ids[:, -1].masked_fill_(cur_unfinished.to(dtype=torch.bool), eos_token_ids[0])
+
+        logprobs = torch.cat(logprobs, dim=1)
+        unfinished_sents = torch.stack(unfinished_sents, dim=1).float()
+        sum_logprobs = (logprobs * unfinished_sents).sum(dim=1)
+        # return logprobs to keep consistent with beam search output
+        logprobs = sum_logprobs / unfinished_sents.sum(dim=1)
+
+        # pad to the same length, otherwise DataParallel will give error
+        pad_len = max_length - input_ids.shape[1]
+        if pad_len > 0:
+            padding_ids = input_ids.new(batch_size, pad_len).fill_(pad_token_id)
+            input_ids = torch.cat([input_ids, padding_ids], dim=1)
+
+        return input_ids, logprobs
+
+
+def top_k_top_p_filtering(logits, top_k=0, top_p=1.0, filter_value=-float("Inf"), min_tokens_to_keep=1):
+    """ Filter a distribution of logits using top-k and/or nucleus (top-p) filtering
+        Args:
+            logits: logits distribution shape (batch size, vocabulary size)
+            if top_k > 0: keep only top k tokens with highest probability (top-k filtering).
+            if top_p < 1.0: keep the top tokens with cumulative probability >= top_p (nucleus filtering).
+                Nucleus filtering is described in Holtzman et al. (http://arxiv.org/abs/1904.09751)
+            Make sure we keep at least min_tokens_to_keep per batch example in the output
+        From: https://gist.github.com/thomwolf/1a5a29f6962089e871b94cbd09daf317
+    """
+    if top_k > 0:
+        top_k = min(max(top_k, min_tokens_to_keep), logits.size(-1))  # Safety check
+        # Remove all tokens with a probability less than the last token of the top-k
+        indices_to_remove = logits < torch.topk(logits, top_k)[0][..., -1, None]
+        logits[indices_to_remove] = filter_value
+
+    if top_p < 1.0:
+        sorted_logits, sorted_indices = torch.sort(logits, descending=True)
+        cumulative_probs = torch.cumsum(F.softmax(sorted_logits, dim=-1), dim=-1)
+
+        # Remove tokens with cumulative probability above the threshold (token with 0 are kept)
+        sorted_indices_to_remove = cumulative_probs > top_p
+        if min_tokens_to_keep > 1:
+            # Keep at least min_tokens_to_keep (set to min_tokens_to_keep-1 because we add the first one below)
+            sorted_indices_to_remove[..., :min_tokens_to_keep] = 0
+        # Shift the indices to the right to keep also the first token above the threshold
+        sorted_indices_to_remove[..., 1:] = sorted_indices_to_remove[..., :-1].clone()
+        sorted_indices_to_remove[..., 0] = 0
+
+        # scatter sorted tensors to original indexing
+        indices_to_remove = sorted_indices_to_remove.scatter(1, sorted_indices, sorted_indices_to_remove)
+        logits[indices_to_remove] = filter_value
+    return logits
+
 
 @add_start_docstrings("""Bert Model with a `language modeling` head on top. """, BERT_START_DOCSTRING)
 class BertForMaskedLM(BertPreTrainedModel):
-
     _keys_to_ignore_on_load_unexpected = [r"pooler"]
     _keys_to_ignore_on_load_missing = [r"position_ids", r"predictions.decoder.bias"]
 
@@ -1361,32 +1535,28 @@ class BertForMaskedLM(BertPreTrainedModel):
         self.cls.predictions.decoder = new_embeddings
 
     @add_start_docstrings_to_model_forward(BERT_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
-    @add_code_sample_docstrings(
-        tokenizer_class=_TOKENIZER_FOR_DOC,
-        checkpoint="bert-base-uncased",
-        output_type=MaskedLMOutput,
-        config_class=_CONFIG_FOR_DOC,
-    )
+    def gather_seq_out_by_pos(self, seq, pos):
+        return torch.gather(seq, 1, pos.unsqueeze(2).expand(-1, -1, seq.size(-1)))
+
     def forward(
-        self,
-        input_ids=None,
-        attention_mask=None,
-        token_type_ids=None,
-        position_ids=None,
-        head_mask=None,
-        inputs_embeds=None,
-        encoder_embeds=None,
-        encoder_hidden_states=None,
-        encoder_attention_mask=None,
-        labels=None,
-        output_attentions=None,
-        output_hidden_states=None,
-        return_dict=None,
-        is_decoder=False,
-        mode='multi_modal',
-        soft_labels=None,
-        alpha=0,
-        return_logits=False,
+            self,
+            input_ids=None,
+            attention_mask=None,
+            token_type_ids=None,
+            position_ids=None,
+            head_mask=None,
+            inputs_embeds=None,
+            encoder_embeds=None,
+            encoder_hidden_states=None,
+            encoder_attention_mask=None,
+            labels=None,
+            output_attentions=None,
+            output_hidden_states=None,
+            return_dict=None,
+            is_decoder=False,
+            mode='multi_modal',
+            return_logits=False,
+            masked_pos=None,
     ):
         r"""
         labels (:obj:`torch.LongTensor` of shape :obj:`(batch_size, sequence_length)`, `optional`):
@@ -1415,8 +1585,15 @@ class BertForMaskedLM(BertPreTrainedModel):
         )
 
         sequence_output = outputs[0]
+
+        if masked_pos is not None:
+            # sequence_output, (bs, len, 768)
+            # masked_pos, (bs, n_mask)
+            sequence_output = self.gather_seq_out_by_pos(sequence_output, masked_pos)
+            # sequence_output, (bs, n_mask, 768)
+
         prediction_scores = self.cls(sequence_output)
-        
+
         if return_logits:
             return prediction_scores
 
@@ -1424,11 +1601,6 @@ class BertForMaskedLM(BertPreTrainedModel):
         if labels is not None:
             loss_fct = CrossEntropyLoss()  # -100 index = padding token
             masked_lm_loss = loss_fct(prediction_scores.view(-1, self.config.vocab_size), labels.view(-1))
-        
-        if soft_labels is not None:
-            loss_distill = -torch.sum(F.log_softmax(prediction_scores, dim=-1)*soft_labels,dim=-1)
-            loss_distill = loss_distill[labels!=-100].mean()
-            masked_lm_loss = (1-alpha)*masked_lm_loss + alpha*loss_distill
 
         if not return_dict:
             output = (prediction_scores,) + outputs[2:]
@@ -1472,18 +1644,18 @@ class BertForNextSentencePrediction(BertPreTrainedModel):
     @add_start_docstrings_to_model_forward(BERT_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
     @replace_return_docstrings(output_type=NextSentencePredictorOutput, config_class=_CONFIG_FOR_DOC)
     def forward(
-        self,
-        input_ids=None,
-        attention_mask=None,
-        token_type_ids=None,
-        position_ids=None,
-        head_mask=None,
-        inputs_embeds=None,
-        labels=None,
-        output_attentions=None,
-        output_hidden_states=None,
-        return_dict=None,
-        **kwargs
+            self,
+            input_ids=None,
+            attention_mask=None,
+            token_type_ids=None,
+            position_ids=None,
+            head_mask=None,
+            inputs_embeds=None,
+            labels=None,
+            output_attentions=None,
+            output_hidden_states=None,
+            return_dict=None,
+            **kwargs
     ):
         r"""
         labels (:obj:`torch.LongTensor` of shape :obj:`(batch_size,)`, `optional`):
@@ -1566,24 +1738,18 @@ class BertForSequenceClassification(BertPreTrainedModel):
         self.init_weights()
 
     @add_start_docstrings_to_model_forward(BERT_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
-    @add_code_sample_docstrings(
-        tokenizer_class=_TOKENIZER_FOR_DOC,
-        checkpoint="bert-base-uncased",
-        output_type=SequenceClassifierOutput,
-        config_class=_CONFIG_FOR_DOC,
-    )
     def forward(
-        self,
-        input_ids=None,
-        attention_mask=None,
-        token_type_ids=None,
-        position_ids=None,
-        head_mask=None,
-        inputs_embeds=None,
-        labels=None,
-        output_attentions=None,
-        output_hidden_states=None,
-        return_dict=None,
+            self,
+            input_ids=None,
+            attention_mask=None,
+            token_type_ids=None,
+            position_ids=None,
+            head_mask=None,
+            inputs_embeds=None,
+            labels=None,
+            output_attentions=None,
+            output_hidden_states=None,
+            return_dict=None,
     ):
         r"""
         labels (:obj:`torch.LongTensor` of shape :obj:`(batch_size,)`, `optional`):
@@ -1650,24 +1816,18 @@ class BertForMultipleChoice(BertPreTrainedModel):
         self.init_weights()
 
     @add_start_docstrings_to_model_forward(BERT_INPUTS_DOCSTRING.format("batch_size, num_choices, sequence_length"))
-    @add_code_sample_docstrings(
-        tokenizer_class=_TOKENIZER_FOR_DOC,
-        checkpoint="bert-base-uncased",
-        output_type=MultipleChoiceModelOutput,
-        config_class=_CONFIG_FOR_DOC,
-    )
     def forward(
-        self,
-        input_ids=None,
-        attention_mask=None,
-        token_type_ids=None,
-        position_ids=None,
-        head_mask=None,
-        inputs_embeds=None,
-        labels=None,
-        output_attentions=None,
-        output_hidden_states=None,
-        return_dict=None,
+            self,
+            input_ids=None,
+            attention_mask=None,
+            token_type_ids=None,
+            position_ids=None,
+            head_mask=None,
+            inputs_embeds=None,
+            labels=None,
+            output_attentions=None,
+            output_hidden_states=None,
+            return_dict=None,
     ):
         r"""
         labels (:obj:`torch.LongTensor` of shape :obj:`(batch_size,)`, `optional`):
@@ -1731,7 +1891,6 @@ class BertForMultipleChoice(BertPreTrainedModel):
     BERT_START_DOCSTRING,
 )
 class BertForTokenClassification(BertPreTrainedModel):
-
     _keys_to_ignore_on_load_unexpected = [r"pooler"]
 
     def __init__(self, config):
@@ -1745,24 +1904,18 @@ class BertForTokenClassification(BertPreTrainedModel):
         self.init_weights()
 
     @add_start_docstrings_to_model_forward(BERT_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
-    @add_code_sample_docstrings(
-        tokenizer_class=_TOKENIZER_FOR_DOC,
-        checkpoint="bert-base-uncased",
-        output_type=TokenClassifierOutput,
-        config_class=_CONFIG_FOR_DOC,
-    )
     def forward(
-        self,
-        input_ids=None,
-        attention_mask=None,
-        token_type_ids=None,
-        position_ids=None,
-        head_mask=None,
-        inputs_embeds=None,
-        labels=None,
-        output_attentions=None,
-        output_hidden_states=None,
-        return_dict=None,
+            self,
+            input_ids=None,
+            attention_mask=None,
+            token_type_ids=None,
+            position_ids=None,
+            head_mask=None,
+            inputs_embeds=None,
+            labels=None,
+            output_attentions=None,
+            output_hidden_states=None,
+            return_dict=None,
     ):
         r"""
         labels (:obj:`torch.LongTensor` of shape :obj:`(batch_size, sequence_length)`, `optional`):
@@ -1822,7 +1975,6 @@ class BertForTokenClassification(BertPreTrainedModel):
     BERT_START_DOCSTRING,
 )
 class BertForQuestionAnswering(BertPreTrainedModel):
-
     _keys_to_ignore_on_load_unexpected = [r"pooler"]
 
     def __init__(self, config):
@@ -1835,25 +1987,19 @@ class BertForQuestionAnswering(BertPreTrainedModel):
         self.init_weights()
 
     @add_start_docstrings_to_model_forward(BERT_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
-    @add_code_sample_docstrings(
-        tokenizer_class=_TOKENIZER_FOR_DOC,
-        checkpoint="bert-base-uncased",
-        output_type=QuestionAnsweringModelOutput,
-        config_class=_CONFIG_FOR_DOC,
-    )
     def forward(
-        self,
-        input_ids=None,
-        attention_mask=None,
-        token_type_ids=None,
-        position_ids=None,
-        head_mask=None,
-        inputs_embeds=None,
-        start_positions=None,
-        end_positions=None,
-        output_attentions=None,
-        output_hidden_states=None,
-        return_dict=None,
+            self,
+            input_ids=None,
+            attention_mask=None,
+            token_type_ids=None,
+            position_ids=None,
+            head_mask=None,
+            inputs_embeds=None,
+            start_positions=None,
+            end_positions=None,
+            output_attentions=None,
+            output_hidden_states=None,
+            return_dict=None,
     ):
         r"""
         start_positions (:obj:`torch.LongTensor` of shape :obj:`(batch_size,)`, `optional`):

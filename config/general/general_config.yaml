@@ -2,3 +2,7 @@ ARO_image_folder_url: https://drive.google.com/file/d/1KnuPkzIzhxMRg39oY569m0u4T
 VALSE_image_folder_url: https://drive.google.com/file/d/1rNDEbPlKwQdZrvrPMCXZBiDz9QXTh2La/view?usp=sharing
 
 full_dataset_path: ../datasets/combined_aro_valse.json
+
+ALBEF_weights: https://drive.google.com/file/d/1h-E_00cNXjFZQSfoLo1dEPtpp5GxZWYX/view?usp=sharing
+XVLM_weights: https://drive.google.com/file/d/1IGGhqbW5kZJv-H3Qe_jxcyC_i9YO4kja/view?usp=sharing
+swin_weights: https://drive.google.com/file/d/1VvDXK7Ey3B0UUgYrhOZB3E1D7bxPtMuq/view?usp=sharing

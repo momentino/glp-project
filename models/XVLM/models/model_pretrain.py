@@ -1,5 +1,5 @@
 import torch
-from models import XVLMBase
+from models.XVLM.models import XVLMBase
 
 
 class XVLM(XVLMBase):

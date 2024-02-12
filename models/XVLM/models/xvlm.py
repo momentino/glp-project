@@ -11,16 +11,16 @@ import torch.distributed as dist
 
 from functools import partial
 
-from models import box_ops
+from models.XVLM.models import box_ops
 
-from models.vit import VisionTransformer, interpolate_pos_embed
-from models.clip_vit import CLIPVisionTransformer
-from models.swin_transformer import SwinTransformer, interpolate_relative_pos_embed
+from models.XVLM.models.vit import VisionTransformer, interpolate_pos_embed
+from models.XVLM.models.clip_vit import CLIPVisionTransformer
+from models.XVLM.models.swin_transformer import SwinTransformer, interpolate_relative_pos_embed
 
-from models.xbert import BertConfig, BertForMaskedLM, BertModel
-from models.xroberta import RobertaConfig, RobertaForMaskedLM, RobertaModel
+from models.XVLM.models.xbert import BertConfig, BertForMaskedLM, BertModel
+from models.XVLM.models.xroberta import RobertaConfig, RobertaForMaskedLM, RobertaModel
 
-from utils import read_json
+from models.XVLM.utils import read_json
 
 
 class AllGather(torch.autograd.Function):
