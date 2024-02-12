@@ -1,0 +1,202 @@
+{
+    "0":{
+        "dataset":"ARO",
+        "image_id":"2388232.jpg",
+        "true_active":"the cat is touching the elephant",
+        "foil_active":"the elephant is touching the cat",
+        "true_passive":"the elephant is being touched by the cat",
+        "foil_passive":"the cat is being touched by the elephant",
+        "verb":"touch",
+        "category":"contact"
+     },
+    "1":{
+        "dataset":"ARO",
+        "image_id":"2350743.jpg",
+        "true_active":"the dogs are watching the cat",
+        "foil_active":"the cat is watching the dogs",
+        "true_passive":"the cat is being watched by the dogs",
+        "foil_passive":"the dogs are being watched by the cat",
+        "verb":"watch",
+        "category":"perception"
+     },
+    "2":{
+        "dataset":"ARO",
+        "image_id":"2358708.jpg",
+        "true_active":"the horse is carrying the woman",
+        "foil_active":"the woman is carrying the horse",
+        "true_passive":"the woman is being carried by the horse",
+        "foil_passive":"the horse is being carried by the woman",
+        "verb":"carry",
+        "category":"change_location"
+     },
+     "3":{
+        "dataset":"ARO",
+        "image_id":"2378748.jpg",
+        "true_active":"the leaves are covering the ground",
+        "foil_active":"the ground is covering the leaves",
+        "true_passive":"the ground is being covered by the leaves",
+        "foil_passive":"the leaves are being covered by the ground",
+        "verb":"cover",
+        "category":"change_state"
+     },
+    "4":{
+        "dataset":"ARO",
+        "image_id":"2378758.jpg",
+        "true_active":"the people are carrying the skateboard",
+        "foil_active":"the skateboard is carrying the people",
+        "true_passive":"the skateboard is being carried by the people",
+        "foil_passive":"the people are being carried by the skateboard",
+        "verb":"carry",
+        "category":"change_location"
+     },
+    "5":{
+        "dataset":"ARO",
+        "image_id":"2319558.jpg",
+        "true_active":"the man is carrying the baby",
+        "foil_active":"the baby is carrying the man",
+        "true_passive":"the baby is being carried by the man",
+        "foil_passive":"the man is being carried by the baby",
+        "verb":"carry",
+        "category":"change_location"
+     },
+    "6":{
+        "dataset":"ARO",
+        "image_id":"2335178.jpg",
+        "true_active":"the lady is carrying the dog",
+        "foil_active":"the dog is carrying the lady",
+        "true_passive":"the dog is being carried by the lady",
+        "foil_passive":"the lady is being carried by the dog",
+        "verb":"carry",
+        "category":"change_location"
+     },
+    "7":{
+        "dataset":"ARO",
+        "image_id":"2343796.jpg",
+        "true_active":"the sheet is covering the fence",
+        "foil_active":"the fence is covering the sheet",
+        "true_passive":"the fence is being covered by the sheet",
+        "foil_passive":"the sheet is being covered by the fence",
+        "verb":"cover",
+        "category":"change_state"
+     },
+    "8":{
+        "dataset":"ARO",
+        "image_id":"2400560.jpg",
+        "true_active":"the man is watching the woman",
+        "foil_active":"the woman is watching the man",
+        "true_passive":"the woman is being watched by the man",
+        "foil_passive":"the man is being watched by the woman",
+        "verb":"watch",
+        "category":"perception"
+     },
+    "9":{
+        "dataset":"ARO",
+        "image_id":"2365840.jpg",
+        "true_active":"the woman is touching the elephant",
+        "foil_active":"the elephant is touching the woman",
+        "true_passive":"the elephant is being touched by the woman",
+        "foil_passive":"the woman is being touched by the elephant",
+        "verb":"touch",
+        "category":"contact"
+     },
+    "10":{
+        "dataset":"ARO",
+        "image_id":"2407347.jpg",
+        "true_active":"the trees are surrounding the grass",
+        "foil_active":"the grass is surrounding the trees",
+        "true_passive":"the grass is being surrounded by the trees",
+        "foil_passive":"the trees are being surrounded by the grass",
+        "verb":"surround",
+        "category":"state_of_being"
+     },
+    "11":{
+        "dataset":"VALSE",
+        "image_id":"teaching_68.jpg",
+        "true_active":"A teacher teaches a student",
+        "foil_active":"A student teaches a teacher",
+        "true_passive":"A student is taught by a teacher",
+        "foil_passive":"A teacher is taught by a student",
+        "verb":"teach",
+        "category":"social"
+     },
+    "12":{
+        "dataset":"VALSE",
+        "image_id":"rehabilitating_199.jpg",
+        "true_active":"A woman rehabilitates a person",
+        "foil_active":"A person rehabilitates a woman",
+        "true_passive":"A person is rehabilitated by a woman",
+        "foil_passive":"A woman is rehabilitated by a person",
+        "verb":"rehabilitate",
+        "category":"change_state"
+     },
+    "13":{
+        "dataset":"VALSE",
+        "image_id":"nuzzling_264.jpg",
+        "true_active":"A wife nuzzles her husband",
+        "foil_active":"A husband nuzzles his wife",
+        "true_passive":"A husband is nuzzled by his wife",
+        "foil_passive":"A wife is nuzzled by her husband",
+        "verb":"nuzzle",
+        "category":"contact"
+     },
+    "14":{
+        "dataset":"VALSE",
+        "image_id":"applauding_36.jpg",
+        "true_active":"A guest applauds a speaker",
+        "foil_active":"A speaker applauds a guest",
+        "true_passive":"A speaker is applauded by a guest",
+        "foil_passive":"A guest is applauded by a speaker",
+        "verb":"applaud",
+        "category":"communication"
+     },
+    "15":{
+        "dataset":"VALSE",
+        "image_id":"disciplining_110.jpg",
+        "true_active":"A woman disciplines a male child",
+        "foil_active":"A male child disciplines a woman",
+        "true_passive":"A male child is disciplined by a woman",
+        "foil_passive":"A woman is disciplined by a male child",
+        "verb":"discipline",
+        "category":"contrast"
+     },
+    "16":{
+        "dataset":"VALSE",
+        "image_id":"encouraging_24.jpg",
+        "true_active":"A young buck encourages a girl",
+        "foil_active":"A girl encourages a young buck",
+        "true_passive":"A girl is encouraged by a young buck",
+        "foil_passive":"A young buck is encouraged by a girl",
+        "verb":"encourage",
+        "category":"communication"
+     },
+    "17":{
+        "dataset":"VALSE",
+        "image_id":"bothering_202.jpg",
+        "true_active":"A woman bothers the usher",
+        "foil_active":"An usher bothers the woman",
+        "true_passive":"An usher bothers the woman",
+        "foil_passive":"A woman is bothered by the usher",
+        "verb":"bother",
+        "category":"communication"
+     },
+    "18":{
+        "dataset":"VALSE",
+        "image_id":"admiring_240.jpg",
+        "true_active":"A person admires a woman",
+        "foil_active":"A woman admires a person",
+        "true_passive":"A woman is admired by a person",
+        "foil_passive":"A person is admired by a woman",
+        "verb":"admire",
+        "category":"perception"
+     },
+    "19":{
+        "dataset":"VALSE",
+        "image_id":"teaching_34.jpg",
+        "true_active":"A man teaches a woman",
+        "foil_active":"A woman teaches a man",
+        "true_passive":"A woman is taught by a man",
+        "foil_passive":"A man is taught by a woman",
+        "verb":"teach",
+        "category":"social"
+     }
+}
