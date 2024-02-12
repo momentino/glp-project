@@ -13667,7 +13667,7 @@
       "true_passive":"A cashier is paid by a man",
       "foil_passive":"A man is paid by a cashier",
       "verb":"pay",
-      "category":"Exchange"
+      "category":"exchange"
    },
    "1367":{
       "dataset":"VALSE",
@@ -13887,7 +13887,7 @@
       "true_passive":"A cashier is paid by a customer",
       "foil_passive":"A customer is paid by a cashier",
       "verb":"pay",
-      "category":"Exchange"
+      "category":"exchange"
    },
    "1389":{
       "dataset":"VALSE",
@@ -14457,7 +14457,7 @@
       "true_passive":"A hand is offered by a man",
       "foil_passive":"A man is offered by a hand",
       "verb":"offer",
-      "category":"Exchange"
+      "category":"exchange"
    },
    "1446":{
       "dataset":"VALSE",
@@ -14847,7 +14847,7 @@
       "true_passive":"A merchandise is sold by a person",
       "foil_passive":"A person is sold by a merchandise",
       "verb":"sell",
-      "category":"Exchange"
+      "category":"exchange"
    },
    "1485":{
       "dataset":"VALSE",
@@ -15797,7 +15797,7 @@
       "true_passive":"A food is sold by its man",
       "foil_passive":"A man is sold by his food",
       "verb":"sell",
-      "category":"Exchange"
+      "category":"exchange"
    },
    "1580":{
       "dataset":"VALSE",
@@ -17317,7 +17317,7 @@
       "true_passive":"A food is sold by its woman",
       "foil_passive":"A woman is sold by her food",
       "verb":"sell",
-      "category":"Exchange"
+      "category":"exchange"
    },
    "1732":{
       "dataset":"VALSE",
@@ -17327,7 +17327,7 @@
       "true_passive":"A food is sold by its woman",
       "foil_passive":"A woman is sold by her food",
       "verb":"sell",
-      "category":"Exchange"
+      "category":"exchange"
    },
    "1733":{
       "dataset":"VALSE",
@@ -17527,7 +17527,7 @@
       "true_passive":"Soap is sold by a woman",
       "foil_passive":"A woman is sold by soap",
       "verb":"sell",
-      "category":"Exchange"
+      "category":"exchange"
    },
    "1753":{
       "dataset":"VALSE",

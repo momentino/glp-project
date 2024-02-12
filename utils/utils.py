@@ -18,4 +18,4 @@ def load_weights(model, model_name, general_config):
     path = '../pretrained_weights/'+model_name+"_weights.pth"
     if (not os.path.exists(path)):
         download_weights(model_name, general_config)
-    model.load_state_dict(torch.load(path), strict=False)
+    model.load_state_dict(torch.load(path, map_location='cpu')['model'])

@@ -47,6 +47,5 @@ class ALBEFForITM(nn.Module):
 
         """ Each ITM head returns the probability for the caption to match the image. 
         We only take the probability for the image to match the caption """
-
-        prob_scores = [F.softmax(captions_vl_output),F.softmax(foils_vl_output)]
+        prob_scores = [F.softmax(captions_vl_output, dim=1),F.softmax(foils_vl_output, dim=1)]
         return prob_scores
