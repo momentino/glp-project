@@ -56,7 +56,6 @@ class ITMDataset(data.Dataset):
             for filename in os.listdir(dataset_img_folder):
                 if(filename==f):
                     image_list.append(Image.open(os.path.join(dataset_img_folder,filename)))
-
         return image_list
 
     def __len__(self):

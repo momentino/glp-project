@@ -1,0 +1,18 @@
+## Vision Encoder
+vit: 'large'
+vit_grad_ckpt: False
+vit_ckpt_layer: 0
+image_res: 224
+
+## Text Encoder
+bert_config: ../models/BLIP/configs/bert_config.json
+text_encoder: bert-base-uncased
+
+## Training
+batch_size_test: 12
+batch_size_test_text: 64
+max_tokens: 30
+temp: 0.07
+k_test: 256
+queue_size: 57600
+alpha: 0.4

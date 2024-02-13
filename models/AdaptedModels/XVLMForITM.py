@@ -1,5 +1,3 @@
-from models.ALBEF.models import model_pretrain
-
 import torch
 from torch import nn
 import torch.nn.functional as F
@@ -27,5 +25,5 @@ class XVLMForITM(nn.Module):
         foils_vl_output = self.base_model.itm_head(cross_foils)
         """ Each ITM head returns the probability for the caption to match the image.
         We only take the probability for the image to match the caption """
-        prob_scores = [F.softmax(captions_vl_output)[:,1],F.softmax(foils_vl_output)[:,1]]
+        prob_scores = [F.softmax(captions_vl_output, dim=1),F.softmax(foils_vl_output, dim=1)]
         return prob_scores

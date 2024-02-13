@@ -6,7 +6,7 @@ model_name = 'roberta-base'
 model = RobertaForMaskedLM.from_pretrained(model_name)
 tokenizer = RobertaTokenizer.from_pretrained(model_name)
 
-threshold_path="./datasets/threshold.json"
+threshold_path="../../datasets/threshold.json"
 dataset_path="./datasets/combined_aro_valse.json"
 
 threshold_foils=load_foils(threshold_path)

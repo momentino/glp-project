@@ -1,6 +1,7 @@
 ## Vision Encoder
 vision_config: ../models/XVLM/configs/config_swinB_224.json
 
+
 use_clip_vit: False
 
 use_swin: True

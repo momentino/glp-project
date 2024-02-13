@@ -9,9 +9,13 @@ from torch.utils.data import DataLoader
 
 from datasets.datasets import ITMDataset
 from models.ALBEF.models.model_pretrain import ALBEF
-from models.XVLM.models.model_pretrain import XVLM
+from models.XVLM.models.model_pretrain import XVLM as XVLM
+from models.X2VLM.models.model_pretrain import XVLM as X2VLM
+from models.BLIP.models.blip_pretrain import BLIP_Pretrain
 from experiments.ALBEF.eval import eval as albef_eval
 from experiments.XVLM.eval import eval as xvlm_eval
+from experiments.X2VLM.eval import eval as x2vlm_eval
+from experiments.BLIP.eval import eval as blip_eval
 from utils.utils import download_weights
 
 _logger = logging.getLogger(__name__)
@@ -30,7 +34,7 @@ _logger.info(f"Running with args {FLAGS}, {FIRE_FLAGS}")
 """
 def get_args_parser():
     parser = argparse.ArgumentParser('Set parameters for the expriments)', add_help=False)
-    parser.add_argument('--model', default='ALBEF', type=str, choices=['ALBEF','XVLM','BLIP','CLIP','NegCLIP'])
+    parser.add_argument('--model', default='ALBEF', type=str, choices=['ALBEF','XVLM','BLIP','X2VLM'])
     parser.add_argument('--experiment', default='first_second', type=str, choices=['pre', 'first_second'])
     parser.add_argument('--dataset', default='all', type=str, choices=['VALSE', 'ARO','all'])
     parser.add_argument('--split', default='all', type=str, choices=['active', 'passive','all'])
@@ -58,6 +62,10 @@ def main(args):
                          'config.yaml'),
         'XVLM': load_config('../config/XVLM',
                              'config.yaml'),
+        'BLIP': load_config('../config/BLIP',
+                             'config.yaml'),
+        'X2VLM': load_config('../config/X2VLM',
+                             'config.yaml'),
     }
 
     # our tokenizer is initialized from the text encoder specified in the config file
@@ -66,12 +74,27 @@ def main(args):
     if(model_name=='XVLM'):
         download_weights(model_name='swin',
                          general_config=configs['general'])  # to download the vision encoder weights if not done already
+
+    # for reduced memory usage
+    models = {}
+    models =
+
     models = {
-        'ALBEF': ALBEF(config=configs['ALBEF'], text_encoder=configs['ALBEF']['text_encoder'], tokenizer=tokenizer),
-         'XVLM': XVLM(config=configs['XVLM'])
+        ,
+         'XVLM': XVLM(config=configs['XVLM']),
+         'BLIP': BLIP_Pretrain(image_size=configs['BLIP']['image_res'], vit=configs['BLIP']['vit'], vit_grad_ckpt=configs['BLIP']['vit_grad_ckpt'],
+                          vit_ckpt_layer=configs['BLIP']['vit_ckpt_layer'], queue_size=configs['BLIP']['queue_size'], med_config=configs['BLIP']['bert_config'] ),
+        'X2VLM': X2VLM(config=configs['X2VLM'], load_text_params=False, load_vision_params=False, pretraining=False)
     }
 
     # load the model
+    if(model_name == 'ALBEF'):
+        'ALBEF': ALBEF(config=configs['ALBEF'], text_encoder=configs['ALBEF']['text_encoder'], tokenizer=tokenizer)
+    elif(model_name == 'BLIP'):
+        BLIP_Pretrain(image_size=configs['BLIP']['image_res'], vit=configs['BLIP']['vit'],
+                      vit_grad_ckpt=configs['BLIP']['vit_grad_ckpt'],
+                      vit_ckpt_layer=configs['BLIP']['vit_ckpt_layer'], queue_size=configs['BLIP']['queue_size'],
+                      med_config=configs['BLIP']['bert_config'])
     model = models[model_name]
 
     dataset_files = {
@@ -137,6 +160,17 @@ def main(args):
                         acc,pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, perf_by_cat = xvlm_eval(model,
                                                                                                                                                         loaders[dataset][split],
                                                                                                                                                         configs['general'])
+                    elif (model_name == 'BLIP'):
+                        acc, pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, perf_by_cat = blip_eval(
+                            model,
+                            loaders[dataset][split],
+                            configs['general'])
+                    elif (model_name == 'X2VLM'):
+                        acc, pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, perf_by_cat = x2vlm_eval(
+                            model,
+                            loaders[dataset][split],
+                            configs['general'],
+                            configs['X2VLM'])
                     df = pd.read_csv(configs['general']['scores_'+experiment+'_path'])
                     rows = []
                     new_row = {

@@ -3,7 +3,9 @@ from models.AdaptedModels.XVLMForITM import XVLMForITM
 import torch
 from utils.utils import load_weights
 def eval(model, loader, config):
+
     adapted_model = XVLMForITM(model)
+    #model.load_pretrained(args.checkpoint, config, is_eval=True)
     load_weights(adapted_model.base_model, model_name='XVLM', general_config=config) # we load the weights of the base architecture
     adapted_model.eval()
 

@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  * By Junnan Li
 '''
-from models.med import BertConfig, BertModel, BertLMHeadModel
+from models.BLIP.models.med import BertConfig, BertModel, BertLMHeadModel
 from transformers import BertTokenizer
 import transformers
 transformers.logging.set_verbosity_error()
@@ -14,7 +14,7 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 
-from models.blip import create_vit, init_tokenizer, load_checkpoint
+from models.BLIP.models.blip import create_vit, init_tokenizer, load_checkpoint
 
 class BLIP_Pretrain(nn.Module):
     def __init__(self,                 
@@ -44,9 +44,12 @@ class BLIP_Pretrain(nn.Module):
             state_dict = checkpoint["model"]     
             msg = self.visual_encoder.load_state_dict(state_dict,strict=False)
         elif vit=='large':
-            from timm.models.helpers import load_custom_pretrained
+            from timm.models import load_custom_pretrained
             from timm.models.vision_transformer import default_cfgs
-            load_custom_pretrained(self.visual_encoder,default_cfgs['vit_large_patch16_224_in21k'])        
+
+            default_cfgs = default_cfgs['vit_large_patch16_224'].default.to_dict()
+            default_cfgs['hf_hub_id'] = None
+            load_custom_pretrained(self.visual_encoder,default_cfgs)
                
         self.tokenizer = init_tokenizer()   
         encoder_config = BertConfig.from_json_file(med_config)
