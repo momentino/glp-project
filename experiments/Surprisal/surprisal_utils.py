@@ -2,13 +2,11 @@ import torch
 import torch.nn.functional as F
 import json
 
-def sent_surprisal(logits, token_ids):
-    size = token_ids.shape[0]
-    #compute probabilities
-    probabilities = F.softmax(logits, dim=-1)
+
+def token_surprisal(logits, token_id, token_index):
     # Compute the surprisal
-    surprisal = -torch.log(probabilities[torch.arange(size),:, token_ids[0]])
-    return surprisal.mean() # Average the surprisal values
+    surprisal = -torch.log_softmax(logits,dim=-1).squeeze(0)[token_index][token_id]
+    return surprisal.item()
 
 def load_foils(json_path):
     foils = []
@@ -22,14 +20,21 @@ def compute_surprisal(sentences,tokenizer,model):
     surprisal_scores = []
     # Iterate through the dataset
     for sent in sentences:
+        word_surprisals=[]
         # Tokenize the input
         input_ids = torch.tensor(tokenizer.encode(sent,add_special_tokens=True)).unsqueeze(0)
-        # Forward pass to compute the layer outputs
-        with torch.no_grad():
-            outputs = model(input_ids)
-            logits=outputs.logits
+        mask_indexes=torch.arange(1,len(input_ids[0])) #remove the beginning and end of sentence tokens
+        for index in mask_indexes:
+            token_id=input_ids[0][index]
+            masked_input_ids=input_ids.clone()
+            # Forward pass to compute the layer outputs
+            masked_input_ids[0][index] = tokenizer.convert_tokens_to_ids(['[MASK]'])[0]
+            with torch.no_grad():
+                outputs = model(masked_input_ids)
+                logits = outputs.logits
             # Compute the surprisal
-        surprisal = sent_surprisal(logits, input_ids)
-        surprisal_scores.append(surprisal)
+            surprisal = token_surprisal(logits, token_id, index)
+            word_surprisals.append(surprisal)
+        surprisal_scores.append(sum(word_surprisals)/len(word_surprisals))
 
     return surprisal_scores
