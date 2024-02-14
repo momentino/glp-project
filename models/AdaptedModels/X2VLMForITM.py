@@ -13,8 +13,8 @@ class X2VLMForITM(nn.Module):
         image_embeds, image_atts = self.base_model.get_vision_embeds(images)
         captions.input_ids = torch.squeeze(captions.input_ids)
         foils.input_ids = torch.squeeze(foils.input_ids)
-        caption_embeds = self.base_model.get_text_embeds_12L(captions.input_ids, captions.attention_mask)
-        foil_embeds = self.base_model.get_text_embeds_12L(foils.input_ids, foils.attention_mask)
+        caption_embeds = self.base_model.get_text_embeds(captions.input_ids, captions.attention_mask)
+        foil_embeds = self.base_model.get_text_embeds(foils.input_ids, foils.attention_mask)
 
         cross_captions = self.base_model.get_cross_embeds(image_embeds, image_atts, text_embeds=caption_embeds, text_atts=captions.attention_mask)[:, 0,
                     :]

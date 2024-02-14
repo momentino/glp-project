@@ -34,7 +34,7 @@ _logger.info(f"Running with args {FLAGS}, {FIRE_FLAGS}")
 """
 def get_args_parser():
     parser = argparse.ArgumentParser('Set parameters for the expriments)', add_help=False)
-    parser.add_argument('--model', default='ALBEF', type=str, choices=['ALBEF','XVLM','BLIP','X2VLM'])
+    parser.add_argument('--model', default='X2VLM', type=str, choices=['ALBEF','XVLM','BLIP','X2VLM'])
     parser.add_argument('--experiment', default='first_second', type=str, choices=['pre', 'first_second'])
     parser.add_argument('--dataset', default='all', type=str, choices=['VALSE', 'ARO','all'])
     parser.add_argument('--split', default='all', type=str, choices=['active', 'passive','all'])
@@ -74,28 +74,23 @@ def main(args):
     if(model_name=='XVLM'):
         download_weights(model_name='swin',
                          general_config=configs['general'])  # to download the vision encoder weights if not done already
-
-    # for reduced memory usage
-    models = {}
-    models =
-
-    models = {
-        ,
-         'XVLM': XVLM(config=configs['XVLM']),
-         'BLIP': BLIP_Pretrain(image_size=configs['BLIP']['image_res'], vit=configs['BLIP']['vit'], vit_grad_ckpt=configs['BLIP']['vit_grad_ckpt'],
-                          vit_ckpt_layer=configs['BLIP']['vit_ckpt_layer'], queue_size=configs['BLIP']['queue_size'], med_config=configs['BLIP']['bert_config'] ),
-        'X2VLM': X2VLM(config=configs['X2VLM'], load_text_params=False, load_vision_params=False, pretraining=False)
-    }
-
+    if(model_name=='X2VLM'):
+        download_weights(model_name='beitv2_base_patch16_224_pt1k_ft21k',
+                         general_config=configs[
+                             'general'])  # to download the vision encoder weights if not done already
     # load the model
     if(model_name == 'ALBEF'):
-        'ALBEF': ALBEF(config=configs['ALBEF'], text_encoder=configs['ALBEF']['text_encoder'], tokenizer=tokenizer)
+        model= ALBEF(config=configs['ALBEF'], text_encoder=configs['ALBEF']['text_encoder'], tokenizer=tokenizer)
     elif(model_name == 'BLIP'):
-        BLIP_Pretrain(image_size=configs['BLIP']['image_res'], vit=configs['BLIP']['vit'],
+        model = BLIP_Pretrain(image_size=configs['BLIP']['image_res'], vit=configs['BLIP']['vit'],
                       vit_grad_ckpt=configs['BLIP']['vit_grad_ckpt'],
                       vit_ckpt_layer=configs['BLIP']['vit_ckpt_layer'], queue_size=configs['BLIP']['queue_size'],
                       med_config=configs['BLIP']['bert_config'])
-    model = models[model_name]
+    elif(model_name == 'XVLM'):
+        model = XVLM(config=configs['XVLM'])
+    elif(model_name == 'X2VLM'):
+        model = X2VLM(config=configs['X2VLM'], load_text_params=True, load_vision_params=True, pretraining=False)
+
 
     dataset_files = {
         'combined': configs['general']['full_dataset_path']

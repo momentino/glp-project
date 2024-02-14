@@ -27,3 +27,4 @@ pycocoevalcap=1.2
 scikit-image
 chardet==5.2.0
 opencv-python==4.9.0.80
+nltk

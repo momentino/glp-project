@@ -29,6 +29,9 @@ import copy
 from models.X2VLM.utils import read_json
 from models.X2VLM.dataset import build_tokenizer
 
+import transformers
+from transformers import BertModel
+
 
 class VanillaConfig(object):
     def __init__(self):
@@ -318,8 +321,9 @@ def build_text_encoder(config, vision_width, load_text_params=False, use_mlm_los
 
     missing_keys = []
     if load_text_params:
-        print("### Initializing text encoder from ", os.path.join(config['text_encoder'], 'pytorch_model.bin'))
-        state_dict = torch.load(os.path.join(config['text_encoder'], 'pytorch_model.bin'), map_location="cpu")
+        #print("### Initializing text encoder from ", os.path.join(config['text_encoder'], 'pytorch_model.bin'))
+        state_dict = BertModel.from_pretrained(config['text_encoder']).state_dict()
+        #state_dict = torch.load(os.path.join(config['text_encoder'], 'pytorch_model.bin'), map_location="cpu")
         if 'model' in state_dict.keys():
             state_dict = state_dict['model']
 

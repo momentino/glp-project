@@ -7,7 +7,7 @@ def eval(model, loader, config, x2vlm_config):
     adapted_model = X2VLMForITM(model)
     #model.load_pretrained(args.checkpoint, config, is_eval=True)
     #load_weights(adapted_model.base_model, model_name='X2VLM', general_config=config) # we load the weights of the base architecture
-    model.load_pretrained(x2vlm_config['pretrained_weights'], config, is_domain_pretrain=True)
+    model.load_pretrained(x2vlm_config['pretrained_weights'], config, is_eval=True)
     adapted_model.eval()
 
     c_scores = []
