@@ -13,10 +13,20 @@ dataset_path="./datasets/combined_aro_valse.json"
 with open(dataset_path, 'r') as f:
     data = json.load(f)
 
-for sample in data.values():
-    foil=sample['foil_active']
-    surprisal=sentence_surprisal(foil,tokenizer,model)
-    sample['surprisal']=surprisal
+threshold_1=set()
+threshold_2=set()
 
-with open(dataset_path, 'w') as f:
-    json.dump(data, f, indent=4)
+i=0
+for sample in data.values():
+    if sample['surprisal_difference']>4:
+        threshold_1.add(sample['foil_active'])
+    if sample['surprisal_difference']>3:
+        threshold_2.add(sample['foil_active'])
+        i+=1
+        
+diff_2_1 = threshold_2.difference(threshold_1)
+
+for item in diff_2_1:
+    print(item)
+
+print(i)

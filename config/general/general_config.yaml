@@ -3,6 +3,7 @@ VALSE_image_folder_url: https://drive.google.com/file/d/1rNDEbPlKwQdZrvrPMCXZBiD
 
 full_dataset_path: ../datasets/combined_aro_valse.json
 scores_first_second_path: ../scores/scores_first_second.csv
+scores_third_path: ../scores/scores_third.csv
 
 ALBEF_weights: https://drive.google.com/file/d/1h-E_00cNXjFZQSfoLo1dEPtpp5GxZWYX/view?usp=sharing
 XVLM_weights: https://drive.google.com/file/d/1IGGhqbW5kZJv-H3Qe_jxcyC_i9YO4kja/view?usp=sharing
