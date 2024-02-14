@@ -12,11 +12,14 @@ from models.ALBEF.models.model_pretrain import ALBEF
 from models.XVLM.models.model_pretrain import XVLM as XVLM
 from models.X2VLM.models.model_pretrain import XVLM as X2VLM
 from models.BLIP.models.blip_pretrain import BLIP_Pretrain
+from models.NegCLIP.negclip import CLIPWrapper
 from experiments.ALBEF.eval import eval as albef_eval
 from experiments.XVLM.eval import eval as xvlm_eval
 from experiments.X2VLM.eval import eval as x2vlm_eval
+from experiments.NegCLIP.eval import eval as negclip_eval
 from experiments.BLIP.eval import eval as blip_eval
 from utils.utils import download_weights
+import open_clip
 
 _logger = logging.getLogger(__name__)
 
@@ -34,7 +37,7 @@ _logger.info(f"Running with args {FLAGS}, {FIRE_FLAGS}")
 """
 def get_args_parser():
     parser = argparse.ArgumentParser('Set parameters for the expriments)', add_help=False)
-    parser.add_argument('--model', default='X2VLM', type=str, choices=['ALBEF','XVLM','BLIP','X2VLM'])
+    parser.add_argument('--model', default='NegCLIP', type=str, choices=['ALBEF','XVLM','BLIP','X2VLM', 'NegCLIP'])
     parser.add_argument('--experiment', default='first_second', type=str, choices=['pre', 'first_second'])
     parser.add_argument('--dataset', default='all', type=str, choices=['VALSE', 'ARO','all'])
     parser.add_argument('--split', default='all', type=str, choices=['active', 'passive','all'])
@@ -66,10 +69,14 @@ def main(args):
                              'config.yaml'),
         'X2VLM': load_config('../config/X2VLM',
                              'config.yaml'),
+
     }
 
     # our tokenizer is initialized from the text encoder specified in the config file
-    tokenizer = AutoTokenizer.from_pretrained(configs[model_name]['text_encoder'])
+    if(model_name=='NegCLIP'):
+        tokenizer = open_clip.get_tokenizer('ViT-B-32')
+    else:
+        tokenizer = AutoTokenizer.from_pretrained(configs[model_name]['text_encoder'])
 
     if(model_name=='XVLM'):
         download_weights(model_name='swin',
@@ -81,15 +88,28 @@ def main(args):
     # load the model
     if(model_name == 'ALBEF'):
         model= ALBEF(config=configs['ALBEF'], text_encoder=configs['ALBEF']['text_encoder'], tokenizer=tokenizer)
+        image_preprocess = None
     elif(model_name == 'BLIP'):
         model = BLIP_Pretrain(image_size=configs['BLIP']['image_res'], vit=configs['BLIP']['vit'],
                       vit_grad_ckpt=configs['BLIP']['vit_grad_ckpt'],
                       vit_ckpt_layer=configs['BLIP']['vit_ckpt_layer'], queue_size=configs['BLIP']['queue_size'],
                       med_config=configs['BLIP']['bert_config'])
+        image_preprocess = None
     elif(model_name == 'XVLM'):
         model = XVLM(config=configs['XVLM'])
+        image_preprocess = None
     elif(model_name == 'X2VLM'):
         model = X2VLM(config=configs['X2VLM'], load_text_params=True, load_vision_params=True, pretraining=False)
+        image_preprocess = None
+    elif(model_name=='NegCLIP'):
+        path = os.path.join('../pretrained_weights', "NegCLIP_weights.pth")
+        if not os.path.exists(path):
+            print("Downloading the NegCLIP model...")
+            import gdown
+            gdown.download(id="1ooVVPxB-tvptgmHlIMMFGV3Cg-IrhbRZ", output=path, quiet=False)
+        model, _, image_preprocess = open_clip.create_model_and_transforms('ViT-B-32', pretrained=path, device='cpu')
+        model = CLIPWrapper(model, 'cpu')
+
 
 
     dataset_files = {
@@ -103,32 +123,25 @@ def main(args):
         ARO_active_dataset = ITMDataset(dataset_file=dataset_files['combined'],
                                         dataset_name='ARO', split='active',
                                         tokenizer=tokenizer,
-                                        general_config=configs['general'],
                                         model_name=model_name,
-                                        model_config=configs[model_name])
+                                        image_preprocess=image_preprocess)
         ARO_passive_dataset = ITMDataset(dataset_file=dataset_files['combined'],
                                          dataset_name='ARO',
                                          split='passive',
                                          tokenizer=tokenizer,
-                                         general_config=configs['general'],
                                          model_name=model_name,
-                                         model_config=configs[model_name]
-                                         )
+                                         image_preprocess=image_preprocess)
         VALSE_active_dataset = ITMDataset(dataset_file=dataset_files['combined'],
                                           dataset_name='VALSE',
                                           split='active',
                                           tokenizer=tokenizer,
-                                          general_config=configs['general'],
                                           model_name=model_name,
-                                          model_config=configs[model_name]
-                                          )
+                                          image_preprocess=image_preprocess)
         VALSE_passive_dataset = ITMDataset(dataset_file=dataset_files['combined'],
                                            dataset_name='VALSE', split='passive',
                                            tokenizer=tokenizer,
-                                           general_config=configs['general'],
                                            model_name=model_name,
-                                           model_config=configs[model_name]
-                                           )
+                                           image_preprocess=image_preprocess)
         """ Define our loaders """
         loaders = {
             'ARO': {
@@ -166,6 +179,10 @@ def main(args):
                             loaders[dataset][split],
                             configs['general'],
                             configs['X2VLM'])
+                    elif (model_name == 'NegCLIP'):
+                        acc, pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, perf_by_cat = negclip_eval(
+                            model,
+                            loaders[dataset][split])
                     df = pd.read_csv(configs['general']['scores_'+experiment+'_path'])
                     rows = []
                     new_row = {
