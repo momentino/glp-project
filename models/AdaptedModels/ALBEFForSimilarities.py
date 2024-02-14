@@ -54,5 +54,5 @@ class ALBEFForSimilarities(nn.Module):
                                             mode='fusion',
                                             ).last_hidden_state[:,0,:]
         
-        #return the three embeddings
-        return true_actives_vl_embeds, foil_actives_vl_embeds, true_passives_vl_embeds
+        #return the three textual embeddings and the three multimodal embeddings
+        return true_actives_embeds, foil_actives_embeds, true_passives_embeds, true_actives_vl_embeds, foil_actives_vl_embeds, true_passives_vl_embeds

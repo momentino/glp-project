@@ -7,7 +7,7 @@ import pandas as pd
 from transformers import AutoTokenizer
 from torch.utils.data import DataLoader
 
-from datasets.datasets import DistancesDataset
+from datasets.datasets import SimilaritiesDataset
 from models.ALBEF.models.model_pretrain import ALBEF
 from models.XVLM.models.model_pretrain import XVLM as XVLM
 from models.X2VLM.models.model_pretrain import XVLM as X2VLM
@@ -94,14 +94,14 @@ def main(args):
     }
     
     """ Define our dataset objects """
-    ARO_dataset = DistancesDataset(dataset_file=dataset_files['combined'],
+    ARO_dataset = SimilaritiesDataset(dataset_file=dataset_files['combined'],
                                     dataset_name='ARO',
                                     tokenizer=tokenizer,
                                     general_config=configs['general'],
                                     model_name=model_name,
                                     model_config=configs[model_name]
                                     )
-    VALSE_dataset = DistancesDataset(dataset_file=dataset_files['combined'],
+    VALSE_dataset = SimilaritiesDataset(dataset_file=dataset_files['combined'],
                                         dataset_name='VALSE',
                                         tokenizer=tokenizer,
                                         general_config=configs['general'],
@@ -121,7 +121,7 @@ def main(args):
     if(dataset == 'all'):
         for dataset in ['ARO','VALSE']:
             if (model_name == 'ALBEF'):
-                tf_mean, tf_std, ap_mean, ap_std, diff_mean, diff_std, perf_by_cat = albef_similarities(model,loaders[dataset],configs['general'])
+                tf_t_mean, tf_t_std, ap_t_mean, ap_t_std, diff_t_mean, diff_t_std, tf_vl_mean, tf_vl_std, ap_vl_mean, ap_vl_std, diff_vl_mean, diff_vl_std, perf_by_cat = albef_similarities(model,loaders[dataset],configs['general'])
                 
             elif(model_name == 'XVLM'):
                 pass    
@@ -135,12 +135,18 @@ def main(args):
                         'model': model_name,
                         'dataset': dataset,
                         'category': None, # because this is the row with the general results as we want in the pre and first experiments
-                        'true_foil_mean':tf_mean,
-                        'true_foil_std':tf_std,
-                        'active_passive_mean':ap_mean,
-                        'active_passive_std':ap_std,
-                        'difference_mean':diff_mean,
-                        'difference_std':diff_std
+                        'true_foil_text_mean':tf_t_mean,
+                        'true_foil_text_std':tf_t_std,
+                        'active_passive_text_mean':ap_t_mean,
+                        'active_passive_text_std':ap_t_std,
+                        'difference_text_mean':diff_t_mean,
+                        'difference_text_std':diff_t_std,
+                        'true_foil_vl_mean':tf_vl_mean,
+                        'true_foil_vl_std':tf_vl_std,
+                        'active_passive_vl_mean':ap_vl_mean,
+                        'active_passive_vl_std':ap_vl_std,
+                        'difference_vl_mean':diff_vl_mean,
+                        'difference_vl_std':diff_vl_std
                     }
             rows.append(new_row)
            
@@ -149,13 +155,18 @@ def main(args):
                             'model': model_name,
                             'dataset': dataset,
                             'category': key,
-                            # because this is the row with the general results as we want in the pre and first experiments
-                            'true_foil_mean':value['true_foil_mean'],
-                            'true_foil_std':value['true_foil_std'],
-                            'active_passive_mean':value['active_passive_mean'],
-                            'active_passive_std':value['active_passive_std'],
-                            'difference_mean':value['difference_mean'],
-                            'difference_std':value['difference_std']
+                            'true_foil_text_mean':value['true_foil_text_mean'],
+                            'true_foil_text_std':value['true_foil_text_std'],
+                            'active_passive_text_mean':value['active_passive_text_mean'],
+                            'active_passive_text_std':value['active_passive_text_std'],
+                            'difference_text_mean':value['difference_text_mean'],
+                            'difference_text_std':value['difference_text_std'],
+                            'true_foil_vl_mean':value['true_foil_vl_mean'],
+                            'true_foil_vl_std':value['true_foil_vl_std'],
+                            'active_passive_vl_mean':value['active_passive_vl_mean'],
+                            'active_passive_vl_std':value['active_passive_vl_std'],
+                            'difference_vl_mean':value['difference_vl_mean'],
+                            'difference_vl_std':value['difference_vl_std']
                             }
                 rows.append(new_row)
             rows = pd.DataFrame(rows)

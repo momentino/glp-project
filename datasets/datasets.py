@@ -79,7 +79,7 @@ class ITMDataset(data.Dataset):
         return image, caption, foil, category
     
 #class for 3rd experiment: return image and the three needed captions
-class DistancesDataset(data.Dataset):
+class SimilaritiesDataset(data.Dataset):
     """ Here for 'dataset' we mean 'VALSE' or 'ARO'."""
     def __init__(self, dataset_file, dataset_name, tokenizer, general_config, model_name, model_config):
         self.general_config = general_config
