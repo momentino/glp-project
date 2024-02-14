@@ -15,7 +15,7 @@ from models.BLIP.models.blip_pretrain import BLIP_Pretrain
 from experiments.ALBEF.similarities import similarities as albef_similarities
 from experiments.XVLM.eval import eval as xvlm_eval
 from experiments.X2VLM.eval import eval as x2vlm_eval
-from experiments.BLIP.eval import eval as blip_eval
+from experiments.BLIP.similarities import similarities as blip_similarities
 from utils.utils import download_weights
 
 _logger = logging.getLogger(__name__)
@@ -125,10 +125,13 @@ def main(args):
                 
             elif(model_name == 'XVLM'):
                 pass    
+            
             elif (model_name == 'BLIP'):
-                pass    
+                tf_t_mean, tf_t_std, ap_t_mean, ap_t_std, diff_t_mean, diff_t_std, tf_vl_mean, tf_vl_std, ap_vl_mean, ap_vl_std, diff_vl_mean, diff_vl_std, perf_by_cat = blip_similarities(model,loaders[dataset],configs['general'])    
+            
             elif (model_name == 'X2VLM'):
                 pass    
+            
             df = pd.read_csv(configs['general']['scores_'+experiment+'_path'])
             rows = []
             new_row = {

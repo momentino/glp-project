@@ -2,6 +2,7 @@ from tqdm import tqdm
 from models.AdaptedModels.BLIPForITM import BLIPForITM
 import torch
 from utils.utils import load_weights
+
 def eval(model, loader, config):
 
     adapted_model = BLIPForITM(model)
