@@ -1,19 +1,21 @@
 from tqdm import tqdm
-from models.AdaptedModels.BLIPForSimilarities import BLIPForSimilarities
+from models.AdaptedModels.X2VLMForSimilarities import X2VLMForSimilarities
 from utils.utils import load_weights
 
 import torch
 import torch.nn.functional as F
 import numpy as np
 
-def similarities(model, loader, config):
-    adapted_model = BLIPForSimilarities(model)
-    load_weights(adapted_model.base_model, model_name='BLIP', general_config=config) # we load the weights of the base architecture
+
+def similarities(model, loader, config, x2vlm_config):
+    adapted_model = X2VLMForSimilarities(model)
+    model.load_pretrained(x2vlm_config['pretrained_weights'], config, is_eval=True)
     adapted_model.eval()
 
     tf_text_scores=[]
     ap_text_scores=[]
     diff_text_scores=[]
+    
     tf_vl_scores=[]
     ap_vl_scores=[]
     diff_vl_scores=[] #cos(true_act,foil_act) - cos(true_act,true_pass). Ideally we want it to be negative (true act/pass more similar than true/foil)
@@ -37,7 +39,7 @@ def similarities(model, loader, config):
             diff_vl_scores.extend(tf_vl_similarities-ap_vl_similarities)
 
             # this is to iterate multiple lists together
-            for cat, tf_t_sc,ap_t_sc,d_t_sc, tf_vl_sc,ap_vl_sc,d_vl_sc in zip(categories, tf_vl_scores, ap_vl_scores, diff_vl_scores):
+            for cat, tf_t_sc,ap_t_sc,d_t_sc,tf_vl_sc,ap_vl_sc,d_vl_sc in zip(categories, tf_text_scores, ap_text_scores, diff_text_scores,tf_vl_scores, ap_vl_scores, diff_vl_scores):
                 try:
                     scores_by_cat[cat]['true_foil_text_scores'].append(tf_t_sc)
                     scores_by_cat[cat]['active_passive_text_scores'].append(ap_t_sc)

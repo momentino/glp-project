@@ -3,7 +3,7 @@ from torch import nn
 import torch.nn.functional as F
 
 
-class BLIPForITM(nn.Module):
+class BLIPForSimilarities(nn.Module):
     def __init__(self, base_model):
         super().__init__()
         self.base_model = base_model
@@ -50,4 +50,4 @@ class BLIPForITM(nn.Module):
         ta_vl_embeddings = ta_output_pos.last_hidden_state[:, 0, :]
         fa_vl_embeddings = fa_output_pos.last_hidden_state[:, 0, :]
         tp_vl_embeddings = tp_output_pos.last_hidden_state[:, 0, :]
-        return ta_vl_embeddings,  fa_vl_embeddings, tp_vl_embeddings
+        return ta_output_pos[:,0,:], fa_output_pos[:,0,:], tp_output_pos[:,0,:], ta_vl_embeddings,  fa_vl_embeddings, tp_vl_embeddings
