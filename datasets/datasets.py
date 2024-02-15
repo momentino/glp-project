@@ -63,13 +63,37 @@ class ITMDataset(data.Dataset):
     def __len__(self):
         return len(self.images)
 
+    def _pre_caption(self, caption, max_words):
+        caption = re.sub(
+            r"([,.'!?\"()*#:;~])",
+            '',
+            caption.lower(),
+        ).replace('-', ' ').replace('/', ' ').replace('<person>', 'person')
+
+        caption = re.sub(
+            r"\s{2,}",
+            ' ',
+            caption,
+        )
+        caption = caption.rstrip('\n')
+        caption = caption.strip(' ')
+
+        # truncate caption
+        caption_words = caption.split(' ')
+        if len(caption_words) > max_words:
+            caption = ' '.join(caption_words[:max_words])
+
+        return caption
+
     def __getitem__(self, idx):
         image = self.images[idx]
         if(self.image_preprocess == None):
             image = preprocess_images(config=self.model_config, model_name=self.model_name, images=image)
-            caption = self.tokenizer(self.captions[idx], padding='max_length', max_length=15, truncation=True,
+            caption, foil = self._pre_caption(self.captions[idx], self.model_config['max_tokens']), self._pre_caption(
+                self.foils[idx], self.model_config['max_tokens'])
+            caption = self.tokenizer(caption, padding='longest', max_length=40,
                                      return_tensors='pt')
-            foil = self.tokenizer(self.foils[idx], padding='max_length', max_length=15, truncation=True,
+            foil = self.tokenizer(foil, padding='longest', max_length=40,
                                   return_tensors='pt')
         else:
             image = self.image_preprocess(image)
@@ -132,13 +156,41 @@ class SimilaritiesDataset(data.Dataset):
     def __len__(self):
         return len(self.images)
 
+    def _pre_caption(self, caption, max_words):
+        caption = re.sub(
+            r"([,.'!?\"()*#:;~])",
+            '',
+            caption.lower(),
+        ).replace('-', ' ').replace('/', ' ').replace('<person>', 'person')
+
+        caption = re.sub(
+            r"\s{2,}",
+            ' ',
+            caption,
+        )
+        caption = caption.rstrip('\n')
+        caption = caption.strip(' ')
+
+        # truncate caption
+        caption_words = caption.split(' ')
+        if len(caption_words) > max_words:
+            caption = ' '.join(caption_words[:max_words])
+
+        return caption
+
     def __getitem__(self, idx):
         image = self.images[idx]
         if(self.image_preprocess == None):
             image = preprocess_images(config=self.model_config, model_name=self.model_name, images=image)
-            true_active = self.tokenizer(self.true_actives[idx], padding='max_length', max_length=15, truncation=True, return_tensors='pt')
-            foil_active = self.tokenizer(self.foil_actives[idx], padding='max_length', max_length=15, truncation=True, return_tensors='pt')
-            true_passive = self.tokenizer(self.true_passives[idx], padding='max_length', max_length=15, truncation=True, return_tensors='pt')
+            true_active, foil_active, true_passive = (self._pre_caption(self.true_active[idx], self.model_config['max_tokens']),
+                                        self._pre_caption(self.foil_active[idx], self.model_config['max_tokens']),
+                                        self._pre_caption(self.true_passive[idx], self.model_config['max_tokens']))
+            true_active = self.tokenizer(true_active, padding='longest', max_length=40,
+                                     return_tensors='pt')
+            foil_active = self.tokenizer(foil_active, padding='longest', max_length=40,
+                                  return_tensors='pt')
+            true_passive = self.tokenizer(true_passive, padding='longest', max_length=40,
+                                         return_tensors='pt')
         else:
             image = self.image_preprocess(image)
             true_active = self.tokenizer(self.true_actives[idx])

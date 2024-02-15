@@ -193,7 +193,7 @@ def main(args):
                     df = pd.read_csv(configs['general']['scores_'+experiment+'_path'])
                     new_row = [{
                         'model': model_name,
-                        'subset':subset,
+                        'split':subset,
                         'dataset': dataset,
                         'acc': acc,
                         'pairwise_acc': pairwise_acc,
@@ -243,12 +243,12 @@ def main(args):
         """ Define our loaders """
         loaders = {
             'ARO': {
-                'active': DataLoader(ARO_active_dataset, batch_size=64, shuffle=False),
-                'passive': DataLoader(ARO_passive_dataset, batch_size=64, shuffle=False)
+                'active': DataLoader(ARO_active_dataset, batch_size=1, shuffle=False),
+                'passive': DataLoader(ARO_passive_dataset, batch_size=1, shuffle=False)
             },
             'VALSE': {
-                'active': DataLoader(VALSE_active_dataset, batch_size=64, shuffle=False),
-                'passive': DataLoader(VALSE_passive_dataset, batch_size=64, shuffle=False)
+                'active': DataLoader(VALSE_active_dataset, batch_size=1, shuffle=False),
+                'passive': DataLoader(VALSE_passive_dataset, batch_size=1, shuffle=False)
             }
         }
 
