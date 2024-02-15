@@ -2,6 +2,9 @@ ARO_image_folder_url: https://drive.google.com/file/d/1KnuPkzIzhxMRg39oY569m0u4T
 VALSE_image_folder_url: https://drive.google.com/file/d/1rNDEbPlKwQdZrvrPMCXZBiDz9QXTh2La/view?usp=sharing
 
 full_dataset_path: ../datasets/combined_aro_valse.json
+correct_subset_path: ../datasets/correct_subset.json
+wrong_subset_path: ../datasets/wrong_subset.json
+scores_pre_path: ../scores/scores_pre.csv
 scores_first_second_path: ../scores/scores_first_second.csv
 scores_third_path: ../scores/scores_third.csv
 

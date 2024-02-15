@@ -113,11 +113,101 @@ def main(args):
 
 
     dataset_files = {
-        'combined': configs['general']['full_dataset_path']
+        'combined': configs['general']['full_dataset_path'],
+        'correct_subset': configs['general']['correct_subset_path'],
+        'wrong_subset': configs['general']['wrong_subset_path']
     }
     if(experiment == 'pre'):
-        #TODO
-        pass
+        """ Define our dataset objects """
+        ARO_correct_subset = ITMDataset(dataset_file=dataset_files['correct_subset'],
+                                        dataset_name='ARO', split='active',
+                                        tokenizer=tokenizer,
+                                        model_name=model_name,
+                                        image_preprocess=image_preprocess,
+                                        model_config=configs[model_name],
+                                        general_config=configs['general'])
+        VALSE_correct_subset = ITMDataset(dataset_file=dataset_files['correct_subset'],
+                                          dataset_name='VALSE',
+                                          split='active',
+                                          tokenizer=tokenizer,
+                                          model_name=model_name,
+                                          image_preprocess=image_preprocess,
+                                          model_config=configs[model_name],
+                                          general_config=configs['general'])
+        ARO_wrong_subset = ITMDataset(dataset_file=dataset_files['wrong_subset'],
+                                         dataset_name='ARO',
+                                         split='active',
+                                         tokenizer=tokenizer,
+                                         model_name=model_name,
+                                         image_preprocess=image_preprocess,
+                                         model_config=configs[model_name],
+                                         general_config=configs['general'])
+        VALSE_wrong_subset = ITMDataset(dataset_file=dataset_files['wrong_subset'],
+                                           dataset_name='VALSE', split='active',
+                                           tokenizer=tokenizer,
+                                           model_name=model_name,
+                                           image_preprocess=image_preprocess,
+                                           model_config=configs[model_name],
+                                           general_config=configs['general'])
+        """ Define our loaders """
+        loaders = {
+            'correct': {
+                'ARO': DataLoader(ARO_correct_subset, batch_size=64, shuffle=False),
+                'VALSE': DataLoader(VALSE_correct_subset, batch_size=64, shuffle=False)
+            },
+            'wrong': {
+                'ARO': DataLoader(ARO_wrong_subset, batch_size=64, shuffle=False),
+                'VALSE': DataLoader(VALSE_wrong_subset, batch_size=64, shuffle=False)
+            }
+        }
+
+        _logger.info(f" Evaluation on the {dataset} benchmark - surprisal subsets. Model evaluated: {model_name}")
+
+        """ Run the evaluation for each model """
+        if(dataset == 'all' and split=='all'):
+            for subset in ['correct','wrong']:
+                for dataset in ['ARO','VALSE']:
+                    if (model_name == 'ALBEF'):
+                        acc,pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, _ = albef_eval(model,
+                                                                                                                                                      loaders[subset][dataset],
+                                                                                                                                                      configs['general'])
+                    elif(model_name == 'XVLM'):
+                        acc,pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, _ = xvlm_eval(model,
+                                                                                                                                                        loaders[subset][dataset],
+                                                                                                                                                        configs['general'])
+                    elif (model_name == 'BLIP'):
+                        acc, pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, _ = blip_eval(
+                            model,
+                            loaders[subset][dataset],
+                            configs['general'])
+                    elif (model_name == 'X2VLM'):
+                        acc, pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, _ = x2vlm_eval(
+                            model,
+                            loaders[subset][dataset],
+                            configs['general'],
+                            configs['X2VLM'])
+                    elif (model_name == 'NegCLIP'):
+                        acc, pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, _ = negclip_eval(
+                            model,
+                            loaders[subset][dataset])
+                    df = pd.read_csv(configs['general']['scores_'+experiment+'_path'])
+                    new_row = [{
+                        'model': model_name,
+                        'subset':subset,
+                        'dataset': dataset,
+                        'acc': acc,
+                        'pairwise_acc': pairwise_acc,
+                        'pairwise_acc_50': pairwise_acc_50,
+                        'pairwise_acc_60': pairwise_acc_60,
+                        'pairwise_acc_70': pairwise_acc_70,
+                        'precision_caption': precision_caption,
+                        'precision_foil': precision_foil
+                    }]
+
+                    row = pd.DataFrame(new_row)
+                    df = pd.concat([df, row], ignore_index=True)
+                    df.to_csv(configs['general']['scores_'+experiment+'_path'], index=False)
+
     elif(experiment == 'first_second'):
         """ Define our dataset objects """
         ARO_active_dataset = ITMDataset(dataset_file=dataset_files['combined'],
