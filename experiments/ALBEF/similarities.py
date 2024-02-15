@@ -26,10 +26,10 @@ def similarities(model, loader, config):
         for images, true_actives, foil_actives, true_passives, categories in tqdm(loader):
             true_actives_text_embeds, foil_actives_text_embeds, true_passives_text_embeds, true_actives_vl_embeds, foil_actives_vl_embeds, true_passives_vl_embeds = adapted_model(images, true_actives, foil_actives, true_passives)
             
-            tf_text_similarities=F.cosine_similarity(true_actives_text_embeds,foil_actives_text_embeds,dim=1)
-            ap_text_similarities=F.cosine_similarity(true_actives_text_embeds,true_passives_text_embeds,dim=1)
-            tf_vl_similarities=F.cosine_similarity(true_actives_vl_embeds,foil_actives_vl_embeds,dim=1)
-            ap_vl_similarities=F.cosine_similarity(true_actives_vl_embeds,true_passives_vl_embeds,dim=1)
+            tf_text_similarities=F.cosine_similarity(true_actives_text_embeds,foil_actives_text_embeds,dim=-1)
+            ap_text_similarities=F.cosine_similarity(true_actives_text_embeds,true_passives_text_embeds,dim=-1)
+            tf_vl_similarities=F.cosine_similarity(true_actives_vl_embeds,foil_actives_vl_embeds,dim=-1)
+            ap_vl_similarities=F.cosine_similarity(true_actives_vl_embeds,true_passives_vl_embeds,dim=-1)
 
             tf_text_scores.extend(tf_text_similarities)
             ap_text_scores.extend(ap_text_similarities)
