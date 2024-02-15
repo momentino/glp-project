@@ -83,11 +83,12 @@ class ITMDataset(data.Dataset):
 #class for 3rd experiment: return image and the three needed captions
 class SimilaritiesDataset(data.Dataset):
     """ Here for 'dataset' we mean 'VALSE' or 'ARO'."""
-    def __init__(self, dataset_file, dataset_name, tokenizer, general_config, model_name, model_config):
+    def __init__(self, dataset_file, dataset_name, tokenizer, general_config, model_name, model_config, image_preprocess=None):
         self.general_config = general_config
         self.model_config = model_config
         self.model_name = model_name
         self.dataset_name = dataset_name
+        self.image_preprocess = image_preprocess
         self.df = self._jsonl_to_df(dataset_file)
         self.df = self.df[self.df['dataset'] == self.dataset_name] # get only the dataset we want from our merged json file
 
@@ -132,11 +133,18 @@ class SimilaritiesDataset(data.Dataset):
 
     def __getitem__(self, idx):
         image = self.images[idx]
-        image = preprocess_images(config=self.model_config, model_name=self.model_name, images=image)
+        if(self.image_preprocess == None):
+            image = preprocess_images(config=self.model_config, model_name=self.model_name, images=image)
+            true_active = self.tokenizer(self.true_actives[idx], padding='max_length', max_length=15, truncation=True, return_tensors='pt')
+            foil_active = self.tokenizer(self.foil_actives[idx], padding='max_length', max_length=15, truncation=True, return_tensors='pt')
+            true_passive = self.tokenizer(self.true_passives[idx], padding='max_length', max_length=15, truncation=True, return_tensors='pt')
+        else:
+            image = self.image_preprocess(image)
+            true_active = self.tokenizer(self.true_actives[idx])
+            foil_active = self.tokenizer(self.foil_actives[idx])
+            true_passive = self.tokenizer(self.true_passives[idx])
+
         category = self.categories[idx]
-        true_active = self.tokenizer(self.true_actives[idx], padding='max_length', max_length=15, truncation=True, return_tensors='pt')
-        foil_active = self.tokenizer(self.foil_actives[idx], padding='max_length', max_length=15, truncation=True, return_tensors='pt')
-        true_passive = self.tokenizer(self.true_passives[idx], padding='max_length', max_length=15, truncation=True, return_tensors='pt')
 
         return image, true_active, foil_active, true_passive, category
 

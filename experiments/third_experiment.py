@@ -17,7 +17,7 @@ from experiments.ALBEF.similarities import similarities as albef_similarities
 from experiments.XVLM.similarities import similarities as xvlm_similarities
 from experiments.X2VLM.similarities import similarities as x2vlm_similarities
 from experiments.BLIP.similarities import similarities as blip_similarities
-from experiments.NegCLIP.eval import eval as negclip_eval
+from experiments.NegCLIP.similarities import similarities as negclip_similarities
 from utils.utils import download_weights
 import open_clip
 
@@ -84,15 +84,19 @@ def main(args):
     # load the model
     if(model_name == 'ALBEF'):
         model= ALBEF(config=configs['ALBEF'], text_encoder=configs['ALBEF']['text_encoder'], tokenizer=tokenizer)
+        image_preprocess = None
     elif(model_name == 'BLIP'):
         model = BLIP_Pretrain(image_size=configs['BLIP']['image_res'], vit=configs['BLIP']['vit'],
                       vit_grad_ckpt=configs['BLIP']['vit_grad_ckpt'],
                       vit_ckpt_layer=configs['BLIP']['vit_ckpt_layer'], queue_size=configs['BLIP']['queue_size'],
                       med_config=configs['BLIP']['bert_config'])
+        image_preprocess = None
     elif(model_name == 'XVLM'):
         model = XVLM(config=configs['XVLM'])
+        image_preprocess = None
     elif(model_name == 'X2VLM'):
         model = X2VLM(config=configs['X2VLM'], load_text_params=True, load_vision_params=True, pretraining=False)
+        image_preprocess = None
     elif(model_name=='NegCLIP'):
         path = os.path.join('../pretrained_weights', "NegCLIP_weights.pth")
         if not os.path.exists(path):
@@ -113,14 +117,16 @@ def main(args):
                                     tokenizer=tokenizer,
                                     general_config=configs['general'],
                                     model_name=model_name,
-                                    model_config=configs[model_name]
+                                    model_config=configs[model_name],
+                                    image_preprocess=image_preprocess
                                     )
     VALSE_dataset = SimilaritiesDataset(dataset_file=dataset_files['combined'],
                                         dataset_name='VALSE',
                                         tokenizer=tokenizer,
                                         general_config=configs['general'],
                                         model_name=model_name,
-                                        model_config=configs[model_name]
+                                        model_config=configs[model_name],
+                                        image_preprocess=image_preprocess
                                         )
 
     """ Define our loaders """
@@ -145,6 +151,9 @@ def main(args):
             
             elif (model_name == 'X2VLM'):
                 tf_t_mean, tf_t_std, ap_t_mean, ap_t_std, diff_t_mean, diff_t_std, tf_vl_mean, tf_vl_std, ap_vl_mean, ap_vl_std, diff_vl_mean, diff_vl_std, perf_by_cat = x2vlm_similarities(model,loaders[dataset],configs['general'],configs['X2VLM'])    
+            
+            elif (model_name == 'NegCLIP'):
+                tf_t_mean, tf_t_std, ap_t_mean, ap_t_std, diff_t_mean, diff_t_std, tf_vl_mean, tf_vl_std, ap_vl_mean, ap_vl_std, diff_vl_mean, diff_vl_std, perf_by_cat = negclip_similarities(model,loaders[dataset])    
 
             df = pd.read_csv(configs['general']['scores_'+experiment+'_path'])
             rows = []
