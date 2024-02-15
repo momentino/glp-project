@@ -7,26 +7,30 @@ model_name = 'roberta-base'
 model = RobertaForMaskedLM.from_pretrained(model_name)
 tokenizer = RobertaTokenizer.from_pretrained(model_name)
 
-threshold_path="./datasets/threshold.json"
 dataset_path="./datasets/combined_aro_valse.json"
+correct_subset_path='./datasets/correct_subset.json'
+wrong_subset_path='./datasets/wrong_subset.json'
+
+correct_subset={}
+wrong_subset={}
+
 
 with open(dataset_path, 'r') as f:
     data = json.load(f)
 
-threshold_1=set()
-threshold_2=set()
-
-i=0
-for sample in data.values():
-    if sample['surprisal_difference']>4:
-        threshold_1.add(sample['foil_active'])
-    if sample['surprisal_difference']>3:
-        threshold_2.add(sample['foil_active'])
-        i+=1
+for key,value in data.items():
+    if value['surprisal_difference']<2:
+        correct_subset[key]=value
         
-diff_2_1 = threshold_2.difference(threshold_1)
+    elif value['surprisal_difference']>5:
+        wrong_subset[key]=value
+    
+print(len(correct_subset))
+print(len(wrong_subset))
 
-for item in diff_2_1:
-    print(item)
+        
+with open(correct_subset_path,'w') as f:
+    json.dump(correct_subset, f, indent=4)
 
-print(i)
+with open(wrong_subset_path,'w') as f:
+    json.dump(wrong_subset, f, indent=4)
