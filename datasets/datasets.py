@@ -15,10 +15,12 @@ from datasets.dataset_utils import preprocess_images
 class ITMDataset(data.Dataset):
     """ Here for 'dataset' we mean 'VALSE' or 'ARO'.
         For 'split' we mean 'active' or 'passive'. """
-    def __init__(self, dataset_file, dataset_name, split, tokenizer, model_name, image_preprocess=None):
+    def __init__(self, dataset_file, dataset_name, split, tokenizer, model_name, model_config, general_config, image_preprocess=None):
         self.model_name = model_name
         self.dataset_name = dataset_name
         self.image_preprocess = image_preprocess
+        self.model_config = model_config
+        self.general_config = general_config
         self.df = self._jsonl_to_df(dataset_file)
         self.df = self.df[self.df['dataset'] == self.dataset_name] # get only the dataset we want from our merged json file
 
