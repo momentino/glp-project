@@ -12,11 +12,14 @@ from models.ALBEF.models.model_pretrain import ALBEF
 from models.XVLM.models.model_pretrain import XVLM as XVLM
 from models.X2VLM.models.model_pretrain import XVLM as X2VLM
 from models.BLIP.models.blip_pretrain import BLIP_Pretrain
+from models.NegCLIP.negclip import CLIPWrapper
 from experiments.ALBEF.similarities import similarities as albef_similarities
-from experiments.XVLM.eval import eval as xvlm_eval
+from experiments.XVLM.similarities import similarities as xvlm_similarities
 from experiments.X2VLM.similarities import similarities as x2vlm_similarities
 from experiments.BLIP.similarities import similarities as blip_similarities
+from experiments.NegCLIP.eval import eval as negclip_eval
 from utils.utils import download_weights
+import open_clip
 
 _logger = logging.getLogger(__name__)
 
@@ -34,7 +37,7 @@ _logger.info(f"Running with args {FLAGS}, {FIRE_FLAGS}")
 """
 def get_args_parser():
     parser = argparse.ArgumentParser('Set parameters for the expriments', add_help=False)
-    parser.add_argument('--model', default='ALBEF', type=str, choices=['ALBEF','XVLM','BLIP','X2VLM'])
+    parser.add_argument('--model', default='ALBEF', type=str, choices=['ALBEF','XVLM','BLIP','X2VLM','NegCLIP'])
     parser.add_argument('--experiment', default='third', type=str, choices=['third'])
     parser.add_argument('--dataset', default='all', type=str, choices=['VALSE', 'ARO','all'])
 
@@ -66,7 +69,10 @@ def main(args):
     }
 
     # our tokenizer is initialized from the text encoder specified in the config file
-    tokenizer = AutoTokenizer.from_pretrained(configs[model_name]['text_encoder'])
+    if(model_name=='NegCLIP'):
+        tokenizer = open_clip.get_tokenizer('ViT-B-32')
+    else:
+        tokenizer = AutoTokenizer.from_pretrained(configs[model_name]['text_encoder'])
 
     if(model_name=='XVLM'):
         download_weights(model_name='swin',
@@ -87,6 +93,14 @@ def main(args):
         model = XVLM(config=configs['XVLM'])
     elif(model_name == 'X2VLM'):
         model = X2VLM(config=configs['X2VLM'], load_text_params=True, load_vision_params=True, pretraining=False)
+    elif(model_name=='NegCLIP'):
+        path = os.path.join('../pretrained_weights', "NegCLIP_weights.pth")
+        if not os.path.exists(path):
+            print("Downloading the NegCLIP model...")
+            import gdown
+            gdown.download(id="1ooVVPxB-tvptgmHlIMMFGV3Cg-IrhbRZ", output=path, quiet=False)
+        model, _, image_preprocess = open_clip.create_model_and_transforms('ViT-B-32', pretrained=path, device='cpu')
+        model = CLIPWrapper(model, 'cpu')
 
 
     dataset_files = {
@@ -124,7 +138,7 @@ def main(args):
                 tf_t_mean, tf_t_std, ap_t_mean, ap_t_std, diff_t_mean, diff_t_std, tf_vl_mean, tf_vl_std, ap_vl_mean, ap_vl_std, diff_vl_mean, diff_vl_std, perf_by_cat = albef_similarities(model,loaders[dataset],configs['general'])
                 
             elif(model_name == 'XVLM'):
-                pass    
+                tf_t_mean, tf_t_std, ap_t_mean, ap_t_std, diff_t_mean, diff_t_std, tf_vl_mean, tf_vl_std, ap_vl_mean, ap_vl_std, diff_vl_mean, diff_vl_std, perf_by_cat = xvlm_similarities(model,loaders[dataset],configs['general'])    
             
             elif (model_name == 'BLIP'):
                 tf_t_mean, tf_t_std, ap_t_mean, ap_t_std, diff_t_mean, diff_t_std, tf_vl_mean, tf_vl_std, ap_vl_mean, ap_vl_std, diff_vl_mean, diff_vl_std, perf_by_cat = blip_similarities(model,loaders[dataset],configs['general'])    
