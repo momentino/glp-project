@@ -37,7 +37,7 @@ _logger.info(f"Running with args {FLAGS}, {FIRE_FLAGS}")
 """
 def get_args_parser():
     parser = argparse.ArgumentParser('Set parameters for the expriments)', add_help=False)
-    parser.add_argument('--model', default='NegCLIP', type=str, choices=['ALBEF','XVLM','BLIP','X2VLM', 'NegCLIP'])
+    parser.add_argument('--model', default='ALBEF', type=str, choices=['ALBEF','XVLM','BLIP','X2VLM', 'NegCLIP'])
     parser.add_argument('--experiment', default='first_second', type=str, choices=['pre', 'first_second'])
     parser.add_argument('--dataset', default='all', type=str, choices=['VALSE', 'ARO','all'])
     parser.add_argument('--split', default='all', type=str, choices=['active', 'passive','all'])
@@ -124,24 +124,32 @@ def main(args):
                                         dataset_name='ARO', split='active',
                                         tokenizer=tokenizer,
                                         model_name=model_name,
-                                        image_preprocess=image_preprocess)
+                                        image_preprocess=image_preprocess,
+                                        model_config=configs[model_name],
+                                        general_config=configs['general'])
         ARO_passive_dataset = ITMDataset(dataset_file=dataset_files['combined'],
                                          dataset_name='ARO',
                                          split='passive',
                                          tokenizer=tokenizer,
                                          model_name=model_name,
-                                         image_preprocess=image_preprocess)
+                                         image_preprocess=image_preprocess,
+                                         model_config=configs[model_name],
+                                         general_config=configs['general'])
         VALSE_active_dataset = ITMDataset(dataset_file=dataset_files['combined'],
                                           dataset_name='VALSE',
                                           split='active',
                                           tokenizer=tokenizer,
                                           model_name=model_name,
-                                          image_preprocess=image_preprocess)
+                                          image_preprocess=image_preprocess,
+                                          model_config=configs[model_name],
+                                          general_config=configs['general'])
         VALSE_passive_dataset = ITMDataset(dataset_file=dataset_files['combined'],
                                            dataset_name='VALSE', split='passive',
                                            tokenizer=tokenizer,
                                            model_name=model_name,
-                                           image_preprocess=image_preprocess)
+                                           image_preprocess=image_preprocess,
+                                           model_config=configs[model_name],
+                                           general_config=configs['general'])
         """ Define our loaders """
         loaders = {
             'ARO': {
