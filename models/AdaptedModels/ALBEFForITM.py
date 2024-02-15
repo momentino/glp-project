@@ -15,8 +15,8 @@ class ALBEFForITM(nn.Module):
         image_atts = torch.ones(image_embeds.size()[:-1],dtype=torch.long)
 
         """ Take the textual embeddings for the captions and the foils """
-        captions.input_ids = torch.squeeze(captions.input_ids)
-        foils.input_ids = torch.squeeze(foils.input_ids)
+        captions.input_ids = torch.squeeze(captions.input_ids,dim=0)
+        foils.input_ids = torch.squeeze(foils.input_ids,dim=0)
         captions_output = self.base_model.text_encoder.bert(captions.input_ids, attention_mask=captions.attention_mask,
                                              return_dict=True, mode='text')
         captions_embeds = captions_output.last_hidden_state

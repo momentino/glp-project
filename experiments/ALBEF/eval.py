@@ -19,6 +19,7 @@ def eval(model, loader, config):
             caption_scores, foils_scores = adapted_model(images, captions, foils)
             c_scores.extend(caption_scores)
             f_scores.extend(foils_scores)
+            total_num_samples+=1
             # this is to iterate multiple lists together
             for cat,c_sc,f_sc in zip(categories, caption_scores, foils_scores):
                 try:
@@ -29,7 +30,7 @@ def eval(model, loader, config):
                         'caption_scores': [c_sc],
                         'foil_scores': [f_sc]
                     }
-            total_num_samples+=64
+
 
 
     pairwise_acc = sum([1 if c_scores[i][1].item()>f_scores[i][1].item() else 0 for i in range(len(c_scores))])/total_num_samples

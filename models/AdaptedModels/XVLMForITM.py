@@ -11,8 +11,8 @@ class XVLMForITM(nn.Module):
 
     def forward(self, images, captions, foils):
         image_embeds, image_atts = self.base_model.get_vision_embeds(images)
-        captions.input_ids = torch.squeeze(captions.input_ids)
-        foils.input_ids = torch.squeeze(foils.input_ids)
+        captions.input_ids = torch.squeeze(captions.input_ids, dim=0)
+        foils.input_ids = torch.squeeze(foils.input_ids, dim=0)
         caption_embeds = self.base_model.get_text_embeds(captions.input_ids, captions.attention_mask)
         foil_embeds = self.base_model.get_text_embeds(foils.input_ids, foils.attention_mask)
 
