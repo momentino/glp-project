@@ -28,7 +28,7 @@ def eval(model, loader, config, x2vlm_config):
                         'caption_scores': [c_sc],
                         'foil_scores': [f_sc]
                     }
-            total_num_samples += 64
+            total_num_samples += 1
 
     pairwise_acc = sum(
         [1 if c_scores[i][1].item() > f_scores[i][1].item() else 0 for i in range(len(c_scores))]) / total_num_samples

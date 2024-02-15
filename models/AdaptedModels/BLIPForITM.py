@@ -19,8 +19,8 @@ class BLIPForITM(nn.Module):
         f_encoder_input_ids = foils.input_ids.clone()
         #f_encoder_input_ids[:, 0] = self.base_model.tokenizer.enc_token_id
 
-        c_encoder_input_ids = torch.squeeze(c_encoder_input_ids)
-        f_encoder_input_ids = torch.squeeze(f_encoder_input_ids)
+        c_encoder_input_ids = torch.squeeze(c_encoder_input_ids, dim=0)
+        f_encoder_input_ids = torch.squeeze(f_encoder_input_ids, dim=0)
 
         captions_output_pos = self.base_model.text_encoder(c_encoder_input_ids,
                                        attention_mask=captions.attention_mask,
