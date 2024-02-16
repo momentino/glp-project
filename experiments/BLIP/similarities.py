@@ -84,7 +84,7 @@ def similarities(model, loader, config):
                 'active_passive_text_std' : None,
                 'difference_text_mean' : None,
                 'difference_text_std' : None,
-                'true_foil_vl_mean' : None,
+                'true_foil_vl_mean' : np.mean(cat_tf_vl_scores),
                 'true_foil_vl_std' : np.std(cat_tf_vl_scores), 
                 'active_passive_vl_mean' : np.mean(cat_ap_vl_scores),
                 'active_passive_vl_std' : np.std(cat_ap_vl_scores),
