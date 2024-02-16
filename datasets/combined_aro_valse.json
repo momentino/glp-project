@@ -22731,7 +22731,7 @@
         "true_passive": "A statue is guarded by a policeman",
         "foil_passive": "A policeman is guarded by a statue",
         "verb": "guard",
-        "category": "contrast ",
+        "category": "contrast",
         "true_surprisal": 4.699371139208476,
         "foil_surprisal": 11.477785110473633,
         "surprisal_difference": 6.778413971265157
