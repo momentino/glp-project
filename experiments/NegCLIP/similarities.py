@@ -16,14 +16,10 @@ def similarities(model, loader):
     with torch.no_grad():
         for images, true_actives, foil_actives, true_passives, categories in tqdm(loader):
             for image, true_active, foil_active, true_passive, cat in zip(images, true_actives, foil_actives, true_passives, categories):
-                
-                ta_input = true_active.squeeze(0)
-                fa_input = foil_active.squeeze(0)
-                tp_input = true_passive.squeeze(0)
 
-                ta_features = model.model.encode_text(ta_input)
-                fa_features = model.model.encode_text(fa_input)
-                tp_features = model.model.encode_text(tp_input)
+                ta_features = model.model.encode_text(true_active)
+                fa_features = model.model.encode_text(foil_active)
+                tp_features = model.model.encode_text(true_passive)
 
                 tf_text_similarities=F.cosine_similarity(ta_features,fa_features,dim=-1)
                 ap_text_similarities=F.cosine_similarity(ta_features,tp_features,dim=-1)

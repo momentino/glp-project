@@ -182,9 +182,9 @@ class SimilaritiesDataset(data.Dataset):
         image = self.images[idx]
         if(self.image_preprocess == None):
             image = preprocess_images(config=self.model_config, model_name=self.model_name, images=image)
-            true_active, foil_active, true_passive = (self._pre_caption(self.true_active[idx], self.model_config['max_tokens']),
-                                        self._pre_caption(self.foil_active[idx], self.model_config['max_tokens']),
-                                        self._pre_caption(self.true_passive[idx], self.model_config['max_tokens']))
+            true_active, foil_active, true_passive = (self._pre_caption(self.true_actives[idx], self.model_config['max_tokens']),
+                                        self._pre_caption(self.foil_actives[idx], self.model_config['max_tokens']),
+                                        self._pre_caption(self.true_passives[idx], self.model_config['max_tokens']))
             true_active = self.tokenizer(true_active, padding='longest', max_length=40,
                                      return_tensors='pt')
             foil_active = self.tokenizer(foil_active, padding='longest', max_length=40,

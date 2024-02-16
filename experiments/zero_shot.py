@@ -38,7 +38,7 @@ _logger.info(f"Running with args {FLAGS}, {FIRE_FLAGS}")
 def get_args_parser():
     parser = argparse.ArgumentParser('Set parameters for the expriments)', add_help=False)
     parser.add_argument('--model', default='NegCLIP', type=str, choices=['ALBEF','XVLM','BLIP','X2VLM', 'NegCLIP'])
-    parser.add_argument('--experiment', default='first_second', type=str, choices=['pre', 'first_second'])
+    parser.add_argument('--experiment', default='pre', type=str, choices=['pre', 'first_second'])
     parser.add_argument('--dataset', default='all', type=str, choices=['VALSE', 'ARO','all'])
     parser.add_argument('--split', default='all', type=str, choices=['active', 'passive','all'])
 
@@ -154,12 +154,12 @@ def main(args):
         """ Define our loaders """
         loaders = {
             'correct': {
-                'ARO': DataLoader(ARO_correct_subset, batch_size=64, shuffle=False),
-                'VALSE': DataLoader(VALSE_correct_subset, batch_size=64, shuffle=False)
+                'ARO': DataLoader(ARO_correct_subset, batch_size=1, shuffle=False),
+                'VALSE': DataLoader(VALSE_correct_subset, batch_size=1, shuffle=False)
             },
             'wrong': {
-                'ARO': DataLoader(ARO_wrong_subset, batch_size=64, shuffle=False),
-                'VALSE': DataLoader(VALSE_wrong_subset, batch_size=64, shuffle=False)
+                'ARO': DataLoader(ARO_wrong_subset, batch_size=1, shuffle=False),
+                'VALSE': DataLoader(VALSE_wrong_subset, batch_size=1, shuffle=False)
             }
         }
 

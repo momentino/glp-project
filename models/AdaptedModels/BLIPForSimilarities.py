@@ -22,9 +22,9 @@ class BLIPForSimilarities(nn.Module):
         tp_encoder_input_ids = true_passives.input_ids.clone()
         #f_encoder_input_ids[:, 0] = self.base_model.tokenizer.enc_token_id
 
-        ta_encoder_input_ids = torch.squeeze(ta_encoder_input_ids)
-        fa_encoder_input_ids = torch.squeeze(fa_encoder_input_ids)
-        tp_encoder_input_ids = torch.squeeze(tp_encoder_input_ids)
+        ta_encoder_input_ids = torch.squeeze(ta_encoder_input_ids, dim=0)
+        fa_encoder_input_ids = torch.squeeze(fa_encoder_input_ids, dim=0)
+        tp_encoder_input_ids = torch.squeeze(tp_encoder_input_ids, dim=0)
 
         ta_output_pos = self.base_model.text_encoder(ta_encoder_input_ids,
                                        attention_mask=true_actives.attention_mask,
@@ -50,4 +50,4 @@ class BLIPForSimilarities(nn.Module):
         ta_vl_embeddings = ta_output_pos.last_hidden_state[:, 0, :]
         fa_vl_embeddings = fa_output_pos.last_hidden_state[:, 0, :]
         tp_vl_embeddings = tp_output_pos.last_hidden_state[:, 0, :]
-        return ta_output_pos[:,0,:], fa_output_pos[:,0,:], tp_output_pos[:,0,:], ta_vl_embeddings,  fa_vl_embeddings, tp_vl_embeddings
+        return ta_vl_embeddings,  fa_vl_embeddings, tp_vl_embeddings

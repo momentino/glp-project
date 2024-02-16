@@ -14,9 +14,9 @@ class ALBEFForSimilarities(nn.Module):
         image_atts = torch.ones(image_embeds.size()[:-1],dtype=torch.long)
 
         """ Take the textual embeddings for the captions and the foils """
-        true_actives.input_ids = torch.squeeze(true_actives.input_ids)
-        foil_actives.input_ids = torch.squeeze(foil_actives.input_ids)
-        true_passives.input_ids = torch.squeeze(true_passives.input_ids)
+        true_actives.input_ids = torch.squeeze(true_actives.input_ids, dim=0)
+        foil_actives.input_ids = torch.squeeze(foil_actives.input_ids, dim=0)
+        true_passives.input_ids = torch.squeeze(true_passives.input_ids, dim=0)
         
         true_actives_output = self.base_model.text_encoder.bert(true_actives.input_ids, attention_mask=true_actives.attention_mask,
                                              return_dict=True, mode='text')
