@@ -163,53 +163,6 @@ def main(args):
             }
         }
 
-        _logger.info(f" Evaluation on the {dataset} benchmark - surprisal subsets. Model evaluated: {model_name}")
-
-        """ Run the evaluation for each model """
-        if(dataset == 'all' and split=='all'):
-            for subset in ['correct','wrong']:
-                for dataset in ['ARO','VALSE']:
-                    if (model_name == 'ALBEF'):
-                        acc,pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, _ = albef_eval(model,
-                                                                                                                                                      loaders[subset][dataset],
-                                                                                                                                                      configs['general'])
-                    elif(model_name == 'XVLM'):
-                        acc,pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, _ = xvlm_eval(model,
-                                                                                                                                                        loaders[subset][dataset],
-                                                                                                                                                        configs['general'])
-                    elif (model_name == 'BLIP'):
-                        acc, pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, _ = blip_eval(
-                            model,
-                            loaders[subset][dataset],
-                            configs['general'])
-                    elif (model_name == 'X2VLM'):
-                        acc, pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, _ = x2vlm_eval(
-                            model,
-                            loaders[subset][dataset],
-                            configs['general'],
-                            configs['X2VLM'])
-                    elif (model_name == 'NegCLIP'):
-                        acc, pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, _ = negclip_eval(
-                            model,
-                            loaders[subset][dataset])
-                    df = pd.read_csv(configs['general']['scores_'+experiment+'_path'])
-                    new_row = [{
-                        'model': model_name,
-                        'split':subset,
-                        'dataset': dataset,
-                        'acc': acc,
-                        'pairwise_acc': pairwise_acc,
-                        'pairwise_acc_50': pairwise_acc_50,
-                        'pairwise_acc_60': pairwise_acc_60,
-                        'pairwise_acc_70': pairwise_acc_70,
-                        'precision_caption': precision_caption,
-                        'precision_foil': precision_foil
-                    }]
-
-                    row = pd.DataFrame(new_row)
-                    df = pd.concat([df, row], ignore_index=True)
-                    df.to_csv(configs['general']['scores_'+experiment+'_path'], index=False)
-
     elif(experiment == 'first_second'):
         """ Define our dataset objects """
         ARO_active_dataset = ITMDataset(dataset_file=dataset_files['combined'],
@@ -256,72 +209,97 @@ def main(args):
 
         _logger.info(f" Evaluation on the {dataset} benchmark - {split} mode. Model evaluated: {model_name}")
 
-        """ Run the evaluation for each model """
-        if(dataset == 'all' and split=='all'):
-            for dataset in ['ARO','VALSE']:
-                for split in ['active','passive']:
-                    if (model_name == 'ALBEF'):
-                        acc,pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, perf_by_cat = albef_eval(model,
-                                                                                                                                                      loaders[dataset][split],
-                                                                                                                                                      configs['general'])
-                    elif(model_name == 'XVLM'):
-                        acc,pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, perf_by_cat = xvlm_eval(model,
-                                                                                                                                                        loaders[dataset][split],
-                                                                                                                                                        configs['general'])
-                    elif (model_name == 'BLIP'):
-                        acc, pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, perf_by_cat = blip_eval(
-                            model,
-                            loaders[dataset][split],
-                            configs['general'])
-                    elif (model_name == 'X2VLM'):
-                        acc, pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, perf_by_cat = x2vlm_eval(
-                            model,
-                            loaders[dataset][split],
-                            configs['general'],
-                            configs['X2VLM'])
-                    elif (model_name == 'NegCLIP'):
-                        acc, pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, perf_by_cat = negclip_eval(
-                            model,
-                            loaders[dataset][split])
-                    df = pd.read_csv(configs['general']['scores_'+experiment+'_path'])
-                    rows = []
+    """ Run the evaluation for each model """
+    if (experiment == 'pre'):
+        splits = ['correct', 'wrong']
+    else:
+        if (split == 'all'):
+            splits = ['ARO', 'VALSE']
+        else:
+            splits = split
+    if(dataset == 'all'):
+        datasets = ['ARO','VALSE']
+    else:
+        datasets = dataset
+    for dataset in datasets:
+        for split in splits:
+            if (model_name == 'ALBEF'):
+                acc,pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, perf_by_cat = albef_eval(model,
+                                                                                                                                              loaders[dataset][split],
+                                                                                                                                              configs['general'])
+            elif(model_name == 'XVLM'):
+                acc,pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, perf_by_cat = xvlm_eval(model,
+                                                                                                                                                loaders[dataset][split],
+                                                                                                                                                configs['general'])
+            elif (model_name == 'BLIP'):
+                acc, pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, perf_by_cat = blip_eval(
+                    model,
+                    loaders[dataset][split],
+                    configs['general'])
+            elif (model_name == 'X2VLM'):
+                acc, pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, perf_by_cat = x2vlm_eval(
+                    model,
+                    loaders[dataset][split],
+                    configs['general'],
+                    configs['X2VLM'])
+            elif (model_name == 'NegCLIP'):
+                acc, pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, perf_by_cat = negclip_eval(
+                    model,
+                    loaders[dataset][split])
+            df = pd.read_csv(configs['general']['scores_'+experiment+'_path'])
+            rows = []
+
+            if( experiment == 'first_second'):
+                new_row = {
+                    'model': model_name,
+                    'dataset': dataset,
+                    'split': split,
+                    'category': None,
+                    # because this is the row with the general results as we want in the pre and first experiments
+                    'acc': acc,
+                    'pairwise_acc': pairwise_acc,
+                    'pairwise_acc_50': pairwise_acc_50,
+                    'pairwise_acc_60': pairwise_acc_60,
+                    'pairwise_acc_70': pairwise_acc_70,
+                    'precision_caption': precision_caption,
+                    'precision_foil': precision_foil
+
+                }
+                rows.append(new_row)
+                for key,value in perf_by_cat.items():
                     new_row = {
                         'model': model_name,
                         'dataset': dataset,
                         'split': split,
-                        'category': None, # because this is the row with the general results as we want in the pre and first experiments
-                        'acc': acc,
-                        'pairwise_acc': pairwise_acc,
-                        'pairwise_acc_50': pairwise_acc_50,
-                        'pairwise_acc_60': pairwise_acc_60,
-                        'pairwise_acc_70': pairwise_acc_70,
-                        'precision_caption': precision_caption,
-                        'precision_foil': precision_foil
-
+                        'category': key,
+                        # because this is the row with the general results as we want in the pre and first experiments
+                        'acc': value['acc'],
+                        'pairwise_acc': value['pairwise_acc'],
+                        'pairwise_acc_50': value['pairwise_acc_50'],
+                        'pairwise_acc_60': value['pairwise_acc_60'],
+                        'pairwise_acc_70': value['pairwise_acc_70'],
+                        'precision_caption': value['precision_caption'],
+                        'precision_foil': value['precision_foil']
 
                     }
                     rows.append(new_row)
-                    if( experiment == 'first_second'):
-                        for key,value in perf_by_cat.items():
-                            new_row = {
-                                'model': model_name,
-                                'dataset': dataset,
-                                'split': split,
-                                'category': key,
-                                # because this is the row with the general results as we want in the pre and first experiments
-                                'acc': value['acc'],
-                                'pairwise_acc': value['pairwise_acc'],
-                                'pairwise_acc_50': value['pairwise_acc_50'],
-                                'pairwise_acc_60': value['pairwise_acc_60'],
-                                'pairwise_acc_70': value['pairwise_acc_70'],
-                                'precision_caption': value['precision_caption'],
-                                'precision_foil': value['precision_foil']
-
-                            }
-                            rows.append(new_row)
-                    rows = pd.DataFrame(rows)
-                    df = pd.concat([df, rows], ignore_index=True)
-                    df.to_csv(configs['general']['scores_'+experiment+'_path'], index=False)
+            elif (experiment == 'pre'):
+                new_row = [{
+                    'model': model_name,
+                    'split': split,
+                    'dataset': dataset,
+                    'acc': acc,
+                    'pairwise_acc': pairwise_acc,
+                    'pairwise_acc_50': pairwise_acc_50,
+                    'pairwise_acc_60': pairwise_acc_60,
+                    'pairwise_acc_70': pairwise_acc_70,
+                    'precision_caption': precision_caption,
+                    'precision_foil': precision_foil
+                }]
+                rows.append(new_row)
+            rows = pd.DataFrame(rows)
+            df = pd.concat([df, rows], ignore_index=True)
+            df.to_csv(configs['general']['scores_'+experiment+'_path'], index=False)
 
 
 if __name__ == '__main__':
