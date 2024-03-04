@@ -1,6 +1,6 @@
 # Investigating Capabilities of Vision-Language Models in Understanding Relationships between Subjects, Objects and Transitive Verbs
 The goal of this project was that of measuring the capabilities of various multimodal visual-language models of understanding the relationship between subjects and objects that depend from a transitive verb.
-You can find a detailed description of our work [here](https://drive.google.com/file/d/1Iw0JbckMY9aJNIdrapcn7CNfK47r0uys/view?usp=sharing).
+You can find a detailed description of our work [here](https://drive.google.com/file/d/15TnqnE8THuP6tUCivBWclKo1sH_3gych/view?usp=sharing).
 
 ---
 # Setup
