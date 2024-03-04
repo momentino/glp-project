@@ -26,7 +26,15 @@ The brackets indicate the possible values that can be assigned to the argument.
 ```
 python -m zero_shot --model=['ALBEF','XVLM','BLIP','X2VLM', 'NegCLIP'] --experiment=pre --dataset=['VALSE', 'ARO','all']
 ```
-### 4.1 Run the ITM experiments (with both aggregated results as well as computed by category)
+### 4.2 Run the ITM experiments (with both aggregated results as well as computed by category)
+The split indicates wheter you wish to perform the experiment only on the active, passive or both (captions,foil) pairs.
 ```
-python -m zero_shot --model=['ALBEF','XVLM','BLIP','X2VLM', 'NegCLIP'] --experiment=itm --dataset=['VALSE', 'ARO','all']
+python -m zero_shot --model=['ALBEF','XVLM','BLIP','X2VLM', 'NegCLIP'] --experiment=itm --dataset=['VALSE', 'ARO','all'] --split=['active','passive','all']
 ```
+### 4.3 Run the experiment on the embeddings 
+```
+python -m third_experiment --model=['ALBEF','XVLM','BLIP','X2VLM', 'NegCLIP'] --dataset=['VALSE', 'ARO','all']
+```
+## 5. Getting the scores
+The scores are saved automatically in the *scores/* folder, with names: 
+- *scores_pre.csv* (experiment at 
