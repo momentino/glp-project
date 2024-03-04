@@ -29,16 +29,10 @@ FLAGS, FIRE_FLAGS = parser.parse_known_args()
 logging.basicConfig(stream=sys.stdout, level=logging.getLevelName(FLAGS.log_level))
 _logger.info(f"Running with args {FLAGS}, {FIRE_FLAGS}")
 
-
-""" 
-    Our arguments to set our experiments. You may set them from command line when we execute the file.
-    However, you may also just change the default value here every time. 
-    
-"""
 def get_args_parser():
-    parser = argparse.ArgumentParser('Set parameters for the expriments)', add_help=False)
-    parser.add_argument('--model', default='X2VLM', type=str, choices=['ALBEF','XVLM','BLIP','X2VLM', 'NegCLIP'])
-    parser.add_argument('--experiment', default='pre', type=str, choices=['pre', 'first_second'])
+    parser = argparse.ArgumentParser('Set parameters for the experiments)', add_help=False)
+    parser.add_argument('--model', default='BLIP', type=str, choices=['ALBEF','XVLM','BLIP','X2VLM', 'NegCLIP'])
+    parser.add_argument('--experiment', default='itm', type=str, choices=['pre', 'itm'])
     parser.add_argument('--dataset', default='all', type=str, choices=['VALSE', 'ARO','all'])
     parser.add_argument('--split', default='all', type=str, choices=['active', 'passive','all'])
 
@@ -153,13 +147,13 @@ def main(args):
                                            general_config=configs['general'])
         """ Define our loaders """
         loaders = {
-            'correct': {
-                'ARO': DataLoader(ARO_correct_subset, batch_size=1, shuffle=False),
-                'VALSE': DataLoader(VALSE_correct_subset, batch_size=1, shuffle=False)
+            'ARO': {
+                'correct': DataLoader(ARO_correct_subset, batch_size=1, shuffle=False),
+                'wrong': DataLoader(ARO_wrong_subset, batch_size=1, shuffle=False),
             },
-            'wrong': {
-                'ARO': DataLoader(ARO_wrong_subset, batch_size=1, shuffle=False),
-                'VALSE': DataLoader(VALSE_wrong_subset, batch_size=1, shuffle=False)
+            'VALSE': {
+                'correct': DataLoader(VALSE_correct_subset, batch_size=1, shuffle=False),
+                'wrong': DataLoader(VALSE_wrong_subset, batch_size=1, shuffle=False)
             }
         }
 
@@ -207,14 +201,14 @@ def main(args):
             }
         }
 
-        _logger.info(f" Evaluation on the {dataset} benchmark - {split} mode. Model evaluated: {model_name}")
 
-    """ Run the evaluation for each model """
+
+
     if (experiment == 'pre'):
         splits = ['correct', 'wrong']
     else:
         if (split == 'all'):
-            splits = ['ARO', 'VALSE']
+            splits = ['active', 'passive']
         else:
             splits = split
     if(dataset == 'all'):
@@ -223,7 +217,11 @@ def main(args):
         datasets = dataset
     for dataset in datasets:
         for split in splits:
+            """ Run the evaluation for each model """
+            _logger.info(
+                f" Zero-shot Evaluation on the {dataset} benchmark - \"{split}\" mode. Model evaluated: {model_name}")
             if (model_name == 'ALBEF'):
+
                 acc,pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, perf_by_cat = albef_eval(model,
                                                                                                                                               loaders[dataset][split],
                                                                                                                                               configs['general'])
@@ -246,7 +244,16 @@ def main(args):
                 acc, pairwise_acc, pairwise_acc_50, pairwise_acc_60, pairwise_acc_70, precision_caption, precision_foil, perf_by_cat = negclip_eval(
                     model,
                     loaders[dataset][split])
-            df = pd.read_csv(configs['general']['scores_'+experiment+'_path'])
+            if(os.path.exists(configs['general']['scores_'+experiment+'_path'])):
+                df = pd.read_csv(configs['general']['scores_'+experiment+'_path'])
+            else:
+                if(experiment == 'pre'):
+                    df = pd.DataFrame(columns=['model','split','dataset','acc','pairwise_acc','pairwise_acc_50','pairwise_acc_60','pairwise_acc_70','precision_caption','precision_foil'])
+                else:
+                    df = pd.DataFrame(columns=['model', 'split', 'category', 'dataset', 'acc', 'pairwise_acc', 'pairwise_acc_50',
+                                               'pairwise_acc_60', 'pairwise_acc_70', 'precision_caption',
+                                               'precision_foil'])
+                df.to_csv(configs['general']['scores_'+experiment+'_path'])
             rows = []
 
             if( experiment == 'first_second'):
@@ -256,13 +263,13 @@ def main(args):
                     'split': split,
                     'category': None,
                     # because this is the row with the general results as we want in the pre and first experiments
-                    'acc': acc,
-                    'pairwise_acc': pairwise_acc,
-                    'pairwise_acc_50': pairwise_acc_50,
-                    'pairwise_acc_60': pairwise_acc_60,
-                    'pairwise_acc_70': pairwise_acc_70,
-                    'precision_caption': precision_caption,
-                    'precision_foil': precision_foil
+                    'acc': round(acc,3),
+                    'pairwise_acc': round(pairwise_acc,3),
+                    'pairwise_acc_50': round(pairwise_acc_50,3),
+                    'pairwise_acc_60': round(pairwise_acc_60,3),
+                    'pairwise_acc_70': round(pairwise_acc_70,3),
+                    'precision_caption': round(precision_caption,3),
+                    'precision_foil': round(precision_foil,3)
 
                 }
                 rows.append(new_row)
@@ -273,32 +280,32 @@ def main(args):
                         'split': split,
                         'category': key,
                         # because this is the row with the general results as we want in the pre and first experiments
-                        'acc': value['acc'],
-                        'pairwise_acc': value['pairwise_acc'],
-                        'pairwise_acc_50': value['pairwise_acc_50'],
-                        'pairwise_acc_60': value['pairwise_acc_60'],
-                        'pairwise_acc_70': value['pairwise_acc_70'],
-                        'precision_caption': value['precision_caption'],
-                        'precision_foil': value['precision_foil']
-
+                        'acc': round(value['acc'],3),
+                        'pairwise_acc': round(value['pairwise_acc'],3),
+                        'pairwise_acc_50': round(value['pairwise_acc_50']),
+                        'pairwise_acc_60': round(value['pairwise_acc_60']),
+                        'pairwise_acc_70': round(value['pairwise_acc_70']),
+                        'precision_caption': round(value['precision_caption']),
+                        'precision_foil': round(value['precision_foil'])
                     }
                     rows.append(new_row)
             elif (experiment == 'pre'):
-                new_row = [{
+                new_row = {
                     'model': model_name,
                     'split': split,
                     'dataset': dataset,
-                    'acc': acc,
-                    'pairwise_acc': pairwise_acc,
-                    'pairwise_acc_50': pairwise_acc_50,
-                    'pairwise_acc_60': pairwise_acc_60,
-                    'pairwise_acc_70': pairwise_acc_70,
-                    'precision_caption': precision_caption,
-                    'precision_foil': precision_foil
-                }]
+                    'acc': round(acc,3),
+                    'pairwise_acc': round(pairwise_acc,3),
+                    'pairwise_acc_50': round(pairwise_acc_50,3),
+                    'pairwise_acc_60': round(pairwise_acc_60,3),
+                    'pairwise_acc_70': round(pairwise_acc_70,3),
+                    'precision_caption': round(precision_caption,3),
+                    'precision_foil': round(precision_foil,3)
+                }
                 rows.append(new_row)
             rows = pd.DataFrame(rows)
             df = pd.concat([df, rows], ignore_index=True)
+            _logger.info(f" Split \"{split}\" for model \"{model_name}\" and \"{dataset}\" dataset complete. Saving the scores at location {configs['general']['scores_'+experiment+'_path']} ")
             df.to_csv(configs['general']['scores_'+experiment+'_path'], index=False)
 
 
