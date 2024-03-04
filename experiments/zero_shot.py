@@ -31,7 +31,7 @@ _logger.info(f"Running with args {FLAGS}, {FIRE_FLAGS}")
 
 def get_args_parser():
     parser = argparse.ArgumentParser('Set parameters for the experiments)', add_help=False)
-    parser.add_argument('--model', default='BLIP', type=str, choices=['ALBEF','XVLM','BLIP','X2VLM', 'NegCLIP'])
+    parser.add_argument('--model', default='X2VLM', type=str, choices=['ALBEF','XVLM','BLIP','X2VLM', 'NegCLIP'])
     parser.add_argument('--experiment', default='itm', type=str, choices=['pre', 'itm'])
     parser.add_argument('--dataset', default='all', type=str, choices=['VALSE', 'ARO','all'])
     parser.add_argument('--split', default='all', type=str, choices=['active', 'passive','all'])
@@ -157,7 +157,7 @@ def main(args):
             }
         }
 
-    elif(experiment == 'first_second'):
+    elif(experiment == 'itm'):
         """ Define our dataset objects """
         ARO_active_dataset = ITMDataset(dataset_file=dataset_files['combined'],
                                         dataset_name='ARO', split='active',

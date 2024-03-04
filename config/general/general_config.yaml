@@ -5,7 +5,7 @@ full_dataset_path: ../datasets/combined_aro_valse.json
 correct_subset_path: ../datasets/correct_subset.json
 wrong_subset_path: ../datasets/wrong_subset.json
 scores_pre_path: ../scores/scores_pre.csv
-scores_first_second_path: ../scores/scores_first_second.csv
+scores_itm_path: ../scores/scores_itm.csv
 scores_third_path: ../scores/scores_third.csv
 
 ALBEF_weights: https://drive.google.com/file/d/1hsgAei4zH4wqqhydV8bPWyz1FdCRGxTs/view?usp=sharing
