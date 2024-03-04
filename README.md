@@ -43,6 +43,6 @@ python -m third_experiment --model=['ALBEF','XVLM','BLIP','X2VLM', 'NegCLIP']
 ```
 ## 5. Getting the scores
 The scores are saved automatically in the *scores/* folder, with names: 
-- *scores_pre.csv* (experiment at [4.1](#41-run-the-plausibility-bias-experiment)
-- *scores_itm.csv* ([4.2](#42-run-the-itm-experiments-with-both-aggregated-results-as-well-as-computed-by-category)
-- *scores_third.csv* ([4.3](#43-run-the-experiment-on-the-embeddings)
+- *scores_pre.csv* (experiment at [4.1](#41-run-the-plausibility-bias-experiment))
+- *scores_itm.csv* ([4.2](#42-run-the-itm-experiments-with-both-aggregated-results-as-well-as-computed-by-category))
+- *scores_third.csv* ([4.3](#43-run-the-experiment-on-the-embeddings))
